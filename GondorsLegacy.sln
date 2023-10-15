@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4639E45C-F2D2-4D09-B22E-E780557B8407}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{4607D68C-F7E0-497C-A31B-4113FC8FCF3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GondorsLegacy.Services.Reservation", "src\Services\GondorsLegacy.Services.Reservation\GondorsLegacy.Services.Reservation.csproj", "{02DCE269-A127-4D57-9BDA-AFA2FC636054}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GondorsLegacy.Services.Payment", "src\Services\GondorsLegacy.Services.Payment\GondorsLegacy.Services.Payment.csproj", "{1BE06D3B-E928-4098-875B-6765F1AFB13C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GondorsLegacy.Services.HotelInformation", "src\Services\GondorsLegacy.Services.HotelInformation\GondorsLegacy.Services.HotelInformation.csproj", "{73857350-A325-4D67-8E4C-B6A4C97A01EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GondorsLegacy.Services.Communication", "src\Services\GondorsLegacy.Services.Communication\GondorsLegacy.Services.Communication.csproj", "{B6B75CAD-4990-46F4-AC34-31FB2890E93B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{02DCE269-A127-4D57-9BDA-AFA2FC636054}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02DCE269-A127-4D57-9BDA-AFA2FC636054}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02DCE269-A127-4D57-9BDA-AFA2FC636054}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02DCE269-A127-4D57-9BDA-AFA2FC636054}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BE06D3B-E928-4098-875B-6765F1AFB13C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BE06D3B-E928-4098-875B-6765F1AFB13C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BE06D3B-E928-4098-875B-6765F1AFB13C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BE06D3B-E928-4098-875B-6765F1AFB13C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73857350-A325-4D67-8E4C-B6A4C97A01EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73857350-A325-4D67-8E4C-B6A4C97A01EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73857350-A325-4D67-8E4C-B6A4C97A01EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73857350-A325-4D67-8E4C-B6A4C97A01EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6B75CAD-4990-46F4-AC34-31FB2890E93B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6B75CAD-4990-46F4-AC34-31FB2890E93B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6B75CAD-4990-46F4-AC34-31FB2890E93B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6B75CAD-4990-46F4-AC34-31FB2890E93B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4607D68C-F7E0-497C-A31B-4113FC8FCF3F} = {4639E45C-F2D2-4D09-B22E-E780557B8407}
+		{02DCE269-A127-4D57-9BDA-AFA2FC636054} = {4607D68C-F7E0-497C-A31B-4113FC8FCF3F}
+		{1BE06D3B-E928-4098-875B-6765F1AFB13C} = {4607D68C-F7E0-497C-A31B-4113FC8FCF3F}
+		{73857350-A325-4D67-8E4C-B6A4C97A01EC} = {4607D68C-F7E0-497C-A31B-4113FC8FCF3F}
+		{B6B75CAD-4990-46F4-AC34-31FB2890E93B} = {4607D68C-F7E0-497C-A31B-4113FC8FCF3F}
+	EndGlobalSection
+EndGlobal
