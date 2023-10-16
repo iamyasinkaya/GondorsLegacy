@@ -6,4 +6,25 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Persistence\" />
+    <None Remove="DateTimes\" />
+    <None Remove="Web\" />
+    <None Remove="Web\MinimalApis\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Persistence\" />
+    <Folder Include="DateTimes\" />
+    <Folder Include="Web\" />
+    <Folder Include="Web\MinimalApis\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GondorsLegacy.Domain\GondorsLegacy.Domain.csproj" />
+    <ProjectReference Include="..\GondorsLegacy.Application\GondorsLegacy.Application.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="EntityFrameworkCore.SqlServer.SimpleBulks" Version="6.7.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.2.2" />
+    <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.2.22" />
+  </ItemGroup>
 </Project>

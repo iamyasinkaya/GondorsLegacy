@@ -1,10 +1,11 @@
-﻿using GondorsLegacy.Services.Reservation.Constants;
+﻿using GondorsLegacy.Domain.Entities;
+using GondorsLegacy.Services.Reservation.Constants;
 
 namespace GondorsLegacy.Services.Reservation.Entities;
 
-public class Reservation
+public class Reservation : Entity<Guid>
 {
-    public Guid ReservationId { get; set; }  // Rezervasyon kimliği
+    public int ReservationId { get; set; }  // Rezervasyon kimliği
     public string CustomerName { get; set; }  // Müşteri adı
     public DateTime CheckInDate { get; set; }  // Giriş tarihi
     public DateTime CheckOutDate { get; set; }  // Çıkış tarihi
@@ -13,34 +14,19 @@ public class Reservation
     public decimal TotalPrice { get; set; }  // Toplam fiyat
     public int RoomNumber { get; set; } // Oda numarası
     public string CustomerEmail { get; set; } // Müşteri e-posta adresi
-    public ReservationStatus Status { get; set; } // Rezervasyon durumu
+    public ReservationStatus ReservationStatus { get; set; } // Rezervasyon durumu
     public string PaymentInformation { get; set; } // Ödeme bilgileri
     public string SpecialRequests { get; set; } // Özel istekler
     public int NumberOfAdults { get; set; } // Yetişkin kişi sayısı
     public int NumberOfChildren { get; set; } // Çocuk kişi sayısı
-    public decimal TaxRate { get; set; } // Vergi oranı
+    public decimal TaxRate { get; set; } // Vergi oranı 
     public decimal ExtraServicePrice { get; set; } // Ekstra hizmet fiyatı
     public List<string> ExtraServices { get; set; } // Ekstra hizmetler listesi
     public PaymentStatus PaymentStatus { get; set; } // Ödeme durumu
     public CancellationReason CancellationReason { get; set; } // İptal nedeni
 
 
-    public Reservation(
-        Guid reservationId,
-        string customerName,
-        DateTime checkInDate,
-        DateTime checkOutDate,
-        RoomType roomType,
-        int numberOfGuests)
-    {
-        ReservationId = reservationId;
-        CustomerName = customerName;
-        CheckInDate = checkInDate;
-        CheckOutDate = checkOutDate;
-        RoomType = roomType;
-        NumberOfGuests = numberOfGuests;
-        TotalPrice = CalculateTotalPrice(taxRate:TaxRate,extraServicePrice:ExtraServicePrice);  // Toplam fiyatı hesapla
-    }
+    
 
     // Toplam fiyatı hesaplayan bir metot (örnek olarak)
     private decimal CalculateTotalPrice(decimal taxRate, decimal extraServicePrice)
@@ -87,13 +73,13 @@ public class Reservation
     // Rezervasyonu Onaylama
     public void ConfirmReservation()
     {
-        Status = ReservationStatus.Confirmed;
+        ReservationStatus = ReservationStatus.Confirmed;
     }
 
     // Rezervasyonu İptal Etme
     public void CancelReservation(CancellationReason reason)
     {
-        Status = ReservationStatus.Canceled;
+        ReservationStatus = ReservationStatus.Canceled;
         CancellationReason = reason;
     }
 

@@ -1,5 +1,7 @@
 ﻿using GondorsLegacy.Services.Reservation.DTOs;
+using GondorsLegacy.Services.Reservation.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GondorsLegacy.Services.Reservation.Controllers;
 
@@ -9,19 +11,26 @@ namespace GondorsLegacy.Services.Reservation.Controllers;
 [ApiController]
 public class ReservationController : ControllerBase
 {
-    
+    private readonly ReservationDbContext _dbContext;
 
-    [HttpGet]
-    public async Task<IActionResult> Get()
+    public ReservationController(ReservationDbContext dbContext)
     {
-        return Ok();
+        _dbContext = dbContext;
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetById()
-    {
-        return Ok();
-    }
+    //[HttpGet]
+    //public async Task<IActionResult> Get()
+    //{
+    //    return Ok(_dbContext.Reservations);
+    //}
+
+    //[HttpGet("{id}")]
+    //public async Task<IActionResult> GetById(int Id)
+    //{
+    //    var reservation = await _dbContext.Reservations.Where(x => x.ReservationId == Id).FirstOrDefaultAsync();    
+
+    //    return Ok(reservation);
+    //}
 
     [HttpPost]
     public async Task<IActionResult> Create(ReservationCreateDto reservationCreateDto)

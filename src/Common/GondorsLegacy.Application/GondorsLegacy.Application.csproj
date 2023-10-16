@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GondorsLegacy.Domain\GondorsLegacy.Domain.csproj" />
+    <ProjectReference Include="..\GondorsLegacy.CrossCuttingCorners\GondorsLegacy.CrossCuttingCorners.csproj" />
+  </ItemGroup>
 </Project>

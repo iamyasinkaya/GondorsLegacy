@@ -1,11 +1,16 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using GondorsLegacy.Services.Reservation;
+using GondorsLegacy.Infrastructure.DateTimes;
+using Microsoft.OpenApi.Models;
+using GondorsLegacy.Infrastructure.Web.MinimalApis;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddReservationModule(builder.Configuration);
+builder.Services.AddDateTimeProvider();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -89,7 +94,6 @@ builder.Services.AddSwaggerGen(c =>
 });
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -104,6 +108,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapEndpointHandlers(Assembly.GetCallingAssembly());
 
 app.Run();
 
