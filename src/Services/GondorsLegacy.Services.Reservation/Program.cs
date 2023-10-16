@@ -76,7 +76,7 @@ builder.Services.AddSwaggerGen(c =>
             Implicit = new OpenApiOAuthFlow
             {
                 AuthorizationUrl = new Uri("https://example.com/auth"),
-                TokenUrl = new Uri( "https://example.com/token"),
+                TokenUrl = new Uri("https://example.com/token"),
                 Scopes = new Dictionary<string, string>
             {
                 { "read", "Read access" },
@@ -87,7 +87,6 @@ builder.Services.AddSwaggerGen(c =>
     });
 
 });
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

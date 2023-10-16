@@ -9,6 +9,7 @@ namespace GondorsLegacy.Services.Reservation.Controllers;
 [ApiController]
 public class ReservationController : ControllerBase
 {
+    
 
     [HttpGet]
     public async Task<IActionResult> Get()
@@ -25,8 +26,17 @@ public class ReservationController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(ReservationCreateDto reservationCreateDto)
     {
+        //// Verileri Redis önbelleğine ekleyin
+        //var redisKey = "reservation:" + reservationCreateDto;
+        //var redisData = JsonConvert.SerializeObject(reservationCreateDto);
+
+        //// StackExchange.Redis ile Redis önbelleğine veriyi ekleyin
+        //var cacheService = _serviceProvider.GetRequiredService<ICacheService>(); // Önceki örnekte tanımlanan ICacheService
+        //cacheService.SetCachedData(redisKey, redisData, TimeSpan.FromMinutes(15));
+
         return Ok();
     }
+
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(ReservationUpdateDto reservationUpdateDto)
