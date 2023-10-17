@@ -3,6 +3,7 @@ using GondorsLegacy.Infrastructure.DateTimes;
 using Microsoft.OpenApi.Models;
 using GondorsLegacy.Infrastructure.Web.MinimalApis;
 using System.Reflection;
+using GondorsLegacy.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddReservationModule(builder.Configuration);
 builder.Services.AddDateTimeProvider();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddApplicationServices();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo

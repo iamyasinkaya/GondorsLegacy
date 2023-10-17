@@ -10,4 +10,18 @@
     <ProjectReference Include="..\GondorsLegacy.Domain\GondorsLegacy.Domain.csproj" />
     <ProjectReference Include="..\GondorsLegacy.CrossCuttingCorners\GondorsLegacy.CrossCuttingCorners.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Common\" />
+    <None Remove="Common\Services\" />
+    <None Remove="Common\Queries\" />
+    <None Remove="Common\Commands\" />
+    <None Remove="Decorators\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Common\" />
+    <Folder Include="Common\Services\" />
+    <Folder Include="Common\Queries\" />
+    <Folder Include="Common\Commands\" />
+    <Folder Include="Decorators\" />
+  </ItemGroup>
 </Project>

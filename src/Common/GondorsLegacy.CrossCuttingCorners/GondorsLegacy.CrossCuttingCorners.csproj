@@ -9,9 +9,11 @@
   <ItemGroup>
     <None Remove="DateTimes\" />
     <None Remove="Exceptions\" />
+    <None Remove="ExtensionMethods\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DateTimes\" />
     <Folder Include="Exceptions\" />
+    <Folder Include="ExtensionMethods\" />
   </ItemGroup>
 </Project>

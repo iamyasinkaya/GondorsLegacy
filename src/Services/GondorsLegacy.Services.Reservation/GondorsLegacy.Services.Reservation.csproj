@@ -33,6 +33,7 @@
     <None Remove="Queries\" />
     <None Remove="Endpoints\" />
     <None Remove="Models\" />
+    <None Remove="Commands\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
@@ -44,6 +45,7 @@
     <Folder Include="Queries\" />
     <Folder Include="Endpoints\" />
     <Folder Include="Models\" />
+    <Folder Include="Commands\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\GondorsLegacy.Domain\GondorsLegacy.Domain.csproj">
