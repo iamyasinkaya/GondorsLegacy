@@ -11,11 +11,13 @@
     <None Remove="Exceptions\" />
     <None Remove="ExtensionMethods\" />
     <None Remove="Caching\" />
+    <None Remove="Logging\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DateTimes\" />
     <Folder Include="Exceptions\" />
     <Folder Include="ExtensionMethods\" />
     <Folder Include="Caching\" />
+    <Folder Include="Logging\" />
   </ItemGroup>
 </Project>

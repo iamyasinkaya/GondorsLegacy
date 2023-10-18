@@ -14,11 +14,13 @@ namespace GondorsLegacy.Services.Reservation.Commands
     {
         private readonly ICrudService<Entities.Reservation> _reservationService;
         private readonly ICache _cacheService;
+        private readonly ILogger<CreateReservationCommand> _logger;
 
-        public CreateReservationCommandHandler(ICrudService<Entities.Reservation> reservationService,ICache cacheService)
+        public CreateReservationCommandHandler(ICrudService<Entities.Reservation> reservationService, ICache cacheService, ILogger<CreateReservationCommand> logger)
         {
             _reservationService = reservationService;
             _cacheService = cacheService;
+            _logger = logger;
         }
 
         public async Task Handle(CreateReservationCommand request, CancellationToken cancellationToken)
@@ -49,6 +51,8 @@ namespace GondorsLegacy.Services.Reservation.Commands
                 TimeSpan timeSpan = exitDate - DateTime.Now;
 
                 string reservationJson = JsonConvert.SerializeObject(request.Reservation);
+
+                _logger.LogInformation(reservationJson);
 
                 _cacheService.Add($"Reservation_{request.Reservation.Id.ToString()}", reservationJson, timeSpan);
             }
