@@ -5,8 +5,10 @@ namespace GondorsLegacy.Services.Reservation.Entities;
 
 public class Reservation : Entity<Guid>
 {
-    public int ReservationId { get; set; }  // Rezervasyon kimliği
-    public string CustomerName { get; set; }  // Müşteri adı
+    
+    public Guid CustomerId { get; set; } // Müşteri kimliği
+    public string CustomerFirstName { get; set; }  // Müşteri adı
+    public string CustomerLastName { get; set; } // Müşteri soyadı
     public DateTime CheckInDate { get; set; }  // Giriş tarihi
     public DateTime CheckOutDate { get; set; }  // Çıkış tarihi
     public RoomType RoomType { get; set; }  // Oda tipi
@@ -15,13 +17,9 @@ public class Reservation : Entity<Guid>
     public int RoomNumber { get; set; } // Oda numarası
     public string CustomerEmail { get; set; } // Müşteri e-posta adresi
     public ReservationStatus ReservationStatus { get; set; } // Rezervasyon durumu
-    public string PaymentInformation { get; set; } // Ödeme bilgileri
     public string SpecialRequests { get; set; } // Özel istekler
     public int NumberOfAdults { get; set; } // Yetişkin kişi sayısı
     public int NumberOfChildren { get; set; } // Çocuk kişi sayısı
-    public decimal TaxRate { get; set; } // Vergi oranı 
-    public decimal ExtraServicePrice { get; set; } // Ekstra hizmet fiyatı
-    public List<string> ExtraServices { get; set; } // Ekstra hizmetler listesi
     public PaymentStatus PaymentStatus { get; set; } // Ödeme durumu
     public CancellationReason CancellationReason { get; set; } // İptal nedeni
 
@@ -81,20 +79,6 @@ public class Reservation : Entity<Guid>
     {
         ReservationStatus = ReservationStatus.Canceled;
         CancellationReason = reason;
-    }
-
-    // Müşteri Bilgilerini Güncelleme
-    public void UpdateCustomerInfo(string newEmail, string newPaymentInfo)
-    {
-        CustomerEmail = newEmail;
-        PaymentInformation = newPaymentInfo;
-    }
-
-    // Ödeme Yapma
-    public void MakePayment(decimal amount)
-    {
-        // Ödeme işlemleri burada işlenir
-        PaymentStatus = PaymentStatus.Paid;
     }
 
     // Oda Temizliği ve Bakımı Yapma

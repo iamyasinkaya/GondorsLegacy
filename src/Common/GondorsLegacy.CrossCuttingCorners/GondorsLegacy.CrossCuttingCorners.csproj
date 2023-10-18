@@ -10,10 +10,12 @@
     <None Remove="DateTimes\" />
     <None Remove="Exceptions\" />
     <None Remove="ExtensionMethods\" />
+    <None Remove="Caching\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DateTimes\" />
     <Folder Include="Exceptions\" />
     <Folder Include="ExtensionMethods\" />
+    <Folder Include="Caching\" />
   </ItemGroup>
 </Project>

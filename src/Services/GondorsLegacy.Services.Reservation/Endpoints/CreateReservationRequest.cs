@@ -9,7 +9,9 @@ namespace GondorsLegacy.Services.Reservation.Endpoints;
 
 public class CreateReservationRequest
 {
-    public string CustomerName { get; set; }  // Müşteri adı
+    public Guid CustomerId { get; set; } // Müşteri kimliği
+    public string CustomerFirstName { get; set; }  // Müşteri adı
+    public string CustomerLastName { get; set; }  // Müşteri adı
     public DateTime CheckInDate { get; set; }  // Giriş tarihi
     public DateTime CheckOutDate { get; set; }  // Çıkış tarihi
     public RoomType RoomType { get; set; }  // Oda tipi
@@ -61,21 +63,23 @@ public class CreateReservationRequestHandler : IEndpointHandler
     {
         var reservation = new Entities.Reservation
         {
-            CustomerName = request.CustomerName,
+            CustomerId = request.CustomerId,
+            CustomerFirstName = request.CustomerFirstName,
+            CustomerLastName = request.CustomerLastName,
             CheckInDate = request.CheckInDate,
             CheckOutDate = request.CheckOutDate,
             RoomType = request.RoomType,
             NumberOfGuests = request.NumberOfGuests,
             CustomerEmail = request.CustomerEmail,
             ReservationStatus = request.ReservationStatus,
-            PaymentInformation = request.PaymentInformation,
             SpecialRequests = request.SpecialRequests,
             NumberOfAdults = request.NumberOfAdults,
             NumberOfChildren = request.NumberOfChildren,
-            PaymentStatus = request.PaymentStatus
+            PaymentStatus = request.PaymentStatus,
+            
         };
 
-        await dispatcher.Send(new CreateUpdateReservationCommand { Reservation = reservation });
+        await dispatcher.Send(new CreateReservationCommand { Reservation = reservation });
 
         var response = new CreateReservationResponse
         {

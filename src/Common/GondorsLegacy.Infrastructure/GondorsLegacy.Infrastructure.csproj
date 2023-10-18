@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,12 +10,14 @@
     <None Remove="DateTimes\" />
     <None Remove="Web\" />
     <None Remove="Web\MinimalApis\" />
+    <None Remove="Caching\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Persistence\" />
     <Folder Include="DateTimes\" />
     <Folder Include="Web\" />
     <Folder Include="Web\MinimalApis\" />
+    <Folder Include="Caching\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GondorsLegacy.Domain\GondorsLegacy.Domain.csproj" />
@@ -26,5 +27,9 @@
     <PackageReference Include="EntityFrameworkCore.SqlServer.SimpleBulks" Version="6.7.0" />
     <PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.2.2" />
     <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.2.22" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.SqlServer" Version="7.0.1" />
+    <PackageReference Include="StackExchange.Redis" Version="2.6.116" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.1" />
   </ItemGroup>
 </Project>

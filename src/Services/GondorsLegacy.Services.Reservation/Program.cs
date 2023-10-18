@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using GondorsLegacy.Infrastructure.Web.MinimalApis;
 using System.Reflection;
 using GondorsLegacy.Application;
+using GondorsLegacy.Infrastructure.Caching;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ builder.Services.AddReservationModule(builder.Configuration);
 builder.Services.AddDateTimeProvider();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddApplicationServices();
+builder.Services.AddCaches(builder.Configuration);
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo

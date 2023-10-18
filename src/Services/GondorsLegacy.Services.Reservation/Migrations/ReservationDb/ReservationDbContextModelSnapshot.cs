@@ -45,13 +45,18 @@ namespace GondorsLegacy.Services.Reservation.Migrations.ReservationDb
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("CustomerName")
+                    b.Property<string>("CustomerFirstName")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<decimal>("ExtraServicePrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CustomerLastName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<int>("NumberOfAdults")
                         .HasColumnType("int");
@@ -62,14 +67,7 @@ namespace GondorsLegacy.Services.Reservation.Migrations.ReservationDb
                     b.Property<int>("NumberOfGuests")
                         .HasColumnType("int");
 
-                    b.Property<string>("PaymentInformation")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
                     b.Property<int>("PaymentStatus")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReservationId")
                         .HasColumnType("int");
 
                     b.Property<int>("ReservationStatus")
@@ -91,9 +89,6 @@ namespace GondorsLegacy.Services.Reservation.Migrations.ReservationDb
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<decimal>("TaxRate")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -107,73 +102,67 @@ namespace GondorsLegacy.Services.Reservation.Migrations.ReservationDb
                     b.HasData(
                         new
                         {
-                            Id = new Guid("eeb48cda-4a54-4f4e-be79-9bc0897d51c2"),
+                            Id = new Guid("7d4ad39b-fd9e-4be0-b493-289b020662ed"),
                             CancellationReason = 0,
-                            CheckInDate = new DateTime(2023, 10, 16, 16, 5, 55, 399, DateTimeKind.Local).AddTicks(2520),
-                            CheckOutDate = new DateTime(2023, 10, 24, 16, 5, 55, 399, DateTimeKind.Local).AddTicks(2550),
+                            CheckInDate = new DateTime(2023, 10, 17, 14, 42, 39, 813, DateTimeKind.Local).AddTicks(250),
+                            CheckOutDate = new DateTime(2023, 10, 25, 14, 42, 39, 813, DateTimeKind.Local).AddTicks(280),
                             CreatedDateTime = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             CustomerEmail = "yasin.salvator@gmail.com",
-                            CustomerName = "Yasin Çınar SALVATOR",
-                            ExtraServicePrice = 0.00m,
+                            CustomerFirstName = "Yasin Çınar",
+                            CustomerId = new Guid("f431d7b7-d24b-4656-a075-f4f2243a4583"),
+                            CustomerLastName = "SALVATOR",
                             NumberOfAdults = 2,
                             NumberOfChildren = 0,
                             NumberOfGuests = 2,
-                            PaymentInformation = "Ödendi",
                             PaymentStatus = 0,
-                            ReservationId = 1,
                             ReservationStatus = 0,
                             RoomNumber = 501,
                             RoomType = 1,
                             SpecialRequests = "Internet mutlaka olmalıdır!",
-                            TaxRate = 20.00m,
                             TotalPrice = 17500.12m,
                             UpdatedDateTime = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
                         {
-                            Id = new Guid("b836a1bc-7e88-40c6-abcf-7def69ee9b85"),
+                            Id = new Guid("0a6e0a46-a030-4c2e-b3bc-d89b366019cc"),
                             CancellationReason = 0,
-                            CheckInDate = new DateTime(2023, 10, 17, 16, 5, 55, 399, DateTimeKind.Local).AddTicks(2570),
-                            CheckOutDate = new DateTime(2023, 10, 20, 16, 5, 55, 399, DateTimeKind.Local).AddTicks(2570),
+                            CheckInDate = new DateTime(2023, 10, 18, 14, 42, 39, 813, DateTimeKind.Local).AddTicks(300),
+                            CheckOutDate = new DateTime(2023, 10, 21, 14, 42, 39, 813, DateTimeKind.Local).AddTicks(300),
                             CreatedDateTime = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             CustomerEmail = "ahmet.cakar@gmail.com",
-                            CustomerName = "Ahmet ASLAN ÇAKAR",
-                            ExtraServicePrice = 0.00m,
+                            CustomerFirstName = "Ahmet ASLAN ",
+                            CustomerId = new Guid("0b79449d-1f74-4df3-bf5a-1a7f4681fdd4"),
+                            CustomerLastName = "ÇAKAR",
                             NumberOfAdults = 2,
                             NumberOfChildren = 1,
                             NumberOfGuests = 3,
-                            PaymentInformation = "Bekliyor",
                             PaymentStatus = 1,
-                            ReservationId = 2,
                             ReservationStatus = 1,
                             RoomNumber = 502,
                             RoomType = 2,
                             SpecialRequests = "Çocuğum için klozete basamak koyulabilir mi?",
-                            TaxRate = 20.00m,
                             TotalPrice = 21500.00m,
                             UpdatedDateTime = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
                         {
-                            Id = new Guid("8df0f252-47bb-4d07-b373-ce61b91176bc"),
+                            Id = new Guid("b301e2c0-6b50-4894-8dec-17b84dee4841"),
                             CancellationReason = 0,
-                            CheckInDate = new DateTime(2023, 10, 28, 16, 5, 55, 399, DateTimeKind.Local).AddTicks(2580),
-                            CheckOutDate = new DateTime(2023, 11, 2, 16, 5, 55, 399, DateTimeKind.Local).AddTicks(2580),
+                            CheckInDate = new DateTime(2023, 10, 29, 14, 42, 39, 813, DateTimeKind.Local).AddTicks(310),
+                            CheckOutDate = new DateTime(2023, 11, 3, 14, 42, 39, 813, DateTimeKind.Local).AddTicks(310),
                             CreatedDateTime = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             CustomerEmail = "ahmet.cakar@gmail.com",
-                            CustomerName = "Sibel SAĞLAM",
-                            ExtraServicePrice = 0.00m,
+                            CustomerFirstName = "Sibel",
+                            CustomerId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            CustomerLastName = "SAĞLAM",
                             NumberOfAdults = 1,
                             NumberOfChildren = 0,
                             NumberOfGuests = 1,
-                            PaymentInformation = "Ödendi",
                             PaymentStatus = 0,
-                            ReservationId = 3,
                             ReservationStatus = 0,
                             RoomNumber = 503,
                             RoomType = 0,
                             SpecialRequests = "Sigara kullanılmayan oda olsun.",
-                            TaxRate = 20.00m,
                             TotalPrice = 1500.00m,
                             UpdatedDateTime = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
                         });
