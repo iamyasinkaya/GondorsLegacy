@@ -3,7 +3,6 @@ using GondorsLegacy.CrossCuttingCorners.Exceptions;
 using GondorsLegacy.Services.Reservation.Repositories;
 using MediatR;
 using Newtonsoft.Json;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace GondorsLegacy.Services.Reservation.Queries;
 
@@ -29,7 +28,7 @@ public class GetReservationQueryHandler : IRequestHandler<GetReservationQuery, E
         var cacheKey = $"Reservation_{request.Id}";
 
         // Öncelikle Redis'ten rezervasyonu almaya çalışın
-        var reservationJson =  _cache.Get<string>(cacheKey);
+        var reservationJson = _cache.Get<string>(cacheKey);
         var reservation = JsonConvert.DeserializeObject<Entities.Reservation>(reservationJson);
 
 

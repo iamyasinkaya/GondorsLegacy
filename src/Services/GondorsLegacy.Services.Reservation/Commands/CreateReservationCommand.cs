@@ -16,7 +16,10 @@ namespace GondorsLegacy.Services.Reservation.Commands
         private readonly ICache _cacheService;
         private readonly ILogger<CreateReservationCommand> _logger;
 
-        public CreateReservationCommandHandler(ICrudService<Entities.Reservation> reservationService, ICache cacheService, ILogger<CreateReservationCommand> logger)
+        public CreateReservationCommandHandler(
+            ICrudService<Entities.Reservation> reservationService,
+            ICache cacheService,
+            ILogger<CreateReservationCommand> logger)
         {
             _reservationService = reservationService;
             _cacheService = cacheService;
@@ -25,67 +28,31 @@ namespace GondorsLegacy.Services.Reservation.Commands
 
         public async Task Handle(CreateReservationCommand request, CancellationToken cancellationToken)
         {
-            bool isReservationServiceSucceeded = false;
-
-            if (cancellationToken.IsCancellationRequested)
-            {
-                if (request.Reservation.Id != Guid.Empty)
-                {
-                    await _reservationService.DeleteAsync(request.Reservation,cancellationToken);
-                }
-
-                if (_cacheService.Get<Entities.Reservation>(request.Reservation.Id.ToString()) != null)
-                {
-                    _cacheService.Remove(request.Reservation.Id.ToString());
-                }
-
-                return;
-            }
-
             try
             {
+                // Attempt to add the reservation to the service
                 await _reservationService.AddAsync(request.Reservation);
-                isReservationServiceSucceeded = true;
 
+                // Calculate the time remaining until checkout
                 DateTime exitDate = request.Reservation.CheckOutDate;
                 TimeSpan timeSpan = exitDate - DateTime.Now;
 
+                // Serialize the reservation object to JSON
                 string reservationJson = JsonConvert.SerializeObject(request.Reservation);
 
-                _logger.LogInformation(reservationJson);
+                // Log the reservation information
+                _logger.LogInformation("Reservation created: {Reservation}", reservationJson);
 
-                _cacheService.Add($"Reservation_{request.Reservation.Id.ToString()}", reservationJson, timeSpan);
+                // Add the reservation data to the cache with a specified time span
+                _cacheService.Add($"Reservation_{request.Reservation.Id}", reservationJson, timeSpan);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Veritabanı işlemi başarısız olduğunda veya hata aldığınızda cache'e kayıt edebilirsiniz.
-                // Örnek olarak:
-                if (!cancellationToken.IsCancellationRequested)
-                {
-                    DateTime exitDate = request.Reservation.CheckOutDate;
-                    TimeSpan timeSpan = exitDate - DateTime.Now;
-
-                    string reservationJson = JsonConvert.SerializeObject(request.Reservation);
-
-                    _cacheService.Add(request.Reservation.Id.ToString(), reservationJson, timeSpan);
-                }
-            }
-
-            // Geriye düşme (fallback) stratejisi: Eğer veritabanı işlemi başarısız olduysa ve önbellekte kayıt varsa,
-            // önbellekten veriyi alarak veritabanına yeniden kaydedin.
-            if (!isReservationServiceSucceeded)
-            {
-                if (!cancellationToken.IsCancellationRequested)
-                {
-                    var cachedReservation = _cacheService.Get<Entities.Reservation>(request.Reservation.Id.ToString());
-
-                    if (cachedReservation != null)
-                    {
-                        await _reservationService.AddAsync(cachedReservation);
-                    }
-                }
+                // Log any exceptions that occur during the reservation creation process
+                _logger.LogError(ex, "Error while handling CreateReservationCommand");
             }
         }
     }
+
 }
 
