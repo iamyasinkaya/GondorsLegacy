@@ -30,29 +30,30 @@ namespace GondorsLegacy.Services.Reservation.Commands
         {
             try
             {
-                // Attempt to add the reservation to the service
+                // Reservation eklemeye çalışın
                 await _reservationService.AddAsync(request.Reservation);
 
-                // Calculate the time remaining until checkout
-                DateTime exitDate = request.Reservation.CheckOutDate;
-                TimeSpan timeSpan = exitDate - DateTime.Now;
+                // Rezervasyonun sonuna kadar kalan süreyi hesaplayın
+                var exitDate = request.Reservation.CheckOutDate;
+                var timeSpan = exitDate - DateTime.Now;
 
-                // Serialize the reservation object to JSON
-                string reservationJson = JsonConvert.SerializeObject(request.Reservation);
+                // Rezervasyon nesnesini JSON'a dönüştürün
+                var reservationJson = JsonConvert.SerializeObject(request.Reservation);
 
-                // Log the reservation information
-                _logger.LogInformation("Reservation created: {Reservation}", reservationJson);
+                // Rezervasyon bilgilerini daha ayrıntılı şekilde kaydedin
+                _logger.LogInformation("Reservation created by customer {Id}: {Reservation}", request.Reservation.CustomerId, reservationJson);
 
-                // Add the reservation data to the cache with a specified time span
-                _cacheService.Add($"Reservation_{request.Reservation.Id}", reservationJson, timeSpan);
+                // Önbelleğe rezervasyon verilerini belirli bir süreyle ekleyin
+                var cacheKey = $"Reservation_{request.Reservation.CustomerId}";
+                _cacheService.Add(cacheKey, reservationJson, timeSpan);
             }
             catch (Exception ex)
             {
-                // Log any exceptions that occur during the reservation creation process
-                _logger.LogError(ex, "Error while handling CreateReservationCommand");
+                // Hataları daha ayrıntılı bir şekilde ele alın ve uygun log mesajları ekleyin
+                _logger.LogError(ex, "Error while handling CreateReservationCommand. customerId: {Id}", request.Reservation.CustomerId);
+                throw; // Hata yeniden fırlatılıyor, daha üst seviyede işlenebilir.
             }
         }
     }
-
 }
 

@@ -10,7 +10,7 @@ public class GetReservationByCustomerIdRequest : IEndpointHandler
 {
  public static void MapEndpoint(IEndpointRouteBuilder builder)
     {
-        builder.MapGet("api/v1/reservation/{customerId}", HandleAsync)
+        builder.MapGet("api/v1/reservation/customer/{customerId}", HandleAsync)
             .WithMetadata(new OpenApiOperation
             {
                 OperationId = "GetReservationCustomerId",
@@ -19,7 +19,7 @@ public class GetReservationByCustomerIdRequest : IEndpointHandler
                 {
                 new OpenApiParameter
                 {
-                    Name = "id",
+                    Name = "customerId",
                     In = ParameterLocation.Path,
                     Required = true,
                     Description = "Customer ID",
@@ -51,9 +51,9 @@ public class GetReservationByCustomerIdRequest : IEndpointHandler
 
 
 
-    private static async Task<IResult> HandleAsync(IMediator dispatcher, Guid id)
+    private static async Task<IResult> HandleAsync(IMediator dispatcher, Guid customerId)
     {
-        var reservation = await dispatcher.Send(new GetReservationByCustomerIdQuery { CustomerId = id, ThrowNotFoundIfNull = true });
+        var reservation = await dispatcher.Send(new GetReservationByCustomerIdQuery { CustomerId = customerId, ThrowNotFoundIfNull = true });
         var model = reservation.ToModel();
         return Results.Ok(model);
     }

@@ -12,6 +12,8 @@ public class GetReservationByCustomerIdQuery : IRequest<Entities.Reservation>
     public bool ThrowNotFoundIfNull { get; set; }
 }
 
+
+
 public class GetReservationByCustomerIdQueryHandler : IRequestHandler<GetReservationByCustomerIdQuery, Entities.Reservation>
 {
     private readonly IReservationRepository _reservationRepository;
@@ -28,30 +30,49 @@ public class GetReservationByCustomerIdQueryHandler : IRequestHandler<GetReserva
     public async Task<Entities.Reservation> Handle(GetReservationByCustomerIdQuery request, CancellationToken cancellationToken)
     {
         var cacheKey = $"Reservation_{request.CustomerId}";
-
-        // Öncelikle Redis'ten rezervasyonu almaya çalışın
-        var reservationJson = _cache.Get<string>(cacheKey);
-        var reservation = JsonConvert.DeserializeObject<Entities.Reservation>(reservationJson);
+        Entities.Reservation reservation = TryGetReservationFromCache(cacheKey);
 
         if (reservation == null)
         {
-            // Redis'te rezervasyon bulunamadı, veritabanından alın
-            reservation = await _reservationRepository.FirstOrDefaultAsync(_reservationRepository.GetAll().Where(x => x.CustomerId == request.CustomerId));
+            _logger.LogInformation($"Reservation for CustomerId {request.CustomerId} not found in cache. Trying to get it from the database.");
+            reservation = await TryGetReservationFromDatabase(request);
 
-            if (request.ThrowNotFoundIfNull)
+            if (reservation != null)
             {
-                _logger.LogError($"Reservation for CustomerId {request.CustomerId} not found.");
-                throw new NotFoundException($"Reservation for CustomerId {request.CustomerId} not found.");
+                _logger.LogInformation($"Reservation for CustomerId {request.CustomerId} retrieved from the database and added to cache.");
             }
             else
             {
-                _logger.LogInformation($"Reservation for CustomerId {request.CustomerId} not found in cache or database.");
+                _logger.LogWarning($"Reservation for CustomerId {request.CustomerId} not found in the database.");
+
+                if (!request.ThrowNotFoundIfNull)
+                {
+                    throw new NotFoundException($"Reservation for CustomerId {request.CustomerId} not found.");
+                }
             }
         }
-        else
+
+        return reservation;
+    }
+
+    private Entities.Reservation TryGetReservationFromCache(string cacheKey)
+    {
+        var reservationJson = _cache.Get<string>(cacheKey);
+
+        if (reservationJson != null)
         {
-            _logger.LogInformation($"Reservation for CustomerId {request.CustomerId} found in cache.");
+            _logger.LogInformation($"Reservation retrieved from cache for key: {cacheKey}");
+            return JsonConvert.DeserializeObject<Entities.Reservation>(reservationJson);
         }
+
+        return null;
+    }
+
+    private async Task<Entities.Reservation> TryGetReservationFromDatabase(GetReservationByCustomerIdQuery request)
+    {
+        _logger.LogInformation($"Fetching reservation for CustomerId {request.CustomerId} from the database.");
+
+        var reservation = await _reservationRepository.FirstOrDefaultAsync(_reservationRepository.GetAll().Where(x=>x.CustomerId == request.CustomerId));
 
         return reservation;
     }
