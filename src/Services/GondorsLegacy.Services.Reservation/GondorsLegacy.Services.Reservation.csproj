@@ -21,6 +21,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="FluentValidation" Version="11.7.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +35,7 @@
     <None Remove="Endpoints\" />
     <None Remove="Models\" />
     <None Remove="Commands\" />
+    <None Remove="Validations\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
@@ -46,6 +48,7 @@
     <Folder Include="Endpoints\" />
     <Folder Include="Models\" />
     <Folder Include="Commands\" />
+    <Folder Include="Validations\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\GondorsLegacy.Domain\GondorsLegacy.Domain.csproj">

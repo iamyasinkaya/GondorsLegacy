@@ -1,6 +1,9 @@
-﻿using GondorsLegacy.Infrastructure.Web.MinimalApis;
+﻿using System.Net;
+using GondorsLegacy.Infrastructure.Web.MinimalApis;
 using GondorsLegacy.Services.Reservation.Commands;
 using GondorsLegacy.Services.Reservation.Constants;
+using GondorsLegacy.Services.Reservation.Entities;
+using GondorsLegacy.Services.Reservation.Validations;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
@@ -12,6 +15,8 @@ public class CreateReservationRequest
     public Guid CustomerId { get; set; } // Müşteri kimliği
     public string CustomerFirstName { get; set; }  // Müşteri adı
     public string CustomerLastName { get; set; }  // Müşteri adı
+    public Guid HotelId { get; set; } // Otel kimliği
+    public string HotelName { get; set; } // Otel adı
     public DateTime CheckInDate { get; set; }  // Giriş tarihi
     public DateTime CheckOutDate { get; set; }  // Çıkış tarihi
     public RoomType RoomType { get; set; }  // Oda tipi
@@ -61,33 +66,75 @@ public class CreateReservationRequestHandler : IEndpointHandler
 
     private static async Task<IResult> HandleAsync(IMediator dispatcher, [FromBody] CreateReservationRequest request)
     {
-        var reservation = new Entities.Reservation
+        try
         {
-            CustomerId = request.CustomerId,
-            CustomerFirstName = request.CustomerFirstName,
-            CustomerLastName = request.CustomerLastName,
-            CheckInDate = request.CheckInDate,
-            CheckOutDate = request.CheckOutDate,
-            RoomType = request.RoomType,
-            NumberOfGuests = request.NumberOfGuests,
-            CustomerEmail = request.CustomerEmail,
-            ReservationStatus = request.ReservationStatus,
-            SpecialRequests = request.SpecialRequests,
-            NumberOfAdults = request.NumberOfAdults,
-            NumberOfChildren = request.NumberOfChildren,
-            PaymentStatus = request.PaymentStatus,
-            
-        };
+            var reservation = new Entities.Reservation
+            {
+                CustomerId = request.CustomerId,
+                CustomerFirstName = request.CustomerFirstName,
+                CustomerLastName = request.CustomerLastName,
+                HotelId = request.HotelId,
+                HotelName = request.HotelName,
+                CheckInDate = request.CheckInDate,
+                CheckOutDate = request.CheckOutDate,
+                RoomType = request.RoomType,
+                NumberOfGuests = request.NumberOfGuests,
+                CustomerEmail = request.CustomerEmail,
+                ReservationStatus = request.ReservationStatus,
+                SpecialRequests = request.SpecialRequests,
+                NumberOfAdults = request.NumberOfAdults,
+                NumberOfChildren = request.NumberOfChildren,
+                PaymentStatus = request.PaymentStatus,
+            };
 
-        await dispatcher.Send(new CreateReservationCommand { Reservation = reservation });
+            var validator = new ReservationValidator();
 
-        var response = new CreateReservationResponse
+            var result = validator.Validate(reservation);
+
+            if (result.IsValid)
+            {
+                await dispatcher.Send(new CreateReservationCommand { Reservation = reservation });
+
+                var response = new CreateReservationResponse
+                {
+                    ReservationId = reservation.Id
+                };
+
+                // İşlem başarılı olduğunda 201 Created yanıtı dön
+                return Results.Created($"api/v1/reservations/{response.ReservationId}", response);
+            }
+            else
+            {
+                // Doğrulama hatası durumunda uygun bir hata yanıtı verin
+                var errorDetails = new ErrorResponse
+                {
+                    StatusCode = StatusCodes.Status400BadRequest,
+                    Message = "Rezervasyon isteği doğrulanamadı",
+                    ErrorDetails  = result.Errors.Select(error => error.ErrorMessage).ToList()
+                };
+
+                // 400 Bad Request yanıtı dön
+                return Results.BadRequest(error:errorDetails);
+            }
+
+          
+        }
+        catch (Exception ex)
         {
-            ReservationId = reservation.Id
-        };
+            // Diğer hata durumları için uygun bir hata yanıtı verin
+            var errorResponse = new ErrorResponse
+            {
+                StatusCode = StatusCodes.Status400BadRequest,
+                Message = "Bir hata oluştu",
+                ErrorDetails = new List<string> { ex.Message }
+            };
 
-        return Results.Created($"api/v1/reservations/{response.ReservationId}", response);
+            // 500 Internal Server Error yanıtı döndürün
+            return Results.BadRequest();
+
+        }
     }
+
 }
 
 

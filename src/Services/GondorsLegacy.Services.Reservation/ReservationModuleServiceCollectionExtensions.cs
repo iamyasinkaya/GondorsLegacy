@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using GondorsLegacy.Domain.Repositories;
 using GondorsLegacy.Services.Reservation.Repositories;
+using GondorsLegacy.Services.Reservation.Validations;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace GondorsLegacy.Services.Reservation;
 
@@ -15,6 +15,8 @@ public static class ReservationModuleServiceCollectionExtensions
         services.AddDbContext<ReservationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ReservationDatabase")));
 
         services.AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+        services.AddTransient<ReservationValidator>();
 
         return services;
     }

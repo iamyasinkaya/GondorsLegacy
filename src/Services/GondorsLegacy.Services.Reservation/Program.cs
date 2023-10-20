@@ -7,7 +7,9 @@ using GondorsLegacy.Infrastructure.Web.MinimalApis;
 using GondorsLegacy.Services.Reservation;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Configuration;
-
+using Microsoft.AspNetCore.Diagnostics;
+using Newtonsoft.Json;
+using GondorsLegacy.Services.Reservation.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -118,6 +120,28 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapEndpointHandlers(Assembly.GetCallingAssembly());
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        context.Response.ContentType = "application/json";
+
+        var exceptionHandlerPathFeature =
+            context.Features.Get<IExceptionHandlerPathFeature>();
+
+        if (exceptionHandlerPathFeature?.Error is Exception exception)
+        {
+            var errorDetails = new ErrorResponse
+            {
+                StatusCode = StatusCodes.Status500InternalServerError,
+                Message = exception.Message
+            };
+
+            var json = JsonConvert.SerializeObject(errorDetails);
+            await context.Response.WriteAsync(json);
+        }
+    });
+});
 
 app.Run();
 
