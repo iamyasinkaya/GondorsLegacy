@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
+using AutoMapper;
 using GondorsLegacy.Domain.Repositories;
+using GondorsLegacy.Services.Reservation.Mappers;
 using GondorsLegacy.Services.Reservation.Repositories;
 using GondorsLegacy.Services.Reservation.Validations;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +19,16 @@ public static class ReservationModuleServiceCollectionExtensions
         services.AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
         services.AddTransient<ReservationValidator>();
+
+        // AutoMapper yapılandırması
+        var mappingConfig = new MapperConfiguration(cfg =>
+        {
+            cfg.AddProfile(new MappingProfile()); // Önceki cevapta oluşturduğumuz profili kullanın
+        });
+
+        IMapper mapper = mappingConfig.CreateMapper();
+
+        services.AddSingleton(mapper);
 
         return services;
     }

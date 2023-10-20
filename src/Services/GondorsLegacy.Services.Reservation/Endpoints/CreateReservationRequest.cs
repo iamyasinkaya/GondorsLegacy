@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using AutoMapper;
 using GondorsLegacy.Infrastructure.Web.MinimalApis;
 using GondorsLegacy.Services.Reservation.Commands;
 using GondorsLegacy.Services.Reservation.Constants;
@@ -64,28 +65,11 @@ public class CreateReservationRequestHandler : IEndpointHandler
             });
     }
 
-    private static async Task<IResult> HandleAsync(IMediator dispatcher, [FromBody] CreateReservationRequest request)
+    private static async Task<IResult> HandleAsync(IMediator dispatcher, [FromBody] CreateReservationRequest request, IMapper mapper)
     {
         try
         {
-            var reservation = new Entities.Reservation
-            {
-                CustomerId = request.CustomerId,
-                CustomerFirstName = request.CustomerFirstName,
-                CustomerLastName = request.CustomerLastName,
-                HotelId = request.HotelId,
-                HotelName = request.HotelName,
-                CheckInDate = request.CheckInDate,
-                CheckOutDate = request.CheckOutDate,
-                RoomType = request.RoomType,
-                NumberOfGuests = request.NumberOfGuests,
-                CustomerEmail = request.CustomerEmail,
-                ReservationStatus = request.ReservationStatus,
-                SpecialRequests = request.SpecialRequests,
-                NumberOfAdults = request.NumberOfAdults,
-                NumberOfChildren = request.NumberOfChildren,
-                PaymentStatus = request.PaymentStatus,
-            };
+            var reservation = mapper.Map<Entities.Reservation>(request);
 
             var validator = new ReservationValidator();
 
@@ -105,11 +89,11 @@ public class CreateReservationRequestHandler : IEndpointHandler
             }
             else
             {
-                // Doğrulama hatası durumunda uygun bir hata yanıtı verin
+                // Doğrulama hatası durumunda uygun bir hata yanıtı veriyoruz
                 var errorDetails = new ErrorResponse
                 {
                     StatusCode = StatusCodes.Status400BadRequest,
-                    Message = "Rezervasyon isteği doğrulanamadı",
+                    Message = Messages.InvalidReservationRequestMessage,
                     ErrorDetails  = result.Errors.Select(error => error.ErrorMessage).ToList()
                 };
 
@@ -125,7 +109,7 @@ public class CreateReservationRequestHandler : IEndpointHandler
             var errorResponse = new ErrorResponse
             {
                 StatusCode = StatusCodes.Status400BadRequest,
-                Message = "Bir hata oluştu",
+                Message = Messages.DefaultErrorMessage,
                 ErrorDetails = new List<string> { ex.Message }
             };
 

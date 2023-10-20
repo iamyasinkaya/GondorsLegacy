@@ -22,6 +22,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="FluentValidation" Version="11.7.1" />
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,12 +31,12 @@
     <None Remove="Constants\" />
     <None Remove="DTOs\" />
     <None Remove="Repositories\" />
-    <None Remove="Mappings\" />
     <None Remove="Queries\" />
     <None Remove="Endpoints\" />
     <None Remove="Models\" />
     <None Remove="Commands\" />
     <None Remove="Validations\" />
+    <None Remove="Mappers\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
@@ -43,12 +44,12 @@
     <Folder Include="Constants\" />
     <Folder Include="DTOs\" />
     <Folder Include="Repositories\" />
-    <Folder Include="Mappings\" />
     <Folder Include="Queries\" />
     <Folder Include="Endpoints\" />
     <Folder Include="Models\" />
     <Folder Include="Commands\" />
     <Folder Include="Validations\" />
+    <Folder Include="Mappers\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\GondorsLegacy.Domain\GondorsLegacy.Domain.csproj">

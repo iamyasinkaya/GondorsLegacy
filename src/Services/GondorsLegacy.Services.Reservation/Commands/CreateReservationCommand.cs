@@ -1,6 +1,5 @@
 ﻿using GondorsLegacy.Application.Common.Services;
 using GondorsLegacy.CrossCuttingCorners.Caching;
-using GondorsLegacy.Services.Reservation.Validations;
 using MediatR;
 using Newtonsoft.Json;
 
