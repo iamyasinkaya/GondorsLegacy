@@ -1,5 +1,7 @@
-﻿using GondorsLegacy.Application.Common.Services;
+﻿using Castle.DynamicProxy;
+using GondorsLegacy.Application.Common.Services;
 using GondorsLegacy.CrossCuttingCorners.Caching;
+using GondorsLegacy.Infrastructure.Interceptors;
 using MediatR;
 using Newtonsoft.Json;
 
@@ -15,21 +17,34 @@ namespace GondorsLegacy.Services.Reservation.Commands
         private readonly ICrudService<Entities.Reservation> _reservationService;
         private readonly ICache _cacheService;
         private readonly ILogger<CreateReservationCommand> _logger;
+        private readonly IProxyGenerator _proxyGenerator;
+        private readonly LoggingInterceptor _interceptor;
+
+
         public CreateReservationCommandHandler(
             ICrudService<Entities.Reservation> reservationService,
             ICache cacheService,
-            ILogger<CreateReservationCommand> logger )
+            ILogger<CreateReservationCommand> logger,
+            IProxyGenerator proxyGenerator,
+            LoggingInterceptor interceptor)
         {
             _reservationService = reservationService;
             _cacheService = cacheService;
-            _logger = logger;        }
+            _logger = logger;
+            _proxyGenerator = proxyGenerator;
+            _interceptor = interceptor;
+        }
 
         public async Task Handle(CreateReservationCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                    // Reservation eklemeye çalışın
-                    await _reservationService.AddAsync(request.Reservation);
+                    // Proxy'i oluşturun
+                    var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_reservationService, _interceptor);
+
+                    // Metot çağrısını proxy üzerinden yapın
+                    await proxy.AddAsync(request.Reservation);
+
 
                     // Rezervasyonun sonuna kadar kalan süreyi hesaplayın
                     var exitDate = request.Reservation.CheckOutDate;
@@ -39,7 +54,7 @@ namespace GondorsLegacy.Services.Reservation.Commands
                     var reservationJson = JsonConvert.SerializeObject(request.Reservation);
 
                     // Rezervasyon bilgilerini daha ayrıntılı şekilde kaydedin
-                    _logger.LogInformation("Reservation created by customer {Id}: {Reservation}", request.Reservation.CustomerId, reservationJson);
+                    //_logger.LogInformation("Reservation created by customer {Id}: {Reservation}", request.Reservation.CustomerId, reservationJson);
 
                     // Önbelleğe rezervasyon verilerini belirli bir süreyle ekleyin
                     var cacheKey = $"Reservation_{request.Reservation.CustomerId}";
@@ -48,8 +63,6 @@ namespace GondorsLegacy.Services.Reservation.Commands
             }
             catch (Exception ex)
             {
-                // Hataları daha ayrıntılı bir şekilde ele alın ve uygun log mesajları ekleyin
-                _logger.LogError(ex, "Error while handling CreateReservationCommand. customerId: {Id}", request.Reservation.CustomerId);
                 throw new Exception(ex.Message);
             }
         }

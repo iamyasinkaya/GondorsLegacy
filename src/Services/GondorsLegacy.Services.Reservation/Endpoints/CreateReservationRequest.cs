@@ -1,5 +1,4 @@
-﻿using System.Net;
-using AutoMapper;
+﻿using AutoMapper;
 using GondorsLegacy.Infrastructure.Web.MinimalApis;
 using GondorsLegacy.Services.Reservation.Commands;
 using GondorsLegacy.Services.Reservation.Constants;
@@ -21,6 +20,8 @@ public class CreateReservationRequest
     public DateTime CheckInDate { get; set; }  // Giriş tarihi
     public DateTime CheckOutDate { get; set; }  // Çıkış tarihi
     public RoomType RoomType { get; set; }  // Oda tipi
+    public string RoomNumber { get; set; } // Oda numarası
+    public decimal TotalPrice { get; set; }  // Toplam fiyat
     public int NumberOfGuests { get; set; }  // Konuk sayısı
     public string CustomerEmail { get; set; } // Müşteri e-posta adresi
     public ReservationStatus ReservationStatus { get; set; } // Rezervasyon durumu
@@ -41,7 +42,7 @@ public class CreateReservationRequestHandler : IEndpointHandler
 {
     public static void MapEndpoint(IEndpointRouteBuilder builder)
     {
-        builder.MapPost("api/v1/reservations", HandleAsync)
+        builder.MapPost("api/v1/reservations/create", HandleAsync)
             .WithName("CreateReservation")
             .Produces<CreateReservationResponse>(statusCode: StatusCodes.Status201Created, contentType: "application/json")
             .ProducesProblem(StatusCodes.Status400BadRequest)

@@ -1,19 +1,20 @@
 ﻿using System.Reflection;
 using GondorsLegacy.Application;
 using GondorsLegacy.Infrastructure.Caching;
-using GondorsLegacy.Infrastructure.Logging;
 using GondorsLegacy.Infrastructure.DateTimes;
+using GondorsLegacy.Infrastructure.Logging;
 using GondorsLegacy.Infrastructure.Web.MinimalApis;
+using GondorsLegacy.Infrastructure.Interceptors;
 using GondorsLegacy.Services.Reservation;
-using Microsoft.OpenApi.Models;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Diagnostics;
-using Newtonsoft.Json;
 using GondorsLegacy.Services.Reservation.Entities;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddInterceptors();
 builder.Services.AddReservationModule(builder.Configuration);
 builder.Services.AddDateTimeProvider();
 builder.Services.AddEndpointsApiExplorer();

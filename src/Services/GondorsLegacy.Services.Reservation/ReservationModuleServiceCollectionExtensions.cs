@@ -30,6 +30,7 @@ public static class ReservationModuleServiceCollectionExtensions
 
         services.AddSingleton(mapper);
 
+      
         return services;
     }
 
