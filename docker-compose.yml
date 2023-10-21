@@ -1,0 +1,50 @@
+version: '3.4'
+
+services:
+  gondorslegacy.services.reservation:
+    image: ${DOCKER_REGISTRY-}gondorslegacyservices
+    build:
+      context: .
+      dockerfile: src/Services/GondorsLegacy.Services.Reservation/Dockerfile
+    environment:
+      ConnectionStrings__ReservationDatabase: "Server=localhost;Database=Reservation.Services.Reservation;User Id=SA;Password=Password123;MultipleActiveResultSets=true;Encrypt=False"
+      AllowedHosts: "*"
+    ports:
+      - "80:80"
+    depends_on:
+      - redis
+      - elasticsearch
+      - rabbitmq
+    networks:
+      - reservation-network
+
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+    networks:
+      - reservation-network
+
+  elasticsearch:
+    image: "docker.elastic.co/elasticsearch/elasticsearch:7.15.0"
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+    networks:
+      - reservation-network
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - reservation-network
+
+networks:
+  reservation-network:
+    driver: bridge
