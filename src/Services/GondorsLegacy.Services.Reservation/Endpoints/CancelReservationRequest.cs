@@ -70,7 +70,7 @@ public class CancelReservationRequestHandler : IEndpointHandler
                 };
 
                 // 400 Bad Request yanıtı dön
-                return new BadRequestResult();
+                return new BadRequestObjectResult(error:errorDetails);
             }
         }
         catch (Exception ex)
@@ -83,8 +83,8 @@ public class CancelReservationRequestHandler : IEndpointHandler
                 ErrorDetails = new List<string> { ex.Message }
             };
 
-            // 500 Internal Server Error yanıtı döndürün
-            return new BadRequestResult();
+            // 400 Bad Request yanıtı döndürün
+            return new BadRequestObjectResult(error:errorResponse);
         }
     }
 }
