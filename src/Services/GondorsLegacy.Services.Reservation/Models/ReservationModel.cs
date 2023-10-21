@@ -9,6 +9,8 @@ namespace GondorsLegacy.Services.Reservation.Models
         public string CustomerFirstName { get; set; }  // Müşteri adı
         public string CustomerLastName { get; set; }  // Müşteri soyadı
         public string CustomerEmail { get; set; } // Müşteri e-posta adresi
+        public Guid HotelId { get; set; } // Otel kimliği
+        public string HotelName { get; set; } // Otel adı
         public DateTime CheckInDate { get; set; }  // Giriş tarihi
         public DateTime CheckOutDate { get; set; }  // Çıkış tarihi
         public RoomType RoomType { get; set; }  // Oda tipi

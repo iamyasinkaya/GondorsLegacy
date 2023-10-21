@@ -2,24 +2,33 @@
 using GondorsLegacy.Application;
 using GondorsLegacy.Infrastructure.Caching;
 using GondorsLegacy.Infrastructure.DateTimes;
-using GondorsLegacy.Infrastructure.Logging;
-using GondorsLegacy.Infrastructure.Web.MinimalApis;
 using GondorsLegacy.Infrastructure.Interceptors;
+using GondorsLegacy.Infrastructure.Logging;
+using GondorsLegacy.Infrastructure.MessagesBrokers;
+using GondorsLegacy.Infrastructure.Web.MinimalApis;
 using GondorsLegacy.Services.Reservation;
-using GondorsLegacy.Services.Reservation.Entities;
-using Microsoft.AspNetCore.Diagnostics;
+using GondorsLegacy.Services.Reservation.Commands;
 using Microsoft.OpenApi.Models;
-using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
 builder.Services.AddInterceptors();
+
+
 builder.Services.AddReservationModule(builder.Configuration);
+
 builder.Services.AddDateTimeProvider();
+
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddApplicationServices();
+
 builder.Services.AddCaches(builder.Configuration);
+
+builder.Services.AddMessageBrokers< CancelReservationCommand>(builder.Configuration);
+
 builder.Services.AddElasticsearchLogging(builder.Environment,builder.Configuration);
 
 
@@ -103,6 +112,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 
 });
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -121,28 +131,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapEndpointHandlers(Assembly.GetCallingAssembly());
-app.UseExceptionHandler(errorApp =>
-{
-    errorApp.Run(async context =>
-    {
-        context.Response.ContentType = "application/json";
-
-        var exceptionHandlerPathFeature =
-            context.Features.Get<IExceptionHandlerPathFeature>();
-
-        if (exceptionHandlerPathFeature?.Error is Exception exception)
-        {
-            var errorDetails = new ErrorResponse
-            {
-                StatusCode = StatusCodes.Status500InternalServerError,
-                Message = exception.Message
-            };
-
-            var json = JsonConvert.SerializeObject(errorDetails);
-            await context.Response.WriteAsync(json);
-        }
-    });
-});
 
 app.Run();
 

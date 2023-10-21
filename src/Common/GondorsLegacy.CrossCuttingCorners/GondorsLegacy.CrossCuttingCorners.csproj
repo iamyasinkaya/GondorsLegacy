@@ -12,6 +12,8 @@
     <None Remove="ExtensionMethods\" />
     <None Remove="Caching\" />
     <None Remove="Logging\" />
+    <None Remove="MessageBrokers\" />
+    <None Remove="MessageBrokers\Rabbit\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DateTimes\" />
@@ -19,5 +21,7 @@
     <Folder Include="ExtensionMethods\" />
     <Folder Include="Caching\" />
     <Folder Include="Logging\" />
+    <Folder Include="MessageBrokers\" />
+    <Folder Include="MessageBrokers\Rabbit\" />
   </ItemGroup>
 </Project>

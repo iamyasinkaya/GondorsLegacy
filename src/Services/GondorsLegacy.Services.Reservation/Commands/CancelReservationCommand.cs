@@ -1,5 +1,6 @@
 ﻿using Castle.DynamicProxy;
 using GondorsLegacy.Application.Common.Services;
+using GondorsLegacy.CrossCuttingCorners.MessageBrokers.Rabbit;
 using GondorsLegacy.Infrastructure.Interceptors;
 using MediatR;
 
@@ -17,35 +18,46 @@ public class CancelReservationCommandHandler : IRequestHandler<CancelReservation
     private readonly ICrudService<Entities.Reservation> _reservationService;
     private readonly IProxyGenerator _proxyGenerator;
     private readonly LoggingInterceptor _interceptor;
+    private readonly IPublisher<CancelReservationCommand> _publisher;
 
     public CancelReservationCommandHandler(
         ICrudService<Entities.Reservation> reservationService,
         IProxyGenerator proxyGenerator,
-        LoggingInterceptor interceptor)
+        LoggingInterceptor interceptor,
+        IPublisher<CancelReservationCommand> publisher)
     {
         _reservationService = reservationService;
         _proxyGenerator = proxyGenerator;
         _interceptor = interceptor;
+        _publisher = publisher;
     }
 
     public async Task Handle(CancelReservationCommand request, CancellationToken cancellationToken)
+{
+    try
     {
-        try
+        // Proxy'i oluşturun
+        var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_reservationService, _interceptor);
+
+        // Rezervasyonu proxy üzerinden alın
+        var reservation = await proxy.GetByIdAsync(request.ReservationId);
+
+        // Eğer rezervasyon daha önce iptal edilmediyse işlemi yapın
+        if (!reservation.IsReservationCancelled)
         {
-            // Proxy'i oluşturun
-            var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_reservationService, _interceptor);
-
-            // Metot çağrısını proxy üzerinden yapın
-            var reservation = await proxy.GetByIdAsync(request.ReservationId);
-
+            // İptal işaretini true yapın
             reservation.IsReservationCancelled = true;
 
+            // Rezervasyonu güncelleyin
             await proxy.UpdateAsync(reservation);
-        }
-        catch (Exception ex)
-        {
-            throw new Exception(ex.Message);
-        }
 
+            _publisher.Publish(request);
+        }
     }
+    catch (Exception ex)
+    {
+        throw new Exception(ex.Message);
+    }
+}
+
 }

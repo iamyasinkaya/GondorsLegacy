@@ -13,6 +13,8 @@
     <None Remove="Caching\" />
     <None Remove="Logging\" />
     <None Remove="Interceptors\" />
+    <None Remove="MessagesBrokers\" />
+    <None Remove="MessagesBrokers\Rabbit\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Persistence\" />
@@ -22,6 +24,8 @@
     <Folder Include="Caching\" />
     <Folder Include="Logging\" />
     <Folder Include="Interceptors\" />
+    <Folder Include="MessagesBrokers\" />
+    <Folder Include="MessagesBrokers\Rabbit\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GondorsLegacy.Domain\GondorsLegacy.Domain.csproj" />
@@ -41,5 +45,6 @@
     <PackageReference Include="Serilog.Exceptions" Version="8.4.0" />
     <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="8.4.1" />
     <PackageReference Include="Castle.Core" Version="5.1.0" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
   </ItemGroup>
 </Project>

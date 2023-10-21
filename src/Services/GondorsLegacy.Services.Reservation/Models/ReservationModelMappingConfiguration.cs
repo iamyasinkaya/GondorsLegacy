@@ -15,6 +15,8 @@ namespace GondorsLegacy.Services.Reservation.Models
                 Id = entity.Id,
                 CustomerFirstName = entity.CustomerFirstName,
                 CustomerLastName = entity.CustomerLastName,
+                HotelId = entity.HotelId,
+                HotelName = entity.HotelName,
                 CheckInDate = entity.CheckInDate,
                 CheckOutDate = entity.CheckOutDate,
                 RoomType = entity.RoomType,
