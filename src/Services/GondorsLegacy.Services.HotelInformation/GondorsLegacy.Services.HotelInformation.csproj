@@ -26,6 +26,7 @@
     <None Remove="Services\Concrete\" />
     <None Remove="Configuration\" />
     <None Remove="Controller\" />
+    <None Remove="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
@@ -33,5 +34,6 @@
     <Folder Include="Services\Concrete\" />
     <Folder Include="Configuration\" />
     <Folder Include="Controller\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 </Project>
