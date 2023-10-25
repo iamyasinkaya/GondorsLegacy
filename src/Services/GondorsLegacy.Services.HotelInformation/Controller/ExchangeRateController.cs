@@ -1,4 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Castle.DynamicProxy;
+using GondorsLegacy.CrossCuttingCorners.Contracts;
+using GondorsLegacy.Infrastructure.Interceptors;
 using GondorsLegacy.Services.HotelInformation.Models;
 using GondorsLegacy.Services.HotelInformation.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +14,16 @@ namespace GondorsLegacy.Services.HotelInformation.Controller;
 public class ExchangeRateController : ControllerBase
 {
     private readonly IExchangeRateApi _exchangeRateApi;
+    private readonly IProxyGenerator _proxyGenerator;
+    private readonly LoggingInterceptor _interceptor;
+    private readonly IRetryPolicy<string> _retryPolicy;
 
-    public ExchangeRateController(IExchangeRateApi exchangeRateApi)
+    public ExchangeRateController(IExchangeRateApi exchangeRateApi, IProxyGenerator proxyGenerator, LoggingInterceptor interceptor, IRetryPolicy<string> retryPolicy)
     {
         _exchangeRateApi = exchangeRateApi;
+        _proxyGenerator = proxyGenerator;
+        _interceptor = interceptor;
+        _retryPolicy = retryPolicy;
     }
 
     /// <summary>
@@ -24,10 +33,11 @@ public class ExchangeRateController : ControllerBase
     [HttpGet("get-exchange-rates")]
     public async Task<IActionResult> GetExchangeRates([FromQuery] [Required] string baseCurrency, [FromQuery] string languageCode)
     {
-        try
-        {
-            
-            var response = await _exchangeRateApi.GetExchangeRatesAsync(baseCurrency, languageCode);
+            var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_retryPolicy, _interceptor);
+
+            var response = await proxy.ExecuteAsync(async () =>
+            await _exchangeRateApi.GetExchangeRatesAsync(baseCurrency:baseCurrency,languageCode:languageCode),3);
+
             if (!string.IsNullOrWhiteSpace(response))
             {
                 // API yanıtı JSON formatındaysa işleyin
@@ -47,16 +57,7 @@ public class ExchangeRateController : ControllerBase
                 // Yanıt boşsa, bir hata dönün.
                 return NotFound("Aranan kayıt bulunamadı.");
             }
-        }
-        catch (HttpRequestException ex)
-        {
-            // Ağ hatası durumu
-            return StatusCode(StatusCodes.Status503ServiceUnavailable, $"Booking.com API'ye bağlanırken ağ hatası oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
-        catch (Exception ex)
-        {
-            // Diğer istisna durumları
-            return StatusCode(StatusCodes.Status500InternalServerError, $"Bir iç hata oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
+        
+    
     }
 }

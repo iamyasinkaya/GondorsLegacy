@@ -1,4 +1,5 @@
 ﻿using GondorsLegacy.Infrastructure.Contracts;
+using GondorsLegacy.Infrastructure.Interceptors;
 using GondorsLegacy.Infrastructure.Services;
 using GondorsLegacy.Services.HotelInformation.Configuration;
 using GondorsLegacy.Services.HotelInformation.Services.Abstract;
@@ -29,6 +30,7 @@ builder.Services.AddRefitClient<IBookingApi>()
     });
 builder.Services.AddContractsService();
 builder.Services.AddControllers();
+builder.Services.AddInterceptors();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {

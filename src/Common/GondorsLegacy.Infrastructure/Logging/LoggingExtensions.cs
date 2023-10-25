@@ -1,17 +1,12 @@
-﻿using System.Diagnostics;
-using System.Reflection;
+﻿using System.Reflection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Serilog;
 using Serilog.Configuration;
-using Serilog.Core;
 using Serilog.Events;
 using Serilog.Exceptions;
-using Serilog.Formatting.Json;
 using Serilog.Sinks.Elasticsearch;
-using Serilog.Sinks.File;
 
 namespace GondorsLegacy.Infrastructure.Logging;
 

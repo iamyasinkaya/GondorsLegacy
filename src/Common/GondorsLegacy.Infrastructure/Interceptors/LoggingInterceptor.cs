@@ -1,6 +1,5 @@
 ﻿using Castle.DynamicProxy;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace GondorsLegacy.Infrastructure.Interceptors;
 
@@ -18,16 +17,14 @@ public class LoggingInterceptor : IInterceptor
         var methodName = invocation.Method.Name;
         var declaringType = invocation.TargetType;
         var arguments = string.Join(", ", invocation.Arguments.Select(a => (a ?? "").ToString()));
+       
 
         var watch = System.Diagnostics.Stopwatch.StartNew();
 
         try
         {
+            
             _logger.LogInformation($"Method {methodName} in class {declaringType} is about to be called with arguments: {arguments}");
-
-            // Request verisini logla (request nesnesine erişim sağlayarak)
-            var requestJson = JsonConvert.SerializeObject(invocation.Arguments.FirstOrDefault(arg => arg != null && arg.GetType().IsClass));
-            _logger.LogInformation($"Request: {requestJson}");
 
             watch.Start();
 
@@ -35,12 +32,9 @@ public class LoggingInterceptor : IInterceptor
 
             watch.Stop();
 
-            // Response verisini logla (response nesnesine erişim sağlayarak)
-            //var responseJson = JsonConvert.SerializeObject(invocation.ReturnValue);
-            //_logger.LogInformation($"Response: {responseJson}");
-
-            _logger.LogInformation($"Method {methodName} in class {declaringType} was called successfully with arguments: {arguments}");
-            //_logger.LogInformation($"Method {methodName} returned: {responseJson}");
+            var returnValue = invocation.ReturnValue;
+            _logger.LogInformation($"Method {methodName} in class {declaringType} was called successfully.");
+            _logger.LogInformation($"Method {methodName} returned: {returnValue}");
             _logger.LogInformation($"Method {methodName} took {watch.ElapsedMilliseconds} ms to execute");
         }
         catch (Exception ex)
