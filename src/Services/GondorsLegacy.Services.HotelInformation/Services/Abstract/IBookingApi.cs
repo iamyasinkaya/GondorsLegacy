@@ -1,8 +1,9 @@
-﻿using Refit;
+﻿using GondorsLegacy.CrossCuttingCorners.Services;
+using Refit;
 
 namespace GondorsLegacy.Services.HotelInformation.Services.Abstract;
 
-public interface IBookingApi
+public interface IBookingApi : IApiService
 {
     [Get("/properties/list")]
     Task<string> GetPropertyList(

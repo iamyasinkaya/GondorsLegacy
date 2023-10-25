@@ -1,9 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Castle.DynamicProxy;
+using GondorsLegacy.CrossCuttingCorners.Contracts;
+using GondorsLegacy.CrossCuttingCorners.Services;
+using GondorsLegacy.Infrastructure.Interceptors;
 using GondorsLegacy.Services.HotelInformation.Models;
 using GondorsLegacy.Services.HotelInformation.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Refit;
+using Polly;
 namespace GondorsLegacy.Services.HotelInformation.Controller;
 
 [Route("api/[controller]")]
@@ -11,10 +15,26 @@ namespace GondorsLegacy.Services.HotelInformation.Controller;
 public class BookingController : ControllerBase
 {
     private readonly IBookingApi _bookingApi;
+    private readonly ILogger<BookingController> _logger;
+    private readonly IRetryPolicy<string> _retryPolicy;
+    private readonly IProxyGenerator _proxyGenerator;
+    private readonly LoggingInterceptor _interceptor;
 
-    public BookingController(IBookingApi bookingApi)
+
+
+
+    public BookingController(
+        IBookingApi bookingApi,
+        ILogger<BookingController> logger,
+        IRetryPolicy<string> retryPolicy,
+        IProxyGenerator proxyGenerator,
+        LoggingInterceptor interceptor)
     {
         _bookingApi = bookingApi;
+        _logger = logger;
+        _retryPolicy = retryPolicy;
+        _proxyGenerator = proxyGenerator;
+        _interceptor = interceptor;
     }
 
     /// <summary>
@@ -52,9 +72,12 @@ public class BookingController : ControllerBase
      [FromQuery] string languageCode,
      [FromQuery] string travelPurpose)
     {
-        try
-        {
-            var response = await _bookingApi.GetPropertyList(
+
+        var proxy =  _proxyGenerator.CreateInterfaceProxyWithTarget(_retryPolicy, _interceptor);
+
+        var response = await proxy.ExecuteAsync(async () =>
+
+        await _bookingApi.GetPropertyList(
                 offset,
                 arrivalDate,
                 departureDate,
@@ -69,36 +92,26 @@ public class BookingController : ControllerBase
                 orderBy,
                 languageCode,
                 travelPurpose
-            );
+            ),3);
 
-            if (!string.IsNullOrWhiteSpace(response))
-            {
-                // API yanıtı JSON formatındaysa işleyin
-                var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponse>(response);
-
-                if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
-                {
-                    return BadRequest(errorResponse.Message);
-                }
-
-                // Başarılı yanıtı işleyin ve istemciye dönün.
-                return Ok(response);
-            }
-            else
-            {
-                // Yanıt boşsa, bir hata dönün.
-                return NotFound("Aranan kayıt bulunamadı.");
-            }
-        }
-        catch (HttpRequestException ex)
+        if (!string.IsNullOrWhiteSpace(response))
         {
-            // Ağ hatası durumu
-            return StatusCode(StatusCodes.Status503ServiceUnavailable, $"Booking.com API'ye bağlanırken ağ hatası oluştu. => hata mesaj ayrıntısı: {ex.Message}");
+            // API yanıtı JSON formatındaysa işleyin
+            var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponse>(response);
+
+            if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
+            {
+                return BadRequest(errorResponse.Message);
+            }
+
+            var jsonResponse = JsonConvert.DeserializeObject<GetPropertyListResponseModel>(response);
+            // Başarılı yanıtı işleyin ve istemciye dönün.
+            return Ok(jsonResponse);
         }
-        catch (Exception ex)
+        else
         {
-            // Diğer istisna durumları
-            return StatusCode(StatusCodes.Status500InternalServerError, $"Bir iç hata oluştu. => hata mesaj ayrıntısı: {ex.Message}");
+            // Yanıt boşsa, bir hata dönün.
+            return NotFound("Aranan kayıt bulunamadı.");
         }
     }
 

@@ -1,4 +1,6 @@
-﻿using GondorsLegacy.Services.HotelInformation.Configuration;
+﻿using GondorsLegacy.Infrastructure.Contracts;
+using GondorsLegacy.Infrastructure.Services;
+using GondorsLegacy.Services.HotelInformation.Configuration;
 using GondorsLegacy.Services.HotelInformation.Services.Abstract;
 using Microsoft.OpenApi.Models;
 using Refit;
@@ -9,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 var appSettings = builder.Configuration.GetSection("RapidAPI").Get<AppSettings>();
 
 // Refit servisi yapılandırma
+builder.Services.AddApiService(builder.Configuration);
 builder.Services.AddRefitClient<IExchangeRateApi>()
     .ConfigureHttpClient(c =>
     {
@@ -24,7 +27,7 @@ builder.Services.AddRefitClient<IBookingApi>()
         c.DefaultRequestHeaders.Add("X-RapidAPI-Key", appSettings.ApiKey);
         c.DefaultRequestHeaders.Add("X-RapidAPI-Host", "apidojo-booking-v1.p.rapidapi.com");
     });
-
+builder.Services.AddContractsService();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
