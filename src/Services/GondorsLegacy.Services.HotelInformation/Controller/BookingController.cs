@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Castle.DynamicProxy;
 using GondorsLegacy.CrossCuttingCorners.Contracts;
-using GondorsLegacy.CrossCuttingCorners.Services;
 using GondorsLegacy.Infrastructure.Interceptors;
 using GondorsLegacy.Services.HotelInformation.Models;
 using GondorsLegacy.Services.HotelInformation.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Polly;
+
 namespace GondorsLegacy.Services.HotelInformation.Controller;
 
 [Route("api/[controller]")]
@@ -15,7 +14,6 @@ namespace GondorsLegacy.Services.HotelInformation.Controller;
 public class BookingController : ControllerBase
 {
     private readonly IBookingApi _bookingApi;
-    private readonly ILogger<BookingController> _logger;
     private readonly IRetryPolicy<string> _retryPolicy;
     private readonly IProxyGenerator _proxyGenerator;
     private readonly LoggingInterceptor _interceptor;
@@ -25,13 +23,11 @@ public class BookingController : ControllerBase
 
     public BookingController(
         IBookingApi bookingApi,
-        ILogger<BookingController> logger,
         IRetryPolicy<string> retryPolicy,
         IProxyGenerator proxyGenerator,
         LoggingInterceptor interceptor)
     {
         _bookingApi = bookingApi;
-        _logger = logger;
         _retryPolicy = retryPolicy;
         _proxyGenerator = proxyGenerator;
         _interceptor = interceptor;
@@ -150,9 +146,11 @@ public class BookingController : ControllerBase
         [FromQuery] int childrenQty,
         [FromQuery] string orderBy)
     {
-        try
-        {
-            var response = await _bookingApi.GetPropertyListByMap(
+        var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_retryPolicy, _interceptor);
+
+        var response = await proxy.ExecuteAsync(async () =>
+
+        await _bookingApi.GetPropertyListByMap(
                 arrivalDate,
                 departureDate,
                 roomQty,
@@ -166,7 +164,8 @@ public class BookingController : ControllerBase
                 travelPurpose,
                 childrenQty,
                 orderBy
-            );
+            ), 3);
+       
             if (!string.IsNullOrWhiteSpace(response))
             {
                 // API yanıtı JSON formatındaysa işleyin
@@ -185,17 +184,6 @@ public class BookingController : ControllerBase
                 // Yanıt boşsa, bir hata dönün.
                 return NotFound("Aranan kayıt bulunamadı.");
             }
-        }
-        catch (HttpRequestException ex)
-        {
-            // Ağ hatası durumu
-            return StatusCode(StatusCodes.Status503ServiceUnavailable, $"Booking.com API'ye bağlanırken ağ hatası oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
-        catch (Exception ex)
-        {
-            // Diğer istisna durumları
-            return StatusCode(StatusCodes.Status500InternalServerError, $"Bir iç hata oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
     }
 
 
@@ -229,9 +217,11 @@ public class BookingController : ControllerBase
         [FromQuery] string currencyCode,
         [FromQuery] string units)
     {
-        try
-        {
-            var response = await _bookingApi.GetPropertyDetail(
+        var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_retryPolicy, _interceptor);
+
+        var response = await proxy.ExecuteAsync(async () =>
+
+        await _bookingApi.GetPropertyDetail(
                 hotelId,
                 searchId,
                 departureDate,
@@ -243,7 +233,9 @@ public class BookingController : ControllerBase
                 languageCode,
                 currencyCode,
                 units
-            );
+            ), 3);
+       
+           
             if (!string.IsNullOrWhiteSpace(response))
             {
                 // API yanıtı JSON formatındaysa işleyin
@@ -262,18 +254,10 @@ public class BookingController : ControllerBase
                 // Yanıt boşsa, bir hata dönün.
                 return NotFound("Aranan kayıt bulunamadı.");
             }
-        }
-        catch (HttpRequestException ex)
-        {
-            // Ağ hatası durumu
-            return StatusCode(StatusCodes.Status503ServiceUnavailable, $"Booking.com API'ye bağlanırken ağ hatası oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
-        catch (Exception ex)
-        {
-            // Diğer istisna durumları
-            return StatusCode(StatusCodes.Status500InternalServerError, $"Bir iç hata oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
+       
+      
     }
+
 
     /// <summary>
     /// Get full details of rooms in the hotel
@@ -298,9 +282,11 @@ public class BookingController : ControllerBase
         [FromQuery] string languageCode,
         [FromQuery] string units)
     {
-        try
-        {
-            var response = await _bookingApi.GetRooms(
+        var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_retryPolicy, _interceptor);
+
+        var response = await proxy.ExecuteAsync(async () =>
+
+       await _bookingApi.GetRooms(
                 hotelId,
                 departureDate,
                 arrivalDate,
@@ -309,7 +295,9 @@ public class BookingController : ControllerBase
                 currencyCode,
                 languageCode,
                 units
-            );
+            ), 3);
+       
+            
 
             if (!string.IsNullOrWhiteSpace(response))
             {
@@ -329,17 +317,7 @@ public class BookingController : ControllerBase
                 // Yanıt boşsa, bir hata dönün.
                 return NotFound("Aranan kayıt bulunamadı.");
             }
-        }
-        catch (HttpRequestException ex)
-        {
-            // Ağ hatası durumu
-            return StatusCode(StatusCodes.Status503ServiceUnavailable, $"Booking.com API'ye bağlanırken ağ hatası oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
-        catch (Exception ex)
-        {
-            // Diğer istisna durumları
-            return StatusCode(StatusCodes.Status500InternalServerError, $"Bir iç hata oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
+    
     }
 
     /// <summary>
@@ -357,14 +335,18 @@ public class BookingController : ControllerBase
        [FromQuery] string languageCode,
        [FromQuery] string checkIn)
     {
-        try
-        {
-            var response = await _bookingApi.GetDescription(
+        var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_retryPolicy, _interceptor);
+
+        var response = await proxy.ExecuteAsync(async () =>
+
+       await _bookingApi.GetDescription(
                 hotelIds,
                 checkOut,
                 languageCode,
                 checkIn
-            );
+            ), 3);
+       
+            
 
             if (!string.IsNullOrWhiteSpace(response))
             {
@@ -384,17 +366,7 @@ public class BookingController : ControllerBase
                 // Yanıt boşsa, bir hata dönün.
                 return NotFound("Aranan kayıt bulunamadı.");
             }
-        }
-        catch (HttpRequestException ex)
-        {
-            // Ağ hatası durumu
-            return StatusCode(StatusCodes.Status503ServiceUnavailable, $"Booking.com API'ye bağlanırken ağ hatası oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
-        catch (Exception ex)
-        {
-            // Diğer istisna durumları
-            return StatusCode(StatusCodes.Status500InternalServerError, $"Bir iç hata oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
+       
     }
 
     /// <summary>
@@ -408,13 +380,16 @@ public class BookingController : ControllerBase
         [FromQuery][Required] int hotelIds,
         [FromQuery] string languageCode)
     {
-        try
-        {
-            var response = await _bookingApi.GetHotelPhotos(
+        var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_retryPolicy, _interceptor);
+
+        var response = await proxy.ExecuteAsync(async () =>
+
+       await _bookingApi.GetHotelPhotos(
                 hotelIds,
                 languageCode
-            );
-
+            ), 3);
+        
+            
             if (!string.IsNullOrWhiteSpace(response))
             {
                 // API yanıtı JSON formatındaysa işleyin
@@ -433,17 +408,7 @@ public class BookingController : ControllerBase
                 // Yanıt boşsa, bir hata dönün.
                 return NotFound("Aranan kayıt bulunamadı.");
             }
-        }
-        catch (HttpRequestException ex)
-        {
-            // Ağ hatası durumu
-            return StatusCode(StatusCodes.Status503ServiceUnavailable, $"Booking.com API'ye bağlanırken ağ hatası oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
-        catch (Exception ex)
-        {
-            // Diğer istisna durumları
-            return StatusCode(StatusCodes.Status500InternalServerError, $"Bir iç hata oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
+      
     }
 
     /// <summary>
@@ -457,12 +422,16 @@ public class BookingController : ControllerBase
         [FromQuery][Required] int hotelId,
         [FromQuery] string languageCode)
     {
-        try
-        {
-            var response = await _bookingApi.GetFeaturedReviews(
+        var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_retryPolicy, _interceptor);
+
+        var response = await proxy.ExecuteAsync(async () =>
+
+       await _bookingApi.GetFeaturedReviews(
                 hotelId,
                 languageCode
-            );
+            ), 3);
+     
+            
 
             if (!string.IsNullOrWhiteSpace(response))
             {
@@ -482,17 +451,7 @@ public class BookingController : ControllerBase
                 // Yanıt boşsa, bir hata dönün.
                 return NotFound("Aranan kayıt bulunamadı.");
             }
-        }
-        catch (HttpRequestException ex)
-        {
-            // Ağ hatası durumu
-            return StatusCode(StatusCodes.Status503ServiceUnavailable, $"Booking.com API'ye bağlanırken ağ hatası oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
-        catch (Exception ex)
-        {
-            // Diğer istisna durumları
-            return StatusCode(StatusCodes.Status500InternalServerError, $"Bir iç hata oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
+       
     }
 
     /// <summary>
@@ -510,14 +469,17 @@ public class BookingController : ControllerBase
         [FromQuery] string currencyCode,
         [FromQuery] string departureDate)
     {
-        try
-        {
-            var response = await _bookingApi.GetPolicies(
+        var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_retryPolicy, _interceptor);
+
+        var response = await proxy.ExecuteAsync(async () =>
+
+       await _bookingApi.GetPolicies(
                 hotelIds,
                 languageCode,
                 currencyCode,
                 departureDate
-            );
+            ), 3);
+       
 
             if (!string.IsNullOrWhiteSpace(response))
             {
@@ -537,17 +499,7 @@ public class BookingController : ControllerBase
                 // Yanıt boşsa, bir hata dönün.
                 return NotFound("Aranan kayıt bulunamadı.");
             }
-        }
-        catch (HttpRequestException ex)
-        {
-            // Ağ hatası durumu
-            return StatusCode(StatusCodes.Status503ServiceUnavailable, $"Booking.com API'ye bağlanırken ağ hatası oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
-        catch (Exception ex)
-        {
-            // Diğer istisna durumları
-            return StatusCode(StatusCodes.Status500InternalServerError, $"Bir iç hata oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
+        
     }
 
     /// <summary>
@@ -561,12 +513,16 @@ public class BookingController : ControllerBase
        [FromQuery][Required] int hotelIds,
        [FromQuery] string languageCode)
     {
-        try
-        {
-            var response = await _bookingApi.GetFacilities(
+        var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_retryPolicy, _interceptor);
+
+        var response = await proxy.ExecuteAsync(async () =>
+
+      await _bookingApi.GetFacilities(
                 hotelIds,
                 languageCode
-            );
+            ), 3);
+        
+           
 
             if (!string.IsNullOrWhiteSpace(response))
             {
@@ -586,17 +542,7 @@ public class BookingController : ControllerBase
                 // Yanıt boşsa, bir hata dönün.
                 return NotFound("Aranan kayıt bulunamadı.");
             }
-        }
-        catch (HttpRequestException ex)
-        {
-            // Ağ hatası durumu
-            return StatusCode(StatusCodes.Status503ServiceUnavailable, $"Booking.com API'ye bağlanırken ağ hatası oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
-        catch (Exception ex)
-        {
-            // Diğer istisna durumları
-            return StatusCode(StatusCodes.Status500InternalServerError, $"Bir iç hata oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
+        
     }
 
     /// <summary>
@@ -620,9 +566,11 @@ public class BookingController : ControllerBase
        [FromQuery] string filterLanguage,
        [FromQuery] string filterCustomerType)
     {
-        try
-        {
-            var response = await _bookingApi.GetReviewsList(
+        var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_retryPolicy, _interceptor);
+
+        var response = await proxy.ExecuteAsync(async () =>
+
+      await _bookingApi.GetReviewsList(
                 hotelIds,
                 languageCode,
                 userSort,
@@ -630,8 +578,9 @@ public class BookingController : ControllerBase
                 offset,
                 filterLanguage,
                 filterCustomerType
-            );
-
+            ), 3);
+       
+         
             if (!string.IsNullOrWhiteSpace(response))
             {
                 // API yanıtı JSON formatındaysa işleyin
@@ -650,17 +599,7 @@ public class BookingController : ControllerBase
                 // Yanıt boşsa, bir hata dönün.
                 return NotFound("Aranan kayıt bulunamadı.");
             }
-        }
-        catch (HttpRequestException ex)
-        {
-            // Ağ hatası durumu
-            return StatusCode(StatusCodes.Status503ServiceUnavailable, $"Booking.com API'ye bağlanırken ağ hatası oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
-        catch (Exception ex)
-        {
-            // Diğer istisna durumları
-            return StatusCode(StatusCodes.Status500InternalServerError, $"Bir iç hata oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
+      
     }
 
     /// <summary>
@@ -674,12 +613,15 @@ public class BookingController : ControllerBase
         [FromQuery][Required] int hotelIds,
         [FromQuery] string languageCode)
     {
-        try
-        {
-            var response = await _bookingApi.GetScores(
-                hotelIds,
-                languageCode
-            );
+            var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_retryPolicy, _interceptor);
+
+            var response = await proxy.ExecuteAsync(async () =>
+
+            await _bookingApi.GetScores(
+                    hotelIds,
+                    languageCode
+                ), 3);
+       
             if (!string.IsNullOrWhiteSpace(response))
             {
                 // API yanıtı JSON formatındaysa işleyin
@@ -698,16 +640,5 @@ public class BookingController : ControllerBase
                 // Yanıt boşsa, bir hata dönün.
                 return NotFound("Aranan kayıt bulunamadı.");
             }
-        }
-        catch (HttpRequestException ex)
-        {
-            // Ağ hatası durumu
-            return StatusCode(StatusCodes.Status503ServiceUnavailable, $"Booking.com API'ye bağlanırken ağ hatası oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
-        catch (Exception ex)
-        {
-            // Diğer istisna durumları
-            return StatusCode(StatusCodes.Status500InternalServerError, $"Bir iç hata oluştu. => hata mesaj ayrıntısı: {ex.Message}");
-        }
     }
 }
