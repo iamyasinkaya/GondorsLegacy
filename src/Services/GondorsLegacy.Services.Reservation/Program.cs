@@ -41,9 +41,9 @@ builder.Services.AddSwaggerGen(c =>
         Description = "Reservation API",
         Contact = new OpenApiContact
         {
-            Name = "Yasin Çınar SALVATOR",
-            Email = "yasin.salvator@gmail.com",
-            Url = new Uri("https://www.yasinsalvator.com")
+            Name = "Yasin Kaya",
+            Email = "iamyasinkaya@gmail.com",
+            Url = new Uri("https://yasinkaya.tech")
         }
     });
     //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";

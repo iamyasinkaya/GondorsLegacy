@@ -69,7 +69,7 @@ public class BookingController : ControllerBase
      [FromQuery] string travelPurpose)
     {
 
-        var proxy =  _proxyGenerator.CreateInterfaceProxyWithTarget(_retryPolicy, _interceptor);
+        var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_retryPolicy, _interceptor);
 
         var response = await proxy.ExecuteAsync(async () =>
 
@@ -88,12 +88,12 @@ public class BookingController : ControllerBase
                 orderBy,
                 languageCode,
                 travelPurpose
-            ),3);
+            ), 3);
 
         if (!string.IsNullOrWhiteSpace(response))
         {
             // API yanıtı JSON formatındaysa işleyin
-            var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponse>(response);
+            var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponseModel>(response);
 
             if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
             {
@@ -165,25 +165,25 @@ public class BookingController : ControllerBase
                 childrenQty,
                 orderBy
             ), 3);
-       
-            if (!string.IsNullOrWhiteSpace(response))
-            {
-                // API yanıtı JSON formatındaysa işleyin
-                var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponse>(response);
 
-                if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
-                {
-                    return BadRequest(errorResponse.Message);
-                }
+        if (!string.IsNullOrWhiteSpace(response))
+        {
+            // API yanıtı JSON formatındaysa işleyin
+            var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponseModel>(response);
 
-                // Başarılı yanıtı işleyin ve istemciye dönün.
-                return Ok(response);
-            }
-            else
+            if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
             {
-                // Yanıt boşsa, bir hata dönün.
-                return NotFound("Aranan kayıt bulunamadı.");
+                return BadRequest(errorResponse.Message);
             }
+
+            // Başarılı yanıtı işleyin ve istemciye dönün.
+            return Ok(response);
+        }
+        else
+        {
+            // Yanıt boşsa, bir hata dönün.
+            return NotFound("Aranan kayıt bulunamadı.");
+        }
     }
 
 
@@ -234,28 +234,28 @@ public class BookingController : ControllerBase
                 currencyCode,
                 units
             ), 3);
-       
-           
-            if (!string.IsNullOrWhiteSpace(response))
-            {
-                // API yanıtı JSON formatındaysa işleyin
-                var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponse>(response);
 
-                if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
-                {
-                    return BadRequest(errorResponse.Message);
-                }
 
-                // Başarılı yanıtı işleyin ve istemciye dönün.
-                return Ok(response);
-            }
-            else
+        if (!string.IsNullOrWhiteSpace(response))
+        {
+            // API yanıtı JSON formatındaysa işleyin
+            var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponseModel>(response);
+
+            if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
             {
-                // Yanıt boşsa, bir hata dönün.
-                return NotFound("Aranan kayıt bulunamadı.");
+                return BadRequest(errorResponse.Message);
             }
-       
-      
+
+            // Başarılı yanıtı işleyin ve istemciye dönün.
+            return Ok(response);
+        }
+        else
+        {
+            // Yanıt boşsa, bir hata dönün.
+            return NotFound("Aranan kayıt bulunamadı.");
+        }
+
+
     }
 
 
@@ -296,28 +296,28 @@ public class BookingController : ControllerBase
                 languageCode,
                 units
             ), 3);
-       
-            
 
-            if (!string.IsNullOrWhiteSpace(response))
+
+
+        if (!string.IsNullOrWhiteSpace(response))
+        {
+            // API yanıtı JSON formatındaysa işleyin
+            var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponseModel>(response);
+
+            if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
             {
-                // API yanıtı JSON formatındaysa işleyin
-                var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponse>(response);
-
-                if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
-                {
-                    return BadRequest(errorResponse.Message);
-                }
-
-                // Başarılı yanıtı işleyin ve istemciye dönün.
-                return Ok(response);
+                return BadRequest(errorResponse.Message);
             }
-            else
-            {
-                // Yanıt boşsa, bir hata dönün.
-                return NotFound("Aranan kayıt bulunamadı.");
-            }
-    
+
+            // Başarılı yanıtı işleyin ve istemciye dönün.
+            return Ok(response);
+        }
+        else
+        {
+            // Yanıt boşsa, bir hata dönün.
+            return NotFound("Aranan kayıt bulunamadı.");
+        }
+
     }
 
     /// <summary>
@@ -345,28 +345,28 @@ public class BookingController : ControllerBase
                 languageCode,
                 checkIn
             ), 3);
-       
-            
 
-            if (!string.IsNullOrWhiteSpace(response))
+
+
+        if (!string.IsNullOrWhiteSpace(response))
+        {
+            // API yanıtı JSON formatındaysa işleyin
+            var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponseModel>(response);
+
+            if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
             {
-                // API yanıtı JSON formatındaysa işleyin
-                var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponse>(response);
-
-                if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
-                {
-                    return BadRequest(errorResponse.Message);
-                }
-
-                // Başarılı yanıtı işleyin ve istemciye dönün.
-                return Ok(response);
+                return BadRequest(errorResponse.Message);
             }
-            else
-            {
-                // Yanıt boşsa, bir hata dönün.
-                return NotFound("Aranan kayıt bulunamadı.");
-            }
-       
+
+            // Başarılı yanıtı işleyin ve istemciye dönün.
+            return Ok(response);
+        }
+        else
+        {
+            // Yanıt boşsa, bir hata dönün.
+            return NotFound("Aranan kayıt bulunamadı.");
+        }
+
     }
 
     /// <summary>
@@ -388,27 +388,27 @@ public class BookingController : ControllerBase
                 hotelIds,
                 languageCode
             ), 3);
-        
-            
-            if (!string.IsNullOrWhiteSpace(response))
-            {
-                // API yanıtı JSON formatındaysa işleyin
-                var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponse>(response);
 
-                if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
-                {
-                    return BadRequest(errorResponse.Message);
-                }
 
-                // Başarılı yanıtı işleyin ve istemciye dönün.
-                return Ok(response);
-            }
-            else
+        if (!string.IsNullOrWhiteSpace(response))
+        {
+            // API yanıtı JSON formatındaysa işleyin
+            var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponseModel>(response);
+
+            if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
             {
-                // Yanıt boşsa, bir hata dönün.
-                return NotFound("Aranan kayıt bulunamadı.");
+                return BadRequest(errorResponse.Message);
             }
-      
+
+            // Başarılı yanıtı işleyin ve istemciye dönün.
+            return Ok(response);
+        }
+        else
+        {
+            // Yanıt boşsa, bir hata dönün.
+            return NotFound("Aranan kayıt bulunamadı.");
+        }
+
     }
 
     /// <summary>
@@ -430,28 +430,28 @@ public class BookingController : ControllerBase
                 hotelId,
                 languageCode
             ), 3);
-     
-            
 
-            if (!string.IsNullOrWhiteSpace(response))
+
+
+        if (!string.IsNullOrWhiteSpace(response))
+        {
+            // API yanıtı JSON formatındaysa işleyin
+            var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponseModel>(response);
+
+            if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
             {
-                // API yanıtı JSON formatındaysa işleyin
-                var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponse>(response);
-
-                if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
-                {
-                    return BadRequest(errorResponse.Message);
-                }
-
-                // Başarılı yanıtı işleyin ve istemciye dönün.
-                return Ok(response);
+                return BadRequest(errorResponse.Message);
             }
-            else
-            {
-                // Yanıt boşsa, bir hata dönün.
-                return NotFound("Aranan kayıt bulunamadı.");
-            }
-       
+
+            // Başarılı yanıtı işleyin ve istemciye dönün.
+            return Ok(response);
+        }
+        else
+        {
+            // Yanıt boşsa, bir hata dönün.
+            return NotFound("Aranan kayıt bulunamadı.");
+        }
+
     }
 
     /// <summary>
@@ -479,27 +479,27 @@ public class BookingController : ControllerBase
                 currencyCode,
                 departureDate
             ), 3);
-       
 
-            if (!string.IsNullOrWhiteSpace(response))
+
+        if (!string.IsNullOrWhiteSpace(response))
+        {
+            // API yanıtı JSON formatındaysa işleyin
+            var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponseModel>(response);
+
+            if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
             {
-                // API yanıtı JSON formatındaysa işleyin
-                var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponse>(response);
-
-                if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
-                {
-                    return BadRequest(errorResponse.Message);
-                }
-
-                // Başarılı yanıtı işleyin ve istemciye dönün.
-                return Ok(response);
+                return BadRequest(errorResponse.Message);
             }
-            else
-            {
-                // Yanıt boşsa, bir hata dönün.
-                return NotFound("Aranan kayıt bulunamadı.");
-            }
-        
+
+            // Başarılı yanıtı işleyin ve istemciye dönün.
+            return Ok(response);
+        }
+        else
+        {
+            // Yanıt boşsa, bir hata dönün.
+            return NotFound("Aranan kayıt bulunamadı.");
+        }
+
     }
 
     /// <summary>
@@ -521,28 +521,28 @@ public class BookingController : ControllerBase
                 hotelIds,
                 languageCode
             ), 3);
-        
-           
 
-            if (!string.IsNullOrWhiteSpace(response))
+
+
+        if (!string.IsNullOrWhiteSpace(response))
+        {
+            // API yanıtı JSON formatındaysa işleyin
+            var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponseModel>(response);
+
+            if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
             {
-                // API yanıtı JSON formatındaysa işleyin
-                var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponse>(response);
-
-                if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
-                {
-                    return BadRequest(errorResponse.Message);
-                }
-
-                // Başarılı yanıtı işleyin ve istemciye dönün.
-                return Ok(response);
+                return BadRequest(errorResponse.Message);
             }
-            else
-            {
-                // Yanıt boşsa, bir hata dönün.
-                return NotFound("Aranan kayıt bulunamadı.");
-            }
-        
+
+            // Başarılı yanıtı işleyin ve istemciye dönün.
+            return Ok(response);
+        }
+        else
+        {
+            // Yanıt boşsa, bir hata dönün.
+            return NotFound("Aranan kayıt bulunamadı.");
+        }
+
     }
 
     /// <summary>
@@ -579,27 +579,27 @@ public class BookingController : ControllerBase
                 filterLanguage,
                 filterCustomerType
             ), 3);
-       
-         
-            if (!string.IsNullOrWhiteSpace(response))
-            {
-                // API yanıtı JSON formatındaysa işleyin
-                var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponse>(response);
 
-                if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
-                {
-                    return BadRequest(errorResponse.Message);
-                }
 
-                // Başarılı yanıtı işleyin ve istemciye dönün.
-                return Ok(response);
-            }
-            else
+        if (!string.IsNullOrWhiteSpace(response))
+        {
+            // API yanıtı JSON formatındaysa işleyin
+            var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponseModel>(response);
+
+            if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
             {
-                // Yanıt boşsa, bir hata dönün.
-                return NotFound("Aranan kayıt bulunamadı.");
+                return BadRequest(errorResponse.Message);
             }
-      
+
+            // Başarılı yanıtı işleyin ve istemciye dönün.
+            return Ok(response);
+        }
+        else
+        {
+            // Yanıt boşsa, bir hata dönün.
+            return NotFound("Aranan kayıt bulunamadı.");
+        }
+
     }
 
     /// <summary>
@@ -613,32 +613,32 @@ public class BookingController : ControllerBase
         [FromQuery][Required] int hotelIds,
         [FromQuery] string languageCode)
     {
-            var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_retryPolicy, _interceptor);
+        var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_retryPolicy, _interceptor);
 
-            var response = await proxy.ExecuteAsync(async () =>
+        var response = await proxy.ExecuteAsync(async () =>
 
-            await _bookingApi.GetScores(
-                    hotelIds,
-                    languageCode
-                ), 3);
-       
-            if (!string.IsNullOrWhiteSpace(response))
+        await _bookingApi.GetScores(
+                hotelIds,
+                languageCode
+            ), 3);
+
+        if (!string.IsNullOrWhiteSpace(response))
+        {
+            // API yanıtı JSON formatındaysa işleyin
+            var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponseModel>(response);
+
+            if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
             {
-                // API yanıtı JSON formatındaysa işleyin
-                var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponse>(response);
-
-                if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
-                {
-                    return BadRequest(errorResponse.Message);
-                }
-
-                // Başarılı yanıtı işleyin ve istemciye dönün.
-                return Ok(response);
+                return BadRequest(errorResponse.Message);
             }
-            else
-            {
-                // Yanıt boşsa, bir hata dönün.
-                return NotFound("Aranan kayıt bulunamadı.");
-            }
+
+            // Başarılı yanıtı işleyin ve istemciye dönün.
+            return Ok(response);
+        }
+        else
+        {
+            // Yanıt boşsa, bir hata dönün.
+            return NotFound("Aranan kayıt bulunamadı.");
+        }
     }
 }

@@ -1,10 +1,16 @@
-﻿using GondorsLegacy.Infrastructure.Contracts;
+﻿using GondorsLegacy.Application;
+using GondorsLegacy.Infrastructure.Caching;
+using GondorsLegacy.Infrastructure.Contracts;
+using GondorsLegacy.Infrastructure.DateTimes;
 using GondorsLegacy.Infrastructure.Interceptors;
 using GondorsLegacy.Infrastructure.Services;
+using GondorsLegacy.Infrastructure.Web.MinimalApis;
+using GondorsLegacy.Services.HotelInformation;
 using GondorsLegacy.Services.HotelInformation.Configuration;
 using GondorsLegacy.Services.HotelInformation.Services.Abstract;
 using Microsoft.OpenApi.Models;
 using Refit;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +37,11 @@ builder.Services.AddRefitClient<IBookingApi>()
 builder.Services.AddContractsService();
 builder.Services.AddControllers();
 builder.Services.AddInterceptors();
+builder.Services.AddHotelModule(builder.Configuration);
+builder.Services.AddDateTimeProvider();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddApplicationServices();
+builder.Services.AddCaches(builder.Configuration);
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1",new Microsoft.OpenApi.Models.OpenApiInfo
@@ -41,13 +51,13 @@ builder.Services.AddSwaggerGen(c =>
         Description = "Otel Bilgilendirme Servisi",
         Contact = new OpenApiContact
         {
-            Name = "Yasin Çınar SALVATOR",
-            Email = "yasinsalvator@outlook.com",
-            Url = new Uri("https://yasinkaya.org")
+            Name = "Yasin Kaya",
+            Email = "iamyasinkaya@gmail.com",
+            Url = new Uri("https://yasinkaya.tech")
         }
     });
 
-    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "GondorsLegacy.Services.HotelInformation.xml"));
+    
 
 });
 
@@ -66,6 +76,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.MapEndpointHandlers(Assembly.GetCallingAssembly());
 app.Run();
 
