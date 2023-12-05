@@ -31,33 +31,33 @@ public class ExchangeRateController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("get-exchange-rates")]
-    public async Task<IActionResult> GetExchangeRates([FromQuery] [Required] string baseCurrency, [FromQuery] string languageCode)
+    public async Task<IActionResult> GetExchangeRates([FromQuery][Required] string baseCurrency, [FromQuery] string languageCode)
     {
-            var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_retryPolicy, _interceptor);
+        var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_retryPolicy, _interceptor);
 
-            var response = await proxy.ExecuteAsync(async () =>
-            await _exchangeRateApi.GetExchangeRatesAsync(baseCurrency:baseCurrency,languageCode:languageCode),3);
+        var response = await proxy.ExecuteAsync(async () =>
+        await _exchangeRateApi.GetExchangeRatesAsync(baseCurrency: baseCurrency, languageCode: languageCode), 3);
 
-            if (!string.IsNullOrWhiteSpace(response))
+        if (!string.IsNullOrWhiteSpace(response))
+        {
+            // API yanıtı JSON formatındaysa işleyin
+            var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponseModel>(response);
+
+            if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
             {
-                // API yanıtı JSON formatındaysa işleyin
-                var errorResponse = JsonConvert.DeserializeObject<BookingApiErrorResponse>(response);
-
-                if (errorResponse != null && !string.IsNullOrWhiteSpace(errorResponse.Message))
-                {
-                    return BadRequest(errorResponse.Message);
-                }
-
-                var successResponse = JsonConvert.DeserializeObject<ExchangeRateResponseModel>(response);
-                // Başarılı yanıtı işleyin ve istemciye dönün.
-                return Ok(successResponse);
+                return BadRequest(errorResponse.Message);
             }
-            else
-            {
-                // Yanıt boşsa, bir hata dönün.
-                return NotFound("Aranan kayıt bulunamadı.");
-            }
-        
-    
+
+            var successResponse = JsonConvert.DeserializeObject<ExchangeRateResponseModel>(response);
+            // Başarılı yanıtı işleyin ve istemciye dönün.
+            return Ok(successResponse);
+        }
+        else
+        {
+            // Yanıt boşsa, bir hata dönün.
+            return NotFound("Aranan kayıt bulunamadı.");
+        }
+
+
     }
 }

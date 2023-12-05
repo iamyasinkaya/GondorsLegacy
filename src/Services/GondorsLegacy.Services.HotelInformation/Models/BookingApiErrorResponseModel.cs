@@ -1,7 +1,7 @@
 ﻿using System;
 namespace GondorsLegacy.Services.HotelInformation.Models;
 
-public class BookingApiErrorResponse
+public class BookingApiErrorResponseModel
 {
     public string Message { get; set; }
     public List<ErrorDetail> Errors { get; set; }
