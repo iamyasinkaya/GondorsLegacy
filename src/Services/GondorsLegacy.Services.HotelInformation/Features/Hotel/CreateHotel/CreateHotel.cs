@@ -10,6 +10,7 @@ using GondorsLegacy.Services.HotelInformation.Validations;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 
 namespace GondorsLegacy.Services.HotelInformation.Features.Hotel.CreateHotel;
 
@@ -51,24 +52,22 @@ public class CreateHotelCommandHandler : IRequestHandler<CreateHotelCommand>
         _interceptor = interceptor;
     }
 
-
     public async Task Handle(CreateHotelCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            // Proxy'i oluşturun
             var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_hotelService, _interceptor);
 
-            // Metot çağrısını proxy üzerinden yapın
             await proxy.AddAsync(request.Hotel);
         }
         catch (Exception ex)
         {
-
+            _logger.LogError($"Otel oluşturulurken bir hata oluştu: {ex.Message}");
             throw new Exception(ex.Message);
         }
     }
 }
+
 
 public class CreateHotelEndpoint : IEndpointHandler
 {
@@ -122,12 +121,10 @@ public class CreateHotelEndpoint : IEndpointHandler
                     }
                 };
 
-                // İşlem başarılı olduğunda 201 Created yanıtı dön
-                return Results.Created($"api/v1/reservations/{response.Data}", response);
+                return Results.Created($"api/v1/hotels/{response.Data}", response);
             }
             else
             {
-                // Doğrulama hatası durumunda uygun bir hata yanıtı veriyoruz
                 var errorDetails = new ErrorResponseModel
                 {
                     StatusCode = StatusCodes.Status400BadRequest,
@@ -135,7 +132,6 @@ public class CreateHotelEndpoint : IEndpointHandler
                     ErrorDetails = result.Errors.Select(error => error.ErrorMessage).ToList()
                 };
 
-                // 400 Bad Request yanıtı dön
                 return Results.BadRequest(error: errorDetails);
             }
 
@@ -143,7 +139,6 @@ public class CreateHotelEndpoint : IEndpointHandler
         }
         catch (Exception ex)
         {
-            // Diğer hata durumları için uygun bir hata yanıtı verin
             var errorResponse = new ErrorResponseModel
             {
                 StatusCode = StatusCodes.Status400BadRequest,
@@ -151,7 +146,6 @@ public class CreateHotelEndpoint : IEndpointHandler
                 ErrorDetails = new List<string> { ex.Message }
             };
 
-            // 500 Internal Server Error yanıtı döndürün
             return Results.BadRequest();
 
         }

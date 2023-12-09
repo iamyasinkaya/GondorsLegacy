@@ -26,26 +26,6 @@ public class GetHotelEndpoint : IEndpointHandler
                     Description = "Hotel ID",
                     Schema = new OpenApiSchema { Type = "string", Format = "guid" }
                 }
-                },
-                Responses = new OpenApiResponses
-                {
-                    // 200 OK yanıtı
-                    ["200"] = new OpenApiResponse
-                    {
-                        Description = "Hotel details retrieved successfully",
-                        Content = new Dictionary<string, OpenApiMediaType>
-                        {
-                            ["application/json"] = new OpenApiMediaType
-                            {
-                                Schema = new OpenApiSchema { /* JSON şeması eklenecek */ }
-                            }
-                        }
-                    },
-                    // 404 Not Found yanıtı
-                    ["404"] = new OpenApiResponse
-                    {
-                        Description = "Hotel not found"
-                    }
                 }
             });
     }

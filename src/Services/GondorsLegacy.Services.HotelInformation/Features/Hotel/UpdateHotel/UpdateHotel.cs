@@ -117,8 +117,8 @@ public class UpdateHotelEndpoint : IEndpointHandler
                 In = ParameterLocation.Path,
                 Required = true,
                 Schema = new OpenApiSchema {
-                  Type = "string", // Eğer hotelId bir string ise; tipini değiştirebilirsiniz.
-                    Format = "uuid" // Eğer hotelId bir Guid ise, tip formatını "uuid" olarak belirtin.
+                  Type = "string", 
+                    Format = "uuid"
                 }
             }
               },
