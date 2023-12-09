@@ -1,4 +1,4 @@
-﻿namespace GondorsLegacy.Services.HotelInformation.Features.Hotel;
+﻿namespace GondorsLegacy.Services.HotelInformation.Features.Hotel.GetHotel;
 
 public class HotelResponse
 {

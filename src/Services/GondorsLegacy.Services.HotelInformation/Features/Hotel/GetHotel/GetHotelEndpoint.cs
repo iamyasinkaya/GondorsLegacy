@@ -5,7 +5,7 @@ using GondorsLegacy.Services.HotelInformation.Models;
 using MediatR;
 using Microsoft.OpenApi.Models;
 
-namespace GondorsLegacy.Services.HotelInformation.Features.Hotel;
+namespace GondorsLegacy.Services.HotelInformation.Features.Hotel.GetHotel;
 
 public class GetHotelEndpoint : IEndpointHandler
 {

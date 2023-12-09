@@ -4,7 +4,7 @@ using GondorsLegacy.Services.HotelInformation.Repositories;
 using MediatR;
 using Newtonsoft.Json;
 
-namespace GondorsLegacy.Services.HotelInformation.Features.Hotel;
+namespace GondorsLegacy.Services.HotelInformation.Features.Hotel.GetHotel;
 
 public class GetHotelQueryHandler : IRequestHandler<GetHotelQuery, Entities.Hotel>
 {

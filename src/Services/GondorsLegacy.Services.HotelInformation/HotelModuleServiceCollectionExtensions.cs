@@ -14,7 +14,11 @@ public static class HotelModuleServiceCollectionExtensions
     {
         services.AddScoped<IRepository<Entities.Hotel,Guid>,Repository<Entities.Hotel,Guid>>();
         services.AddScoped<IHotelRepository,HotelRepository>();
-        services.AddDbContext<HotelDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("HotelDatabase")));
+        services.AddDbContext<HotelDbContext>(options =>
+        {
+            options.UseSqlServer(Configuration.GetConnectionString("HotelDatabase"));
+            options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+        });
 
         services.AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
