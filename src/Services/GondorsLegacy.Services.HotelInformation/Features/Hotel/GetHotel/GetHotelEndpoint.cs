@@ -63,9 +63,16 @@ public class GetHotelEndpoint : IEndpointHandler
                 Message = Messages.HotelNotFound,
             });
         }
-        var responseModel = mapper.Map<HotelResponse>(hotel);
+        var mappingModel = mapper.Map<HotelResponse>(hotel);
 
-        return Results.Ok(responseModel);
+        var response = new SuccessResponseModel
+        {
+            StatusCode = StatusCodes.Status200OK,
+            Message = Messages.RequestProcessedSuccessfully,
+            Data = mappingModel
+        };
+
+        return Results.Ok(response);
     }
 
 }

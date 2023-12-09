@@ -112,13 +112,18 @@ public class CreateHotelEndpoint : IEndpointHandler
             {
                 await dispatcher.Send(new CreateHotelCommand { Hotel = hotel });
 
-                var response = new CreateHotelResponse
+                var response = new SuccessResponseModel
                 {
-                    HotelId = hotel.Id
+                    StatusCode = StatusCodes.Status201Created,
+                    Message = Messages.HotelAddedSuccessfully,
+                    Data = new CreateHotelResponse
+                    {
+                        HotelId = hotel.Id,
+                    }
                 };
 
                 // İşlem başarılı olduğunda 201 Created yanıtı dön
-                return Results.Created($"api/v1/reservations/{response.HotelId}", response);
+                return Results.Created($"api/v1/reservations/{response.Data}", response);
             }
             else
             {
