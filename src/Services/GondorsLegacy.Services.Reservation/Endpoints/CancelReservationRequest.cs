@@ -23,7 +23,7 @@ public class CancelReservationRequestHandler : IEndpointHandler
 {
     public static void MapEndpoint(IEndpointRouteBuilder builder)
     {
-        builder.MapPost("api/v1/reservations/cancel", HandleAsync)
+        builder.MapPost("api/v1/reservation/cancel", HandleAsync)
             .WithName("CancelReservation")
             .Produces<CancelReservationResponse>(statusCode: StatusCodes.Status201Created, contentType: "application/json")
             .ProducesProblem(StatusCodes.Status400BadRequest)

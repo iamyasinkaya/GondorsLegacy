@@ -1,0 +1,30 @@
+{
+    "Routes": [
+        {
+            "DownstreamPathTemplate": "/api/{version}/reservation/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5001
+                }
+            ],
+            "UpstreamPathTemplate": "/api/{version}/reservation/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+            "UpstreamScheme": "http"
+        },
+        {
+            "DownstreamPathTemplate": "/api/{version}/hotel/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5002
+                }
+            ],
+            "UpstreamPathTemplate": "/api/{version}/hotel/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+            "UpstreamScheme": "http"
+        }
+    ]
+}

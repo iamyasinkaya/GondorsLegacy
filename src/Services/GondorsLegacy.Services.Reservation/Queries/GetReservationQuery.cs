@@ -51,7 +51,7 @@ public class GetReservationQueryHandler : IRequestHandler<GetReservationQuery, E
         {
             _logger.LogWarning($"Reservation {request.Id} not found.");
 
-            throw new NotFoundException($"Reservation {request.Id} not found.");
+            return reservation;
         }
 
         return reservation;

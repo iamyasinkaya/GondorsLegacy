@@ -7,33 +7,34 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4639E45C-F2D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{4607D68C-F7E0-497C-A31B-4113FC8FCF3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GondorsLegacy.Services.Reservation", "src\Services\GondorsLegacy.Services.Reservation\GondorsLegacy.Services.Reservation.csproj", "{02DCE269-A127-4D57-9BDA-AFA2FC636054}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GondorsLegacy.Services.Reservation", "src\Services\GondorsLegacy.Services.Reservation\GondorsLegacy.Services.Reservation.csproj", "{02DCE269-A127-4D57-9BDA-AFA2FC636054}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GondorsLegacy.Services.Payment", "src\Services\GondorsLegacy.Services.Payment\GondorsLegacy.Services.Payment.csproj", "{1BE06D3B-E928-4098-875B-6765F1AFB13C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GondorsLegacy.Services.Payment", "src\Services\GondorsLegacy.Services.Payment\GondorsLegacy.Services.Payment.csproj", "{1BE06D3B-E928-4098-875B-6765F1AFB13C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GondorsLegacy.Services.HotelInformation", "src\Services\GondorsLegacy.Services.HotelInformation\GondorsLegacy.Services.HotelInformation.csproj", "{73857350-A325-4D67-8E4C-B6A4C97A01EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GondorsLegacy.Services.HotelInformation", "src\Services\GondorsLegacy.Services.HotelInformation\GondorsLegacy.Services.HotelInformation.csproj", "{73857350-A325-4D67-8E4C-B6A4C97A01EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GondorsLegacy.Services.Communication", "src\Services\GondorsLegacy.Services.Communication\GondorsLegacy.Services.Communication.csproj", "{B6B75CAD-4990-46F4-AC34-31FB2890E93B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GondorsLegacy.Services.Communication", "src\Services\GondorsLegacy.Services.Communication\GondorsLegacy.Services.Communication.csproj", "{B6B75CAD-4990-46F4-AC34-31FB2890E93B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{56225A52-0CAF-4231-AD70-60896E9FC24D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GondorsLegacy.Application", "src\Common\GondorsLegacy.Application\GondorsLegacy.Application.csproj", "{A6F387CD-724C-4D47-AE1C-97653FAC9D34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GondorsLegacy.Application", "src\Common\GondorsLegacy.Application\GondorsLegacy.Application.csproj", "{A6F387CD-724C-4D47-AE1C-97653FAC9D34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GondorsLegacy.Domain", "src\Common\GondorsLegacy.Domain\GondorsLegacy.Domain.csproj", "{8F5673EF-D122-45FE-81C8-E25D4C1241BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GondorsLegacy.Domain", "src\Common\GondorsLegacy.Domain\GondorsLegacy.Domain.csproj", "{8F5673EF-D122-45FE-81C8-E25D4C1241BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GondorsLegacy.Infrastructure", "src\Common\GondorsLegacy.Infrastructure\GondorsLegacy.Infrastructure.csproj", "{2938A932-C012-4D51-9DE0-B6013CF5C7B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GondorsLegacy.Infrastructure", "src\Common\GondorsLegacy.Infrastructure\GondorsLegacy.Infrastructure.csproj", "{2938A932-C012-4D51-9DE0-B6013CF5C7B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GondorsLegacy.CrossCuttingCorners", "src\Common\GondorsLegacy.CrossCuttingCorners\GondorsLegacy.CrossCuttingCorners.csproj", "{2D44DFEF-317D-4F0F-8DC0-741C5D27D8A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GondorsLegacy.CrossCuttingCorners", "src\Common\GondorsLegacy.CrossCuttingCorners\GondorsLegacy.CrossCuttingCorners.csproj", "{2D44DFEF-317D-4F0F-8DC0-741C5D27D8A4}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F6C2FA41-F270-45B8-A308-8F42B29860DB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{17509B47-59CF-4759-A5D8-0FF579A2F6EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GondorsLegacy.ApiGateway", "src\ApiGateway\GondorsLegacy.ApiGateway\GondorsLegacy.ApiGateway.csproj", "{BF26FDF4-D88A-4ECA-B5ED-77F6E672CDAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{02DCE269-A127-4D57-9BDA-AFA2FC636054}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -72,6 +73,13 @@ Global
 		{F6C2FA41-F270-45B8-A308-8F42B29860DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6C2FA41-F270-45B8-A308-8F42B29860DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6C2FA41-F270-45B8-A308-8F42B29860DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF26FDF4-D88A-4ECA-B5ED-77F6E672CDAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF26FDF4-D88A-4ECA-B5ED-77F6E672CDAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF26FDF4-D88A-4ECA-B5ED-77F6E672CDAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF26FDF4-D88A-4ECA-B5ED-77F6E672CDAC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4607D68C-F7E0-497C-A31B-4113FC8FCF3F} = {4639E45C-F2D2-4D09-B22E-E780557B8407}
@@ -84,5 +92,7 @@ Global
 		{8F5673EF-D122-45FE-81C8-E25D4C1241BD} = {56225A52-0CAF-4231-AD70-60896E9FC24D}
 		{2938A932-C012-4D51-9DE0-B6013CF5C7B3} = {56225A52-0CAF-4231-AD70-60896E9FC24D}
 		{2D44DFEF-317D-4F0F-8DC0-741C5D27D8A4} = {56225A52-0CAF-4231-AD70-60896E9FC24D}
+		{17509B47-59CF-4759-A5D8-0FF579A2F6EA} = {4639E45C-F2D2-4D09-B22E-E780557B8407}
+		{BF26FDF4-D88A-4ECA-B5ED-77F6E672CDAC} = {17509B47-59CF-4759-A5D8-0FF579A2F6EA}
 	EndGlobalSection
 EndGlobal

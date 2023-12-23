@@ -42,7 +42,7 @@ public class CreateReservationRequestHandler : IEndpointHandler
 {
     public static void MapEndpoint(IEndpointRouteBuilder builder)
     {
-        builder.MapPost("api/v1/reservations/create", HandleAsync)
+        builder.MapPost("api/v1/reservation/create", HandleAsync)
             .WithName("CreateReservation")
             .Produces<CreateReservationResponse>(statusCode: StatusCodes.Status201Created, contentType: "application/json")
             .ProducesProblem(StatusCodes.Status400BadRequest)

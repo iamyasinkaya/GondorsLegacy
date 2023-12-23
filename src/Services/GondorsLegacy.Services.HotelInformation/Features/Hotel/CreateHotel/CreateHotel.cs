@@ -119,7 +119,7 @@ public class CreateHotelEndpoint : IEndpointHandler
                     }
                 };
 
-                return Results.Created($"api/v1/hotels/{response.Data}", response);
+                return Results.Created($"api/v1/hotel/{response.Data}", response);
             }
             else
             {

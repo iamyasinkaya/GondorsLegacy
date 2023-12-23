@@ -1,4 +1,5 @@
 ﻿using GondorsLegacy.Infrastructure.Web.MinimalApis;
+using GondorsLegacy.Services.Reservation.Constants;
 using GondorsLegacy.Services.Reservation.Models;
 using GondorsLegacy.Services.Reservation.Queries;
 using MediatR;
@@ -54,7 +55,19 @@ public class GetReservationRequest : IEndpointHandler
     private static async Task<IResult> HandleAsync(IMediator dispatcher, Guid id)
     {
         var reservation = await dispatcher.Send(new GetReservationQuery { Id = id, ThrowNotFoundIfNull = true });
+
+        if (reservation == null)
+        {
+            // Hotel not found, return 404 Not Found response with details
+
+            return Results.NotFound(new ErrorResponseModel
+            {
+                StatusCode = StatusCodes.Status404NotFound,
+                Message = Messages.ResourceNotFoundMessage,
+            });
+        }
         var model = reservation.ToModel();
+
         return Results.Ok(model);
     }
 }
