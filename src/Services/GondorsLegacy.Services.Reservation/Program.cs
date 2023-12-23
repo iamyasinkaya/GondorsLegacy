@@ -8,7 +8,11 @@ using GondorsLegacy.Infrastructure.MessagesBrokers;
 using GondorsLegacy.Infrastructure.Web.MinimalApis;
 using GondorsLegacy.Services.Reservation;
 using GondorsLegacy.Services.Reservation.Commands;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
+using RabbitMQ.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -113,7 +117,36 @@ builder.Services.AddSwaggerGen(c =>
 
 });
 
+builder.Services.AddHealthChecks()
+                .AddSqlServer(builder.Configuration
+                .GetConnectionString("ReservationDatabase"))
+                .AddRedis("localhost:6379")
+                .AddRabbitMQ(options =>
+               {
+                   options.ConnectionFactory = new ConnectionFactory
+                   {
+                       HostName = "localhost",
+                       Port = 5672,
+                       VirtualHost = "localhost",
+                       UserName = "",
+                       Password = ""
+                   };
+               });
+
 var app = builder.Build();
+
+app.MapHealthChecks("/health",
+    new HealthCheckOptions
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+        AllowCachingResponses = false,
+        ResultStatusCodes = new Dictionary<HealthStatus, int>
+        {
+            {HealthStatus.Healthy, 200},
+            {HealthStatus.Degraded,503},
+            {HealthStatus.Unhealthy, 500}
+        }
+    });
 
 if (app.Environment.IsDevelopment())
 {

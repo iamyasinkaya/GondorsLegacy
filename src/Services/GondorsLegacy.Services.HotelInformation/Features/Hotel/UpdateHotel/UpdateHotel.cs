@@ -5,8 +5,6 @@ using GondorsLegacy.CrossCuttingCorners.Exceptions;
 using GondorsLegacy.Infrastructure.Interceptors;
 using GondorsLegacy.Infrastructure.Web.MinimalApis;
 using GondorsLegacy.Services.HotelInformation.Constants;
-using GondorsLegacy.Services.HotelInformation.Entities;
-using GondorsLegacy.Services.HotelInformation.Features.Hotel.GetHotel;
 using GondorsLegacy.Services.HotelInformation.Models;
 using GondorsLegacy.Services.HotelInformation.Validations;
 using MediatR;

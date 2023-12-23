@@ -8,6 +8,9 @@ using GondorsLegacy.Infrastructure.Web.MinimalApis;
 using GondorsLegacy.Services.HotelInformation;
 using GondorsLegacy.Services.HotelInformation.Configuration;
 using GondorsLegacy.Services.HotelInformation.Services.Abstract;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 using Refit;
 using System.Reflection;
@@ -34,6 +37,7 @@ builder.Services.AddRefitClient<IBookingApi>()
         c.DefaultRequestHeaders.Add("X-RapidAPI-Key", appSettings.ApiKey);
         c.DefaultRequestHeaders.Add("X-RapidAPI-Host", "apidojo-booking-v1.p.rapidapi.com");
     });
+
 builder.Services.AddContractsService();
 builder.Services.AddControllers();
 builder.Services.AddInterceptors();
@@ -44,7 +48,7 @@ builder.Services.AddApplicationServices();
 builder.Services.AddCaches(builder.Configuration);
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1",new Microsoft.OpenApi.Models.OpenApiInfo
+    c.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "API Dokümantasyonu",
         Version = "v1",
@@ -57,13 +61,28 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 
-    
+
 
 });
 
+builder.Services.AddHealthChecks()
+                .AddSqlServer(builder.Configuration
+                .GetConnectionString("HotelDatabase"));
+
 var app = builder.Build();
 
-
+app.MapHealthChecks("/health",
+    new HealthCheckOptions
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+        AllowCachingResponses = false,
+        ResultStatusCodes = new Dictionary<HealthStatus, int>
+        {
+            {HealthStatus.Healthy, 200},
+            {HealthStatus.Degraded,503},
+            {HealthStatus.Unhealthy, 500}
+        }
+    });
 
 if (app.Environment.IsDevelopment())
 {

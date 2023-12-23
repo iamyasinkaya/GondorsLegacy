@@ -57,43 +57,43 @@ namespace GondorsLegacy.Services.HotelInformation.Migrations.HotelDb
                     b.HasData(
                         new
                         {
-                            Id = new Guid("bf39541a-6cc3-4d9a-bc65-5078dcc41b90"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 5, 10, 6, 54, 778, DateTimeKind.Unspecified).AddTicks(7990), new TimeSpan(0, 0, 0, 0, 0)),
+                            Id = new Guid("1df5491a-2109-4ad0-864d-6b2d95f0687e"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 22, 8, 18, 3, 519, DateTimeKind.Unspecified).AddTicks(5651), new TimeSpan(0, 0, 0, 0, 0)),
                             Description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
                             Name = "Salvator Hotel",
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 5, 10, 6, 54, 778, DateTimeKind.Unspecified).AddTicks(7991), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 22, 8, 18, 3, 519, DateTimeKind.Unspecified).AddTicks(5652), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
                         {
-                            Id = new Guid("1a1bc651-7cde-43f7-800f-d4245ae5e0f7"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 5, 10, 6, 54, 778, DateTimeKind.Unspecified).AddTicks(7994), new TimeSpan(0, 0, 0, 0, 0)),
+                            Id = new Guid("a25d1208-49ef-428e-8441-25f494f66cd8"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 22, 8, 18, 3, 519, DateTimeKind.Unspecified).AddTicks(5655), new TimeSpan(0, 0, 0, 0, 0)),
                             Description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
                             Name = "Kelebek Hotel",
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 5, 10, 6, 54, 778, DateTimeKind.Unspecified).AddTicks(7994), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 22, 8, 18, 3, 519, DateTimeKind.Unspecified).AddTicks(5655), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
                         {
-                            Id = new Guid("c458637b-11e5-41cb-ad62-1515a42b4cac"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 5, 10, 6, 54, 778, DateTimeKind.Unspecified).AddTicks(7996), new TimeSpan(0, 0, 0, 0, 0)),
+                            Id = new Guid("baf458d6-a9a0-4ff9-a795-9fd5358a16dc"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 22, 8, 18, 3, 519, DateTimeKind.Unspecified).AddTicks(5657), new TimeSpan(0, 0, 0, 0, 0)),
                             Description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
                             Name = "Vensure Hotel",
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 5, 10, 6, 54, 778, DateTimeKind.Unspecified).AddTicks(7996), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 22, 8, 18, 3, 519, DateTimeKind.Unspecified).AddTicks(5658), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
                         {
-                            Id = new Guid("1eab298e-7cc9-4242-ac64-9f64bee2d4e0"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 5, 10, 6, 54, 778, DateTimeKind.Unspecified).AddTicks(7998), new TimeSpan(0, 0, 0, 0, 0)),
+                            Id = new Guid("e0a98bd9-50ad-4ebe-8253-694ad35dcc3f"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 22, 8, 18, 3, 519, DateTimeKind.Unspecified).AddTicks(5659), new TimeSpan(0, 0, 0, 0, 0)),
                             Description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
                             Name = "Radisson Hotel",
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 5, 10, 6, 54, 778, DateTimeKind.Unspecified).AddTicks(7998), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 22, 8, 18, 3, 519, DateTimeKind.Unspecified).AddTicks(5660), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
                         {
-                            Id = new Guid("34822875-0df8-4b5a-bf1c-9647c3e70266"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 5, 10, 6, 54, 778, DateTimeKind.Unspecified).AddTicks(7999), new TimeSpan(0, 0, 0, 0, 0)),
+                            Id = new Guid("b30a16b2-8b74-4d54-a5bf-8e4411f67803"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 22, 8, 18, 3, 519, DateTimeKind.Unspecified).AddTicks(5661), new TimeSpan(0, 0, 0, 0, 0)),
                             Description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
                             Name = "Koeralop Hotel",
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 5, 10, 6, 54, 778, DateTimeKind.Unspecified).AddTicks(8000), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 22, 8, 18, 3, 519, DateTimeKind.Unspecified).AddTicks(5662), new TimeSpan(0, 0, 0, 0, 0))
                         });
                 });
 #pragma warning restore 612, 618

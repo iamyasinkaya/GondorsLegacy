@@ -10,7 +10,6 @@ using GondorsLegacy.Services.HotelInformation.Validations;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
-using Newtonsoft.Json;
 
 namespace GondorsLegacy.Services.HotelInformation.Features.Hotel.CreateHotel;
 
@@ -67,7 +66,6 @@ public class CreateHotelCommandHandler : IRequestHandler<CreateHotelCommand>
         }
     }
 }
-
 
 public class CreateHotelEndpoint : IEndpointHandler
 {
