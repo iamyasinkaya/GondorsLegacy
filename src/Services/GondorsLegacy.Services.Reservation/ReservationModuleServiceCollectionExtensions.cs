@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using AutoMapper;
 using GondorsLegacy.Domain.Repositories;
+using GondorsLegacy.Infrastructure.Monitoring.OpenTelemetry;
 using GondorsLegacy.Services.Reservation.Mappers;
 using GondorsLegacy.Services.Reservation.Repositories;
 using GondorsLegacy.Services.Reservation.Validations;
@@ -30,6 +31,7 @@ public static class ReservationModuleServiceCollectionExtensions
 
         services.AddSingleton(mapper);
 
+        services.AddOpenTelemetryExtension(Configuration);
       
         return services;
     }

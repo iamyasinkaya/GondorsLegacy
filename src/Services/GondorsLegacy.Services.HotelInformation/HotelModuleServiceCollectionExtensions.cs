@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GondorsLegacy.Domain.Repositories;
+using GondorsLegacy.Infrastructure.Monitoring.OpenTelemetry;
 using GondorsLegacy.Services.HotelInformation.Mappers;
 using GondorsLegacy.Services.HotelInformation.Repositories;
 using GondorsLegacy.Services.HotelInformation.Validations;
@@ -34,6 +35,7 @@ public static class HotelModuleServiceCollectionExtensions
 
         services.AddSingleton(mapper);
 
+        services.AddOpenTelemetryExtension(Configuration);
 
         return services;
     }

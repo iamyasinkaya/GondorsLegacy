@@ -3,7 +3,7 @@ using GondorsLegacy.ApiGateway.HttpMessageHandlers;
 using Ocelot.Configuration.File;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
-using Ocelot.Values;
+using GondorsLegacy.Infrastructure.Monitoring.OpenTelemetry;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,6 +55,7 @@ services.PostConfigure<FileConfiguration>(fileConfiguration =>
 });
 
 services.AddReverseProxy().LoadFromConfig(configuration.GetSection("Yarp"));
+services.AddOpenTelemetryExtension(configuration);
 
 var app = builder.Build();
 
