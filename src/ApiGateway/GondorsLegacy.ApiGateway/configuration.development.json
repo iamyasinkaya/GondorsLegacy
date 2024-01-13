@@ -1,19 +1,37 @@
 {
     "Routes": [
         {
+            // İstemci tarafından gönderilen isteklerin yönlendirileceği hedef yol şablonu.
             "DownstreamPathTemplate": "/api/{version}/reservation/{everything}",
+
+            // İstemcinin isteğini yönlendireceğiniz sunucunun protokolü (http veya https).
             "DownstreamScheme": "http",
+
+            // İstemcinin isteğini yönlendireceğiniz hedef sunucunun ana bilgisayar adı ve port numarası.
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
                     "Port": 5001
                 }
             ],
+
+            // Yönlendirilen isteğin hedef sunucudaki yol şablonu.
             "UpstreamPathTemplate": "/api/{version}/reservation/{everything}",
+
+            // İstemcinin yönlendirdiği HTTP metodları (Get, Post, Put, Delete gibi).
             "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-            "UpstreamScheme": "http"
+
+            // İstemcinin isteğini yönlendireceğiniz sunucunun protokolü (http veya https).
+            "UpstreamScheme": "http",
+
+            // Belirli bir süre içinde yapılabilecek istek sayısını sınırlamak için kullanılan özellik.
+            "RateLimiting": {
+                "Limit": 1000, // Belirli bir süre içinde izin verilen maksimum istek sayısı.
+                "Period": "1h" // Hız sınırlamasının uygulandığı süre (örneğin, 1 saat).
+            }
         },
         {
+            // İkinci bir rota için aynı açıklamalar geçerlidir.
             "DownstreamPathTemplate": "/api/{version}/hotel/{everything}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
@@ -24,7 +42,11 @@
             ],
             "UpstreamPathTemplate": "/api/{version}/hotel/{everything}",
             "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-            "UpstreamScheme": "http"
+            "UpstreamScheme": "http",
+            "RateLimiting": {
+                "Limit": 1000,
+                "Period": "1h"
+            }
         }
     ]
 }

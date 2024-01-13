@@ -1,50 +1,139 @@
-version: '3.4'
+version: '3.8'
 
 services:
-  gondorslegacy.services.reservation:
-    image: ${DOCKER_REGISTRY-}gondorslegacyservices
-    build:
-      context: .
-      dockerfile: src/Services/GondorsLegacy.Services.Reservation/Dockerfile
+  # SQL Server servisi
+  sql_server:
+    image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
-      ConnectionStrings__ReservationDatabase: "Server=localhost;Database=Reservation.Services.Reservation;User Id=SA;Password=Password123;MultipleActiveResultSets=true;Encrypt=False"
-      AllowedHosts: "*"
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Password123
+    ports:
+      - "1433:1433"
+
+  # Nginx servisi
+  nginx:
+    image: nginx:latest
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
     ports:
       - "80:80"
-    depends_on:
-      - redis
-      - elasticsearch
-      - rabbitmq
     networks:
-      - reservation-network
+      - web
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
+  # Redis servisi
   redis:
-    image: "redis:latest"
+    image: redis:latest
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
     ports:
       - "6379:6379"
     networks:
-      - reservation-network
+      - web
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
-  elasticsearch:
-    image: "docker.elastic.co/elasticsearch/elasticsearch:7.15.0"
-    environment:
-      - discovery.type=single-node
-    ports:
-      - "9200:9200"
-    networks:
-      - reservation-network
-
+  # RabbitMQ servisi
   rabbitmq:
     image: "rabbitmq:3-management"
-    environment:
-      - RABBITMQ_DEFAULT_USER=user
-      - RABBITMQ_DEFAULT_PASS=password
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
     ports:
-      - "5672:5672"
       - "15672:15672"
+      - "5672:5672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=iraXlX9T2a9LBBSu
     networks:
-      - reservation-network
+      - web
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # MySQL servisi
+  mysql:
+    image: mysql:latest
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=my-secret-pw
+      - MYSQL_DATABASE=db
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=51g4gXF9sa8d9l39
+    networks:
+      - web
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "admin", "-p51g4gXF9sa8d9l39"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Zipkin servisi
+  zipkin:
+    image: openzipkin/zipkin
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "9411:9411"
+    networks:
+      - web
+
+  # Jaeger servisi
+  jaeger:
+    image: jaegertracing/all-in-one
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "16686:16686"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "4317:4317"
+      - "4318:4318"
+    networks:
+      - web
 
 networks:
-  reservation-network:
-    driver: bridge
+  # Web aðý
+  web:
+    driver: overlay

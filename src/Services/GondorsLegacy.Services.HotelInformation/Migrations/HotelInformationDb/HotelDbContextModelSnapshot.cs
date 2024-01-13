@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace GondorsLegacy.Services.HotelInformation.Migrations.HotelDb
+namespace GondorsLegacy.Services.HotelInformation.Migrations.HotelInformationDb
 {
     [DbContext(typeof(HotelDbContext))]
     partial class HotelDbContextModelSnapshot : ModelSnapshot
@@ -57,43 +57,43 @@ namespace GondorsLegacy.Services.HotelInformation.Migrations.HotelDb
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1df5491a-2109-4ad0-864d-6b2d95f0687e"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 22, 8, 18, 3, 519, DateTimeKind.Unspecified).AddTicks(5651), new TimeSpan(0, 0, 0, 0, 0)),
+                            Id = new Guid("fb456969-5392-4e25-abca-06d89a284aa7"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 1, 13, 10, 32, 1, 252, DateTimeKind.Unspecified).AddTicks(930), new TimeSpan(0, 0, 0, 0, 0)),
                             Description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
                             Name = "Salvator Hotel",
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 22, 8, 18, 3, 519, DateTimeKind.Unspecified).AddTicks(5652), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 1, 13, 10, 32, 1, 252, DateTimeKind.Unspecified).AddTicks(932), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
                         {
-                            Id = new Guid("a25d1208-49ef-428e-8441-25f494f66cd8"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 22, 8, 18, 3, 519, DateTimeKind.Unspecified).AddTicks(5655), new TimeSpan(0, 0, 0, 0, 0)),
+                            Id = new Guid("fc72ceb6-6482-4245-9358-ab215fb3e816"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 1, 13, 10, 32, 1, 252, DateTimeKind.Unspecified).AddTicks(935), new TimeSpan(0, 0, 0, 0, 0)),
                             Description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
                             Name = "Kelebek Hotel",
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 22, 8, 18, 3, 519, DateTimeKind.Unspecified).AddTicks(5655), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 1, 13, 10, 32, 1, 252, DateTimeKind.Unspecified).AddTicks(935), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
                         {
-                            Id = new Guid("baf458d6-a9a0-4ff9-a795-9fd5358a16dc"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 22, 8, 18, 3, 519, DateTimeKind.Unspecified).AddTicks(5657), new TimeSpan(0, 0, 0, 0, 0)),
+                            Id = new Guid("e29fcaa9-406c-49b2-b375-8166963f32a8"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 1, 13, 10, 32, 1, 252, DateTimeKind.Unspecified).AddTicks(937), new TimeSpan(0, 0, 0, 0, 0)),
                             Description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
                             Name = "Vensure Hotel",
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 22, 8, 18, 3, 519, DateTimeKind.Unspecified).AddTicks(5658), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 1, 13, 10, 32, 1, 252, DateTimeKind.Unspecified).AddTicks(938), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
                         {
-                            Id = new Guid("e0a98bd9-50ad-4ebe-8253-694ad35dcc3f"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 22, 8, 18, 3, 519, DateTimeKind.Unspecified).AddTicks(5659), new TimeSpan(0, 0, 0, 0, 0)),
+                            Id = new Guid("599bc6bd-68a7-43e6-bb91-ba39d15df78e"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 1, 13, 10, 32, 1, 252, DateTimeKind.Unspecified).AddTicks(940), new TimeSpan(0, 0, 0, 0, 0)),
                             Description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
                             Name = "Radisson Hotel",
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 22, 8, 18, 3, 519, DateTimeKind.Unspecified).AddTicks(5660), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 1, 13, 10, 32, 1, 252, DateTimeKind.Unspecified).AddTicks(940), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
                         {
-                            Id = new Guid("b30a16b2-8b74-4d54-a5bf-8e4411f67803"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 22, 8, 18, 3, 519, DateTimeKind.Unspecified).AddTicks(5661), new TimeSpan(0, 0, 0, 0, 0)),
+                            Id = new Guid("c65715c0-8f50-457e-b274-1e908b669a14"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 1, 13, 10, 32, 1, 252, DateTimeKind.Unspecified).AddTicks(942), new TimeSpan(0, 0, 0, 0, 0)),
                             Description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
                             Name = "Koeralop Hotel",
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2023, 12, 22, 8, 18, 3, 519, DateTimeKind.Unspecified).AddTicks(5662), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 1, 13, 10, 32, 1, 252, DateTimeKind.Unspecified).AddTicks(942), new TimeSpan(0, 0, 0, 0, 0))
                         });
                 });
 #pragma warning restore 612, 618
