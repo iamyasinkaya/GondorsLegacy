@@ -9,8 +9,8 @@ namespace GondorsLegacy.Services.Reservation.Commands
 {
     public class CreateReservationCommand : IRequest
     {
-		public Entities.Reservation Reservation { get; set; }
-	}
+        public Entities.Reservation Reservation { get; set; }
+    }
 
     public class CreateReservationCommandHandler : IRequestHandler<CreateReservationCommand>
     {
@@ -39,27 +39,27 @@ namespace GondorsLegacy.Services.Reservation.Commands
         {
             try
             {
-                    // Proxy'i oluşturun
-                    var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_reservationService, _interceptor);
+                // Proxy'i oluşturun
+                var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_reservationService, _interceptor);
 
-                    // Metot çağrısını proxy üzerinden yapın
-                    await proxy.AddAsync(request.Reservation);
+                // Metot çağrısını proxy üzerinden yapın
+                await proxy.AddAsync(request.Reservation);
 
 
-                    // Rezervasyonun sonuna kadar kalan süreyi hesaplayın
-                    var exitDate = request.Reservation.CheckOutDate;
-                    var timeSpan = exitDate - DateTime.Now;
+                // Rezervasyonun sonuna kadar kalan süreyi hesaplayın
+                var exitDate = request.Reservation.CheckOutDate;
+                var timeSpan = exitDate - DateTime.Now;
 
-                    // Rezervasyon nesnesini JSON'a dönüştürün
-                    var reservationJson = JsonConvert.SerializeObject(request.Reservation);
+                // Rezervasyon nesnesini JSON'a dönüştürün
+                var reservationJson = JsonConvert.SerializeObject(request.Reservation);
 
-                    // Rezervasyon bilgilerini daha ayrıntılı şekilde kaydedin
-                    //_logger.LogInformation("Reservation created by customer {Id}: {Reservation}", request.Reservation.CustomerId, reservationJson);
+                // Rezervasyon bilgilerini daha ayrıntılı şekilde kaydedin
+                //_logger.LogInformation("Reservation created by customer {Id}: {Reservation}", request.Reservation.CustomerId, reservationJson);
 
-                    // Önbelleğe rezervasyon verilerini belirli bir süreyle ekleyin
-                    var cacheKey = $"Reservation_{request.Reservation.CustomerId}";
-                    _cacheService.Add(cacheKey, reservationJson, timeSpan);
-                
+                // Önbelleğe rezervasyon verilerini belirli bir süreyle ekleyin
+                var cacheKey = $"Reservation_{request.Reservation.CustomerId}";
+                _cacheService.Add(cacheKey, reservationJson, timeSpan);
+
             }
             catch (Exception ex)
             {

@@ -3,6 +3,7 @@ using GondorsLegacy.Infrastructure.Web.MinimalApis;
 using GondorsLegacy.Services.Reservation.Commands;
 using GondorsLegacy.Services.Reservation.Constants;
 using GondorsLegacy.Services.Reservation.Entities;
+using GondorsLegacy.Services.Reservation.Models;
 using GondorsLegacy.Services.Reservation.Validations;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -91,7 +92,7 @@ public class CreateReservationRequestHandler : IEndpointHandler
             else
             {
                 // Doğrulama hatası durumunda uygun bir hata yanıtı veriyoruz
-                var errorDetails = new ErrorResponse
+                var errorDetails = new ErrorResponseModel
                 {
                     StatusCode = StatusCodes.Status400BadRequest,
                     Message = Messages.InvalidReservationRequestMessage,
@@ -107,7 +108,7 @@ public class CreateReservationRequestHandler : IEndpointHandler
         catch (Exception ex)
         {
             // Diğer hata durumları için uygun bir hata yanıtı verin
-            var errorResponse = new ErrorResponse
+            var errorResponse = new ErrorResponseModel
             {
                 StatusCode = StatusCodes.Status400BadRequest,
                 Message = Messages.DefaultErrorMessage,

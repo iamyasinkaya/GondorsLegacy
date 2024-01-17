@@ -33,31 +33,31 @@ public class CancelReservationCommandHandler : IRequestHandler<CancelReservation
     }
 
     public async Task Handle(CancelReservationCommand request, CancellationToken cancellationToken)
-{
-    try
     {
-        // Proxy'i oluşturun
-        var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_reservationService, _interceptor);
-
-        // Rezervasyonu proxy üzerinden alın
-        var reservation = await proxy.GetByIdAsync(request.ReservationId);
-
-        // Eğer rezervasyon daha önce iptal edilmediyse işlemi yapın
-        if (!reservation.IsReservationCancelled)
+        try
         {
-            // İptal işaretini true yapın
-            reservation.IsReservationCancelled = true;
+            // Proxy'i oluşturun
+            var proxy = _proxyGenerator.CreateInterfaceProxyWithTarget(_reservationService, _interceptor);
 
-            // Rezervasyonu güncelleyin
-            await proxy.UpdateAsync(reservation);
+            // Rezervasyonu proxy üzerinden alın
+            var reservation = await proxy.GetByIdAsync(request.ReservationId);
 
-            _publisher.Publish(request);
+            // Eğer rezervasyon daha önce iptal edilmediyse işlemi yapın
+            if (!reservation.IsReservationCancelled)
+            {
+                // İptal işaretini true yapın
+                reservation.IsReservationCancelled = true;
+
+                // Rezervasyonu güncelleyin
+                await proxy.UpdateAsync(reservation);
+
+                _publisher.Publish(request);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
         }
     }
-    catch (Exception ex)
-    {
-        throw new Exception(ex.Message);
-    }
-}
 
 }

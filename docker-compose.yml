@@ -1,36 +1,33 @@
 version: '3.8'
 
 services:
-  # SQL Server servisi
   sql_server:
     image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=Password123
+      - ACCEPT_EULA=Y  # EULA (End User License Agreement) þartlarýný kabul et
+      - SA_PASSWORD=Password123 # SQL Server 'SA' þifresi
     ports:
-      - "1433:1433"
+      - "1433:1433" # Port yönlendirmesi
 
-  # Nginx servisi
   nginx:
     image: nginx:latest
     deploy:
-      replicas: 1
+      replicas: 1 # Çalýþan örnek sayýsý
       update_config:
-        parallelism: 2
-        delay: 10s
+        parallelism: 2  # Güncelleme iþlemlerinde eþ zamanlý çalýþan örnek sayýsý
+        delay: 10s # Güncelleme iþlemleri arasýndaki gecikme
       restart_policy:
-        condition: on-failure
+        condition: on-failure  # Baþarýsýz durumda otomatik olarak yeniden baþlatma
     ports:
-      - "80:80"
+      - "80:80" # Port yönlendirmesi
     networks:
-      - web
+      - web # Kullanýlan að
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      test: ["CMD", "curl", "-f", "http://localhost"] # Saðlýk kontrolü için kullanýlan komut
+      interval: 30s  # Kontrol aralýðý
+      timeout: 10s  # Maksimum kontrol süresi
+      retries: 3  # Baþarýsýz kontrol durumunda tekrar deneme sayýsý
 
-  # Redis servisi
   redis:
     image: redis:latest
     deploy:
@@ -50,7 +47,6 @@ services:
       timeout: 10s
       retries: 3
 
-  # RabbitMQ servisi
   rabbitmq:
     image: "rabbitmq:3-management"
     deploy:
@@ -74,7 +70,6 @@ services:
       timeout: 10s
       retries: 3
 
-  # MySQL servisi
   mysql:
     image: mysql:latest
     deploy:
@@ -99,7 +94,6 @@ services:
       timeout: 10s
       retries: 3
 
-  # Zipkin servisi
   zipkin:
     image: openzipkin/zipkin
     deploy:
@@ -114,7 +108,6 @@ services:
     networks:
       - web
 
-  # Jaeger servisi
   jaeger:
     image: jaegertracing/all-in-one
     deploy:
@@ -133,7 +126,38 @@ services:
     networks:
       - web
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+    networks:
+      - web
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.10.0
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    networks:
+      - web
+
 networks:
-  # Web aðý
   web:
     driver: overlay

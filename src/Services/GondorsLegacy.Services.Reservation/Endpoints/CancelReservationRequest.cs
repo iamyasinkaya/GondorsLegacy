@@ -2,6 +2,7 @@
 using GondorsLegacy.Services.Reservation.Commands;
 using GondorsLegacy.Services.Reservation.Constants;
 using GondorsLegacy.Services.Reservation.Entities;
+using GondorsLegacy.Services.Reservation.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
@@ -54,15 +55,19 @@ public class CancelReservationRequestHandler : IEndpointHandler
         {
             if (request != null)
             {
-                await dispatcher.Send(new CancelReservationCommand
-                { CustomerId = request.CustomerId, IsReservationCancelled = request.IsReservationCancelled, ReservationId = request.ReservationId });
+                await dispatcher.Send(request: new CancelReservationCommand
+                {
+                    CustomerId = request.CustomerId,
+                    IsReservationCancelled = request.IsReservationCancelled,
+                    ReservationId = request.ReservationId
+                });
 
                 return new OkResult();
             }
             else
             {
                 // Doğrulama hatası durumunda uygun bir hata yanıtı veriyoruz
-                var errorDetails = new ErrorResponse
+                var errorDetails = new ErrorResponseModel
                 {
                     StatusCode = StatusCodes.Status400BadRequest,
                     Message = Messages.InvalidReservationRequestMessage,
@@ -70,13 +75,13 @@ public class CancelReservationRequestHandler : IEndpointHandler
                 };
 
                 // 400 Bad Request yanıtı dön
-                return new BadRequestObjectResult(error:errorDetails);
+                return new BadRequestObjectResult(error: errorDetails);
             }
         }
         catch (Exception ex)
         {
             // Diğer hata durumları için uygun bir hata yanıtı verin
-            var errorResponse = new ErrorResponse
+            var errorResponse = new ErrorResponseModel
             {
                 StatusCode = StatusCodes.Status400BadRequest,
                 Message = Messages.DefaultErrorMessage,
@@ -84,7 +89,7 @@ public class CancelReservationRequestHandler : IEndpointHandler
             };
 
             // 400 Bad Request yanıtı döndürün
-            return new BadRequestObjectResult(error:errorResponse);
+            return new BadRequestObjectResult(error: errorResponse);
         }
     }
 }

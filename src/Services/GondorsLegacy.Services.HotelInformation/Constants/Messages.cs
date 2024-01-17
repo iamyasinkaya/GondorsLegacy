@@ -15,7 +15,7 @@
         /// <summary>
         /// Geçersiz bir hotel isteği gönderildi. Lütfen isteği kontrol edin ve tekrar deneyin.
         /// </summary>
-        public const string InvalidHotelRequestMessage = "Hotel isteği doğrulanamadı";
+        public const string InvalidHotelRequestMessage = "Otel isteği doğrulanamadı";
 
         /// <summary>
         /// Otel başarıyla eklendi.
@@ -35,7 +35,7 @@
         /// <summary>
         /// Boş veya geçersiz parametrelerle birlikte hotel isteği gönderildi.
         /// </summary>
-        public const string EmptyOrInvalidParameters = "Boş veya geçersiz parametrelerle birlikte hotel isteği gönderildi";
+        public const string EmptyOrInvalidParameters = "Boş veya geçersiz parametrelerle birlikte otel isteği gönderildi";
 
         /// <summary>
         /// İstek başarıyla işlendi.
