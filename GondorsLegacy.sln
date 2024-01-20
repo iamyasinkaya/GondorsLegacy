@@ -25,11 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GondorsLegacy.Infrastructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GondorsLegacy.CrossCuttingCorners", "src\Common\GondorsLegacy.CrossCuttingCorners\GondorsLegacy.CrossCuttingCorners.csproj", "{2D44DFEF-317D-4F0F-8DC0-741C5D27D8A4}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F6C2FA41-F270-45B8-A308-8F42B29860DB}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{17509B47-59CF-4759-A5D8-0FF579A2F6EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GondorsLegacy.ApiGateway", "src\ApiGateway\GondorsLegacy.ApiGateway\GondorsLegacy.ApiGateway.csproj", "{BF26FDF4-D88A-4ECA-B5ED-77F6E672CDAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GondorsLegacy.ApiGateway", "src\ApiGateway\GondorsLegacy.ApiGateway\GondorsLegacy.ApiGateway.csproj", "{BF26FDF4-D88A-4ECA-B5ED-77F6E672CDAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,10 +67,6 @@ Global
 		{2D44DFEF-317D-4F0F-8DC0-741C5D27D8A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D44DFEF-317D-4F0F-8DC0-741C5D27D8A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D44DFEF-317D-4F0F-8DC0-741C5D27D8A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F6C2FA41-F270-45B8-A308-8F42B29860DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F6C2FA41-F270-45B8-A308-8F42B29860DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F6C2FA41-F270-45B8-A308-8F42B29860DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F6C2FA41-F270-45B8-A308-8F42B29860DB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BF26FDF4-D88A-4ECA-B5ED-77F6E672CDAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BF26FDF4-D88A-4ECA-B5ED-77F6E672CDAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF26FDF4-D88A-4ECA-B5ED-77F6E672CDAC}.Release|Any CPU.ActiveCfg = Release|Any CPU

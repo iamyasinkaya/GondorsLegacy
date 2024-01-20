@@ -22,6 +22,5 @@
     <Folder Include="Common\Services\" />
     <Folder Include="Common\Queries\" />
     <Folder Include="Common\Commands\" />
-    <Folder Include="Decorators\" />
   </ItemGroup>
 </Project>
