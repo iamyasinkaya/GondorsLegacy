@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using GondorsLegacy.Domain.Repositories;
 using GondorsLegacy.Infrastructure.Monitoring.OpenTelemetry;
-using GondorsLegacy.Infrastructure.Web.ExceptionHandlers;
 using GondorsLegacy.Services.Reservation.Mappers;
 using GondorsLegacy.Services.Reservation.RateLimiterPolicies;
 using GondorsLegacy.Services.Reservation.Repositories;
