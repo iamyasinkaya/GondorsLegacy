@@ -2,6 +2,7 @@
 using GondorsLegacy.Domain.Repositories;
 using GondorsLegacy.Infrastructure.Monitoring.OpenTelemetry;
 using GondorsLegacy.Services.HotelInformation.Mappers;
+using GondorsLegacy.Services.HotelInformation.RateLimiterPolicies;
 using GondorsLegacy.Services.HotelInformation.Repositories;
 using GondorsLegacy.Services.HotelInformation.Validations;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,10 @@ public static class HotelModuleServiceCollectionExtensions
 
         services.AddOpenTelemetryExtension(Configuration);
 
+        services.AddRateLimiter(options =>
+        {
+            options.AddPolicy<string, DefaultRateLimiterPolicy>(RateLimiterPolicyNames.DefaultPolicy);
+        });
         return services;
     }
     public static void MigrateReservationDb(this IApplicationBuilder app)

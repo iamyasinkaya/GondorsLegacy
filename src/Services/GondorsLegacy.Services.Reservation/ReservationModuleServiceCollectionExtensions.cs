@@ -1,11 +1,13 @@
-﻿using System.Reflection;
-using AutoMapper;
+﻿using AutoMapper;
 using GondorsLegacy.Domain.Repositories;
 using GondorsLegacy.Infrastructure.Monitoring.OpenTelemetry;
+using GondorsLegacy.Infrastructure.Web.ExceptionHandlers;
 using GondorsLegacy.Services.Reservation.Mappers;
+using GondorsLegacy.Services.Reservation.RateLimiterPolicies;
 using GondorsLegacy.Services.Reservation.Repositories;
 using GondorsLegacy.Services.Reservation.Validations;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace GondorsLegacy.Services.Reservation;
 
@@ -32,7 +34,12 @@ public static class ReservationModuleServiceCollectionExtensions
         services.AddSingleton(mapper);
 
         services.AddOpenTelemetryExtension(Configuration);
-      
+
+        services.AddRateLimiter(options =>
+        {
+            options.AddPolicy<string, DefaultRateLimiterPolicy>(RateLimiterPolicyNames.DefaultPolicy);
+        });
+
         return services;
     }
 
