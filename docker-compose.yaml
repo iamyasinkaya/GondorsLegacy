@@ -1,0 +1,173 @@
+version: "3.8"
+
+services:
+  sql_server:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y # EULA (End User License Agreement) �artlar�n� kabul et
+      - SA_PASSWORD=Password123 # SQL Server 'SA' �ifresi
+    ports:
+      - "1433:1433" # Port y�nlendirmesi
+
+  nginx:
+    image: nginx:latest
+    deploy:
+      replicas: 1 # �al��an �rnek say�s�
+      update_config:
+        parallelism: 2 # G�ncelleme i�lemlerinde e� zamanl� �al��an �rnek say�s�
+        delay: 10s # G�ncelleme i�lemleri aras�ndaki gecikme
+      restart_policy:
+        condition: on-failure # Ba�ar�s�z durumda otomatik olarak yeniden ba�latma
+    ports:
+      - "80:80" # Port y�nlendirmesi
+    networks:
+      - web # Kullan�lan a�
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"] # Sa�l�k kontrol� i�in kullan�lan komut
+      interval: 30s # Kontrol aral���
+      timeout: 10s # Maksimum kontrol s�resi
+      retries: 3 # Ba�ar�s�z kontrol durumunda tekrar deneme say�s�
+
+  redis:
+    image: redis:latest
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "6379:6379"
+    networks:
+      - web
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=iraXlX9T2a9LBBSu
+    networks:
+      - web
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  mysql:
+    image: mysql:latest
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=my-secret-pw
+      - MYSQL_DATABASE=db
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=51g4gXF9sa8d9l39
+    networks:
+      - web
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "admin",
+          "-p51g4gXF9sa8d9l39",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  zipkin:
+    image: openzipkin/zipkin
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "9411:9411"
+    networks:
+      - web
+
+  jaeger:
+    image: jaegertracing/all-in-one
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "16686:16686"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "4317:4317"
+      - "4318:4318"
+    networks:
+      - web
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+    networks:
+      - web
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.10.0
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    networks:
+      - web
+
+networks:
+  web:
+    driver: overlay
