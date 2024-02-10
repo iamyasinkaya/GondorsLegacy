@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using Asp.Versioning.Builder;
+using Asp.Versioning;
+using AutoMapper;
 using GondorsLegacy.Infrastructure.Web.MinimalApis;
 using GondorsLegacy.Services.Reservation.Commands;
 using GondorsLegacy.Services.Reservation.Constants;
@@ -43,7 +45,13 @@ public class CreateReservationRequestHandler : IEndpointHandler
 {
     public static void MapEndpoint(IEndpointRouteBuilder builder)
     {
-        builder.MapPost("api/v1/reservation/create", HandleAsync)
+        ApiVersionSet apiVersionSet = builder.NewApiVersionSet()
+                                             .HasApiVersion(new ApiVersion(1))
+                                             .HasApiVersion(new ApiVersion(2))
+                                             .ReportApiVersions()
+                                             .Build();
+
+        builder.MapPost("api/v{version:apiVersion}/reservation/create", HandleAsync)
             .WithName("CreateReservation")
             .Produces<CreateReservationResponse>(statusCode: StatusCodes.Status201Created, contentType: "application/json")
             .ProducesProblem(StatusCodes.Status400BadRequest)
@@ -64,7 +72,7 @@ public class CreateReservationRequestHandler : IEndpointHandler
                     },
                     Required = true
                 }
-            });
+            }).WithApiVersionSet(apiVersionSet).MapToApiVersion(1);
     }
 
     private static async Task<IResult> HandleAsync(IMediator dispatcher, [FromBody] CreateReservationRequest request, IMapper mapper)
@@ -87,7 +95,7 @@ public class CreateReservationRequestHandler : IEndpointHandler
                 };
 
                 // İşlem başarılı olduğunda 201 Created yanıtı dön
-                return Results.Created($"api/v1/reservations/{response.ReservationId}", response);
+                return Results.Created($"api/v{{version:apiVersion}}/reservations/{response.ReservationId}", response);
             }
             else
             {

@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+﻿using Asp.Versioning;
 using GondorsLegacy.Application;
 using GondorsLegacy.Infrastructure.Caching;
 using GondorsLegacy.Infrastructure.DateTimes;
@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 using RabbitMQ.Client;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -133,7 +134,23 @@ builder.Services.AddHealthChecks()
                    };
                });
 
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1);
+    options.ReportApiVersions = true;
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ApiVersionReader = ApiVersionReader.Combine(
+        new UrlSegmentApiVersionReader(),
+        new HeaderApiVersionReader("X-Api-Version"));
+}).AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'V";
+    options.SubstituteApiVersionInUrl = true;
+});
+
 var app = builder.Build();
+
+
 
 app.MapHealthChecks("/health",
     new HealthCheckOptions

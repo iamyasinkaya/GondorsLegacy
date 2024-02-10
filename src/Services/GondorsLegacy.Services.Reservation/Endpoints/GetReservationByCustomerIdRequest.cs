@@ -1,3 +1,5 @@
+using Asp.Versioning.Builder;
+using Asp.Versioning;
 using GondorsLegacy.Infrastructure.Web.MinimalApis;
 using GondorsLegacy.Services.Reservation.Models;
 using GondorsLegacy.Services.Reservation.Queries;
@@ -10,7 +12,12 @@ public class GetReservationByCustomerIdRequest : IEndpointHandler
 {
  public static void MapEndpoint(IEndpointRouteBuilder builder)
     {
-        builder.MapGet("api/v1/reservation/customer/{customerId}", HandleAsync)
+        ApiVersionSet apiVersionSet = builder.NewApiVersionSet()
+                                             .HasApiVersion(new ApiVersion(1))
+                                             .HasApiVersion(new ApiVersion(2))
+                                             .ReportApiVersions()
+                                             .Build();
+        builder.MapGet("api/v{version:apiVersion}/reservation/customer/{customerId}", HandleAsync)
             .WithMetadata(new OpenApiOperation
             {
                 OperationId = "GetReservationCustomerId",
@@ -46,7 +53,7 @@ public class GetReservationByCustomerIdRequest : IEndpointHandler
                         Description = "Reservation not found"
                     }
                 }
-            });
+            }).WithApiVersionSet(apiVersionSet).MapToApiVersion(1);
     }
 
 
