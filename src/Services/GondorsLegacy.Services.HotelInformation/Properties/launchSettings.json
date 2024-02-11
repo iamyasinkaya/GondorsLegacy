@@ -11,7 +11,7 @@
   "profiles": {
     "hotel-webapi": {
       "commandName": "Project",
-      "launchBrowser": false,
+      "launchBrowser": true,
       "launchUrl": "swagger",
       "applicationUrl": "http://localhost:5002",
       "environmentVariables": {

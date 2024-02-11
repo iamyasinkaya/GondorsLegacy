@@ -2,6 +2,7 @@
 using GondorsLegacy.CrossCuttingCorners.Exceptions;
 using GondorsLegacy.Services.HotelInformation.Repositories;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace GondorsLegacy.Services.HotelInformation.Features.Hotel.GetHotel
@@ -57,11 +58,15 @@ namespace GondorsLegacy.Services.HotelInformation.Features.Hotel.GetHotel
             return null;
         }
 
-        private async Task<Entities.Hotel> TryGetHotelFromDatabase(GetHotelQuery request)
-        {
-            _logger.LogInformation("Veritabanından otel alınıyor.");
-            var hotel = await _hotelRepository.FirstOrDefaultAsync(_hotelRepository.GetAll().Where(x => x.Id == request.Id));
-            return hotel;
-        }
+        private async Task<Entities.Hotel> TryGetHotelFromDatabase(GetHotelQuery request) => await _hotelRepository
+    .GetAll()
+    .Include(x => x.HotelRatings)
+    .Include(x => x.HotelCustomerReviews)
+    .Include(x => x.Services)
+    .Include(x => x.Policies)
+    .Include(x => x.Addresses)
+    .Include(x => x.Rooms)
+    .FirstOrDefaultAsync(x => x.Id == request.Id);
+
     }
 }
