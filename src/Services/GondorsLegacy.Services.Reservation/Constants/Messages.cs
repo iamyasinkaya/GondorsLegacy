@@ -1,83 +1,28 @@
 ﻿namespace GondorsLegacy.Services.Reservation.Constants;
 
-public class Messages
+public record Messages(string Message)
 {
-    /// <summary>
-    /// Bir hata oluştu. Lütfen daha sonra tekrar deneyin.
-    /// </summary>
-    public const string DefaultErrorMessage = "Bir hata oluştu";
+    public static Messages DefaultErrorMessage { get; } = new("Bir hata oluştu. Lütfen daha sonra tekrar deneyin.");
+    public static Messages InvalidReservationRequestMessage { get; } = new("Geçersiz bir rezervasyon isteği gönderildi. Lütfen isteği kontrol edin ve tekrar deneyin.");
+    public static Messages UnauthorizedOperationMessage { get; } = new("Bu işlem için yetkiniz yok. Lütfen giriş yapın veya yöneticiye başvurun.");
+    public static Messages ResourceNotFoundMessage { get; } = new("Belirtilen kaynak bulunamadı veya mevcut değil.");
+    public static Messages RequestTimeoutMessage { get; } = new("İstek zaman aşımına uğradı. Lütfen tekrar deneyin.");
+    public static Messages InvalidRequestFieldsMessage { get; } = new("İstekteki gerekli alanlar eksik veya hatalı. Lütfen isteği kontrol edin.");
+    public static Messages SuccessMessage { get; } = new("İşlem başarıyla tamamlandı.");
+    public static Messages LoginRequiredMessage { get; } = new("Kullanıcı girişi gereklidir. Lütfen oturum açın.");
+    public static Messages UserNotFoundMessage { get; } = new("Kullanıcı bulunamadı.");
+    public static Messages AccessDeniedMessage { get; } = new("Erişim reddedildi.");
+    public static Messages InsufficientFundsMessage { get; } = new("Yetersiz bakiye.");
+    public static Messages DuplicateEntryMessage { get; } = new("Girdi zaten mevcut, lütfen farklı bir değer deneyin.");
+    public static Messages FileUploadErrorMessage { get; } = new("Dosya yüklenirken hata oluştu.");
+    public static Messages PasswordResetSuccessMessage { get; } = new("Şifre sıfırlama başarıyla tamamlandı.");
+    public static Messages EmailConfirmationMessage { get; } = new("E-posta doğrulama başarılı.");
 
-    /// <summary>
-    /// Geçersiz bir rezervasyon isteği gönderildi. Lütfen isteği kontrol edin ve tekrar deneyin.
-    /// </summary>
-    public const string InvalidReservationRequestMessage = "Rezervasyon isteği doğrulanamadı";
+    public static implicit operator string(Messages message) => message.Message;
 
-    /// <summary>
-    /// Bu işlem için yetkiniz yok. Lütfen giriş yapın veya yöneticiye başvurun.
-    /// </summary>
-    public const string UnauthorizedOperationMessage = "Yetkisiz işlem";
-
-    /// <summary>
-    /// Belirtilen kaynak bulunamadı veya mevcut değil.
-    /// </summary>
-    public const string ResourceNotFoundMessage = "Kaynak bulunamadı";
-
-    /// <summary>
-    /// İstek zaman aşımına uğradı. Lütfen tekrar deneyin.
-    /// </summary>
-    public const string RequestTimeoutMessage = "İstek zaman aşımına uğradı";
-
-    /// <summary>
-    /// İstekteki gerekli alanlar eksik veya hatalı. Lütfen isteği kontrol edin.
-    /// </summary>
-    public const string InvalidRequestFieldsMessage = "Geçersiz veya eksik alanlar";
-
-    /// <summary>
-    /// İşlem başarıyla tamamlandı.
-    /// </summary>
-    public const string SuccessMessage = "İşlem başarıyla tamamlandı";
-
-    /// <summary>
-    /// Kullanıcı girişi gereklidir. Lütfen oturum açın.
-    /// </summary>
-    public const string LoginRequiredMessage = "Oturum açma gereklidir";
-
-    // Yeni mesajlar
-    /// <summary>
-    /// Kullanıcı bulunamadı.
-    /// </summary>
-    public const string UserNotFoundMessage = "Kullanıcı bulunamadı";
-
-    /// <summary>
-    /// Erişim reddedildi.
-    /// </summary>
-    public const string AccessDeniedMessage = "Erişim reddedildi";
-
-    /// <summary>
-    /// Yetersiz bakiye.
-    /// </summary>
-    public const string InsufficientFundsMessage = "Yetersiz bakiye";
-
-    /// <summary>
-    /// Girdi zaten mevcut, lütfen farklı bir değer deneyin.
-    /// </summary>
-    public const string DuplicateEntryMessage = "Girdi zaten mevcut, lütfen farklı bir değer deneyin";
-
-    /// <summary>
-    /// Dosya yüklenirken hata oluştu.
-    /// </summary>
-    public const string FileUploadErrorMessage = "Dosya yüklenirken hata oluştu";
-
-    /// <summary>
-    /// Şifre sıfırlama başarıyla tamamlandı.
-    /// </summary>
-    public const string PasswordResetSuccessMessage = "Şifre sıfırlama başarıyla tamamlandı";
-
-    /// <summary>
-    /// E-posta doğrulama başarılı.
-    /// </summary>
-    public const string EmailConfirmationMessage = "E-posta doğrulama başarılı";
+    public override string ToString() => Message;
 }
+
 
 
 

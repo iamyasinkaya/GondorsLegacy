@@ -17,10 +17,10 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Yapılandırmayı oku
+// Yapılandırmadan 'RapidAPI' bölümünü alıp, AppSettings sınıfına dönüştürür.
 var appSettings = builder.Configuration.GetSection("RapidAPI").Get<AppSettings>();
 
-// Refit servisi yapılandırma
+// ApiService ve RefitClient'lar hizmetlere eklenir, yapılandırılır ve RapidAPI anahtarları ayarlanır.
 builder.Services.AddApiService(builder.Configuration);
 builder.Services.AddRefitClient<IExchangeRateApi>()
     .ConfigureHttpClient(c =>
@@ -38,6 +38,7 @@ builder.Services.AddRefitClient<IBookingApi>()
         c.DefaultRequestHeaders.Add("X-RapidAPI-Host", "apidojo-booking-v1.p.rapidapi.com");
     });
 
+// ContractsService, Controllers, Interceptors, HotelModule ve diğer servisler eklenir.
 builder.Services.AddContractsService();
 builder.Services.AddControllers();
 builder.Services.AddInterceptors();
@@ -46,6 +47,8 @@ builder.Services.AddDateTimeProvider();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddApplicationServices();
 builder.Services.AddCaches(builder.Configuration);
+
+// Swagger belgelendirmesi yapılandırılır.
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
@@ -60,17 +63,15 @@ builder.Services.AddSwaggerGen(c =>
             Url = new Uri("https://yasinkaya.tech")
         }
     });
-
-
-
 });
 
+// Sağlık kontrolü eklenir.
 builder.Services.AddHealthChecks()
-                .AddSqlServer(builder.Configuration
-                .GetConnectionString("HotelDatabase"));
+    .AddSqlServer(builder.Configuration.GetConnectionString("HotelDatabase"));
 
 var app = builder.Build();
 
+// '/health' endpoint'ine sağlık kontrolü eklendi.
 app.MapHealthChecks("/health",
     new HealthCheckOptions
     {
@@ -79,11 +80,12 @@ app.MapHealthChecks("/health",
         ResultStatusCodes = new Dictionary<HealthStatus, int>
         {
             {HealthStatus.Healthy, 200},
-            {HealthStatus.Degraded,503},
+            {HealthStatus.Degraded, 503},
             {HealthStatus.Unhealthy, 500}
         }
     });
 
+// Geliştirme ortamında Swagger ve Swagger UI kullanılır.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -91,10 +93,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
+// Controller'lar ve diğer uygulama işleyicileri eşleştirilir.
 app.MapControllers();
 app.MapEndpointHandlers(Assembly.GetCallingAssembly());
-app.Run();
 
+// Uygulama başlatılır.
+app.Run();
