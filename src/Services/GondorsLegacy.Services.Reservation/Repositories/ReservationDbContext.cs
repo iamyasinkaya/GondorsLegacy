@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using GondorsLegacy.Infrastructure.Persistence;
+using GondorsLegacy.Services.Reservation.Entities;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -13,6 +14,7 @@ public class ReservationDbContext : DbContextUnitOfWork<ReservationDbContext>
     }
 
     public DbSet<Entities.Reservation> Reservations { get; set; }
+    public DbSet<Guest> Guests { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

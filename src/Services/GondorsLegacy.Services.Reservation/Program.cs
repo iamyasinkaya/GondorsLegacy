@@ -7,7 +7,7 @@ using GondorsLegacy.Infrastructure.Logging;
 using GondorsLegacy.Infrastructure.MessagesBrokers;
 using GondorsLegacy.Infrastructure.Web.MinimalApis;
 using GondorsLegacy.Services.Reservation;
-using GondorsLegacy.Services.Reservation.Commands;
+using GondorsLegacy.Services.Reservation.Commands.Reservation;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;

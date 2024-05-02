@@ -1,26 +1,16 @@
-﻿using Asp.Versioning.Builder;
-using Asp.Versioning;
+﻿using Asp.Versioning;
+using Asp.Versioning.Builder;
 using GondorsLegacy.Infrastructure.Web.MinimalApis;
-using GondorsLegacy.Services.Reservation.Commands;
+using GondorsLegacy.Services.Reservation.Commands.Reservation;
 using GondorsLegacy.Services.Reservation.Constants;
-using GondorsLegacy.Services.Reservation.Entities;
 using GondorsLegacy.Services.Reservation.Models;
+using GondorsLegacy.Services.Reservation.Models.Requests.Reservation;
+using GondorsLegacy.Services.Reservation.Models.Responses.Reservation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 
-namespace GondorsLegacy.Services.Reservation.Endpoints;
-
-public class CancelReservationRequest
-{
-    public Guid ReservationId { get; set; } // Rezervasyon kimliği
-    public Guid CustomerId { get; set; } // Müşteri kimliği
-    public bool IsReservationCancelled { get; set; }
-}
-public class CancelReservationResponse
-{
-
-}
+namespace GondorsLegacy.Services.Reservation.Endpoints.Reservation;
 
 public class CancelReservationRequestHandler : IEndpointHandler
 {
@@ -35,7 +25,7 @@ public class CancelReservationRequestHandler : IEndpointHandler
             .WithName("CancelReservation")
             .Produces<CancelReservationResponse>(statusCode: StatusCodes.Status201Created, contentType: "application/json")
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .WithOpenApi(operation => new Microsoft.OpenApi.Models.OpenApiOperation
+            .WithOpenApi(operation => new OpenApiOperation
             {
                 Tags = new List<OpenApiTag> { new OpenApiTag { Name = "Reservations" } },
                 RequestBody = new OpenApiRequestBody

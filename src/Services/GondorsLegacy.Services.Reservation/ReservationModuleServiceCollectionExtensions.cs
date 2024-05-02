@@ -16,11 +16,15 @@ public static class ReservationModuleServiceCollectionExtensions
     {
         services.AddScoped<IRepository<Entities.Reservation, Guid>, Repository<Entities.Reservation, Guid>>();
         services.AddScoped<IReservationRepository, ReservationRepository>();
+
+        services.AddScoped<IRepository<Entities.Guest, Guid>, Repository<Entities.Guest, Guid>>();
+        services.AddScoped<IGuestRepository, GuestRepository>();
         services.AddDbContext<ReservationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ReservationDatabase")));
 
         services.AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
         services.AddTransient<ReservationValidator>();
+        services.AddTransient<GuestValidator>();
 
         // AutoMapper yapılandırması
         var mappingConfig = new MapperConfiguration(cfg =>

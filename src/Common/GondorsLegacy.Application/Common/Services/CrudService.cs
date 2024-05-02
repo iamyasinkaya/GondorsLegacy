@@ -53,13 +53,25 @@ public class CrudService<T> : ICrudService<T>
 
     public async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
     {
-        await _repository.UpdateAsync(entity, cancellationToken);
+        var existingEntity = await GetByIdAsync(entity.Id, cancellationToken);
+        if (existingEntity == null)
+        {
+            throw new Exception($"Entity with id {entity.Id} not found");
+        }
+
+        await _repository.UpdateAsync(entity);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         await _dispatcher.DispatchAsync(new EntityUpdatedEvent<T>(entity, DateTime.UtcNow), cancellationToken);
     }
 
     public async Task DeleteAsync(T entity, CancellationToken cancellationToken = default)
     {
+        var existingEntity = await GetByIdAsync(entity.Id, cancellationToken);
+        if (existingEntity == null)
+        {
+            throw new Exception($"Entity with id {entity.Id} not found");
+        }
+
         _repository.Delete(entity);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         await _dispatcher.DispatchAsync(new EntityDeletedEvent<T>(entity, DateTime.UtcNow), cancellationToken);

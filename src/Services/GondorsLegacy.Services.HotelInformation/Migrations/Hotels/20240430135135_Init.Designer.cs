@@ -4,16 +4,19 @@ using GondorsLegacy.Services.HotelInformation.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace GondorsLegacy.Services.HotelInformation.Migraions.HotelDb
+namespace GondorsLegacy.Services.HotelInformation.Migrations.Hotels
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240430135135_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,13 +106,13 @@ namespace GondorsLegacy.Services.HotelInformation.Migraions.HotelDb
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3e97bd4c-6762-41e7-8595-6c79a5d91a19"),
+                            Id = new Guid("ca937045-e20d-4651-89b1-3dbebd8b1156"),
                             AdditionalInfo = "NULL",
                             ApartmentNumber = "5",
                             BuildingNumber = "9",
                             City = "İstanbul",
                             Country = "Türkiye",
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 878, DateTimeKind.Unspecified).AddTicks(2798), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 21, DateTimeKind.Unspecified).AddTicks(6217), new TimeSpan(0, 3, 0, 0, 0)),
                             District = "Gaziosmanpaşa",
                             Floor = "1",
                             HotelId = new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"),
@@ -123,7 +126,7 @@ namespace GondorsLegacy.Services.HotelInformation.Migraions.HotelDb
                             Province = "İstanbul",
                             SecurityCode = "f4e465s1",
                             Street = "Kuyu",
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 878, DateTimeKind.Unspecified).AddTicks(2862), new TimeSpan(0, 3, 0, 0, 0))
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 21, DateTimeKind.Unspecified).AddTicks(6291), new TimeSpan(0, 3, 0, 0, 0))
                         });
                 });
 
@@ -168,12 +171,12 @@ namespace GondorsLegacy.Services.HotelInformation.Migraions.HotelDb
                         new
                         {
                             Id = new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 878, DateTimeKind.Unspecified).AddTicks(8485), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(1703), new TimeSpan(0, 3, 0, 0, 0)),
                             Description = "Açıklama",
                             EmailAddress = "info@salvatorresort.com",
                             Name = "SALVATOR RESORT HOTEL",
                             Phone = "05303288200",
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 878, DateTimeKind.Unspecified).AddTicks(8502), new TimeSpan(0, 3, 0, 0, 0)),
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(1718), new TimeSpan(0, 3, 0, 0, 0)),
                             Website = "https://www.salvatorresort.com"
                         });
                 });
@@ -235,35 +238,35 @@ namespace GondorsLegacy.Services.HotelInformation.Migraions.HotelDb
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5aa381c7-7dab-4c81-a8d0-6c517ded8318"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(773), new TimeSpan(0, 3, 0, 0, 0)),
-                            CustomerId = new Guid("efb1421d-65e7-4eda-bc9d-b6080420ba17"),
+                            Id = new Guid("5ae56c1c-e4f8-4dce-a348-7e97e10e502d"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(3597), new TimeSpan(0, 3, 0, 0, 0)),
+                            CustomerId = new Guid("7f1831d1-4fc0-4899-afab-156ed1ab5c24"),
                             Dislikes = 10,
                             HotelId = new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"),
                             IsHelpful = true,
                             IsRecommended = true,
                             IsVerified = true,
                             Likes = 10,
-                            ReviewDate = new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Local).AddTicks(797),
+                            ReviewDate = new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Local).AddTicks(3621),
                             ReviewText = "Bu otele bayıldım",
                             ReviewTitle = "Bu otele bayıldım!",
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(799), new TimeSpan(0, 3, 0, 0, 0))
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(3623), new TimeSpan(0, 3, 0, 0, 0))
                         },
                         new
                         {
-                            Id = new Guid("0230c9ac-c9fa-4d09-bf58-03979355604e"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(823), new TimeSpan(0, 3, 0, 0, 0)),
-                            CustomerId = new Guid("e1e1af7b-01f0-4dc3-95a1-dd6873bf3dd7"),
+                            Id = new Guid("e6c1fdf7-40b7-44a6-9d53-1bac83eea279"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(3628), new TimeSpan(0, 3, 0, 0, 0)),
+                            CustomerId = new Guid("93803ce2-71d1-4b23-88e6-13c3a5f63398"),
                             Dislikes = 12,
                             HotelId = new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"),
                             IsHelpful = true,
                             IsRecommended = true,
                             IsVerified = true,
                             Likes = 17,
-                            ReviewDate = new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Local).AddTicks(825),
+                            ReviewDate = new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Local).AddTicks(3629),
                             ReviewText = "Bu otele güzeldi",
                             ReviewTitle = "Bu otel güzeldi!",
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(827), new TimeSpan(0, 3, 0, 0, 0))
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(3630), new TimeSpan(0, 3, 0, 0, 0))
                         });
                 });
 
@@ -300,35 +303,35 @@ namespace GondorsLegacy.Services.HotelInformation.Migraions.HotelDb
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1388b190-db9f-47ec-9ab4-8ff9438ca309"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(3047), new TimeSpan(0, 3, 0, 0, 0)),
+                            Id = new Guid("78850b86-a52b-45fa-b33f-f88f61d54273"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(5061), new TimeSpan(0, 3, 0, 0, 0)),
                             HotelId = new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"),
-                            HotelPolicyType = 13,
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(3060), new TimeSpan(0, 3, 0, 0, 0))
+                            HotelPolicyType = 14,
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(5068), new TimeSpan(0, 3, 0, 0, 0))
                         },
                         new
                         {
-                            Id = new Guid("49909ea1-1cb9-4535-893d-0f96d05dea03"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(3067), new TimeSpan(0, 3, 0, 0, 0)),
+                            Id = new Guid("0d0d277b-4806-4e6b-a043-e5cde90def76"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(5072), new TimeSpan(0, 3, 0, 0, 0)),
                             HotelId = new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"),
-                            HotelPolicyType = 55,
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(3069), new TimeSpan(0, 3, 0, 0, 0))
+                            HotelPolicyType = 56,
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(5073), new TimeSpan(0, 3, 0, 0, 0))
                         },
                         new
                         {
-                            Id = new Guid("a04bcb45-5327-4533-b9c5-d035d1188608"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(3073), new TimeSpan(0, 3, 0, 0, 0)),
+                            Id = new Guid("3ab6b852-2c64-474f-9d2a-b5c7b027d186"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(5076), new TimeSpan(0, 3, 0, 0, 0)),
                             HotelId = new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"),
-                            HotelPolicyType = 43,
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(3074), new TimeSpan(0, 3, 0, 0, 0))
+                            HotelPolicyType = 44,
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(5077), new TimeSpan(0, 3, 0, 0, 0))
                         },
                         new
                         {
-                            Id = new Guid("41341e7b-c984-435b-b607-69877b6a7990"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(3078), new TimeSpan(0, 3, 0, 0, 0)),
+                            Id = new Guid("d7a90fc6-8073-4b0e-91dc-01f226bbac10"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(5080), new TimeSpan(0, 3, 0, 0, 0)),
                             HotelId = new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"),
-                            HotelPolicyType = 22,
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(3079), new TimeSpan(0, 3, 0, 0, 0))
+                            HotelPolicyType = 23,
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(5081), new TimeSpan(0, 3, 0, 0, 0))
                         });
                 });
 
@@ -383,16 +386,16 @@ namespace GondorsLegacy.Services.HotelInformation.Migraions.HotelDb
                     b.HasData(
                         new
                         {
-                            Id = new Guid("91a7887a-4318-4a0a-be4c-55248609e4d6"),
+                            Id = new Guid("d2e6cf3a-d001-4659-a10a-5d27272241b5"),
                             Amenities = 10f,
                             Cleanliness = 10f,
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(4909), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(6309), new TimeSpan(0, 3, 0, 0, 0)),
                             Description = "NULL",
                             HotelId = new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"),
                             Location = 10f,
                             ServiceQuality = 10f,
                             Stars = 5,
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(4921), new TimeSpan(0, 3, 0, 0, 0)),
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(6315), new TimeSpan(0, 3, 0, 0, 0)),
                             ValueForMoney = 10f
                         });
                 });
@@ -433,30 +436,30 @@ namespace GondorsLegacy.Services.HotelInformation.Migraions.HotelDb
                     b.HasData(
                         new
                         {
-                            Id = new Guid("260e469a-b87f-49e5-8ac8-c36716521552"),
+                            Id = new Guid("93abd8c4-2460-4839-a801-301272d4123f"),
                             Capacity = 50,
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(6411), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(7492), new TimeSpan(0, 3, 0, 0, 0)),
                             HotelId = new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"),
                             RoomType = 0,
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(6428), new TimeSpan(0, 3, 0, 0, 0))
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(7505), new TimeSpan(0, 3, 0, 0, 0))
                         },
                         new
                         {
-                            Id = new Guid("88f4520b-9c57-4e55-9654-107b926b214b"),
+                            Id = new Guid("fe13f5b3-d735-473f-a510-307d9155deb0"),
                             Capacity = 75,
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(6431), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(7515), new TimeSpan(0, 3, 0, 0, 0)),
                             HotelId = new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"),
                             RoomType = 3,
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(6434), new TimeSpan(0, 3, 0, 0, 0))
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(7518), new TimeSpan(0, 3, 0, 0, 0))
                         },
                         new
                         {
-                            Id = new Guid("69e60e50-08bf-4bdc-95fc-fce558a0ea60"),
+                            Id = new Guid("e3454d91-301a-4c13-bc43-d008c744be09"),
                             Capacity = 80,
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(6445), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(7520), new TimeSpan(0, 3, 0, 0, 0)),
                             HotelId = new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"),
                             RoomType = 5,
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(6447), new TimeSpan(0, 3, 0, 0, 0))
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(7522), new TimeSpan(0, 3, 0, 0, 0))
                         });
                 });
 
@@ -493,43 +496,43 @@ namespace GondorsLegacy.Services.HotelInformation.Migraions.HotelDb
                     b.HasData(
                         new
                         {
-                            Id = new Guid("86aa2b6a-329e-4ddf-a2db-21f8f6932fa6"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(7978), new TimeSpan(0, 3, 0, 0, 0)),
+                            Id = new Guid("8aaf0f3e-f150-4e9c-8da7-8f154e54a20e"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(8961), new TimeSpan(0, 3, 0, 0, 0)),
                             HotelId = new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"),
-                            HotelServiceType = 74,
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(7988), new TimeSpan(0, 3, 0, 0, 0))
+                            HotelServiceType = 75,
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(8973), new TimeSpan(0, 3, 0, 0, 0))
                         },
                         new
                         {
-                            Id = new Guid("58d6d610-424c-4df1-bda0-02848857920d"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(7999), new TimeSpan(0, 3, 0, 0, 0)),
+                            Id = new Guid("33d5cf9a-b162-4bd1-9ccd-84ce176a3f22"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(8978), new TimeSpan(0, 3, 0, 0, 0)),
                             HotelId = new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"),
-                            HotelServiceType = 51,
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(8001), new TimeSpan(0, 3, 0, 0, 0))
+                            HotelServiceType = 52,
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(8979), new TimeSpan(0, 3, 0, 0, 0))
                         },
                         new
                         {
-                            Id = new Guid("0097bc87-0623-461f-9479-7b96975fdbc9"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(8007), new TimeSpan(0, 3, 0, 0, 0)),
+                            Id = new Guid("7e3f89e2-be99-48e1-a43f-6d9aebd5a92b"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(8982), new TimeSpan(0, 3, 0, 0, 0)),
                             HotelId = new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"),
-                            HotelServiceType = 33,
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(8009), new TimeSpan(0, 3, 0, 0, 0))
+                            HotelServiceType = 34,
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(8983), new TimeSpan(0, 3, 0, 0, 0))
                         },
                         new
                         {
-                            Id = new Guid("5a7ec8e3-a70a-4058-861c-4457e3e54380"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(8013), new TimeSpan(0, 3, 0, 0, 0)),
+                            Id = new Guid("f5c22a88-3e86-405c-86de-1b75bca1e98e"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(8986), new TimeSpan(0, 3, 0, 0, 0)),
                             HotelId = new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"),
-                            HotelServiceType = 8,
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(8014), new TimeSpan(0, 3, 0, 0, 0))
+                            HotelServiceType = 9,
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(8987), new TimeSpan(0, 3, 0, 0, 0))
                         },
                         new
                         {
-                            Id = new Guid("442d1a17-b52d-4226-8c95-5052ce4a51af"),
-                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(8018), new TimeSpan(0, 3, 0, 0, 0)),
+                            Id = new Guid("53d2af56-fcdf-407f-9a17-5b05dd0fc336"),
+                            CreatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(8990), new TimeSpan(0, 3, 0, 0, 0)),
                             HotelId = new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"),
-                            HotelServiceType = 72,
-                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(8019), new TimeSpan(0, 3, 0, 0, 0))
+                            HotelServiceType = 73,
+                            UpdatedDateTime = new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(8991), new TimeSpan(0, 3, 0, 0, 0))
                         });
                 });
 

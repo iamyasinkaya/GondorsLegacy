@@ -17,6 +17,7 @@ public record Messages(string Message)
     public static Messages FileUploadErrorMessage { get; } = new("Dosya yüklenirken hata oluştu.");
     public static Messages PasswordResetSuccessMessage { get; } = new("Şifre sıfırlama başarıyla tamamlandı.");
     public static Messages EmailConfirmationMessage { get; } = new("E-posta doğrulama başarılı.");
+    public static Messages RequestProcessedSuccessfully { get; } = new Messages("İstek başarıyla işlendi");
 
     public static implicit operator string(Messages message) => message.Message;
 

@@ -4,7 +4,7 @@ using GondorsLegacy.Services.Reservation.Repositories;
 using MediatR;
 using Newtonsoft.Json;
 
-namespace GondorsLegacy.Services.Reservation.Queries;
+namespace GondorsLegacy.Services.Reservation.Queries.Reservation;
 
 public class GetReservationQuery : IRequest<Entities.Reservation>
 {

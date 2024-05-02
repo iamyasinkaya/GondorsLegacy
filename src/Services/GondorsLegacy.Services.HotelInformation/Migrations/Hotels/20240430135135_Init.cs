@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace GondorsLegacy.Services.HotelInformation.Migraions.HotelDb
+namespace GondorsLegacy.Services.HotelInformation.Migrations.Hotels
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -198,20 +198,20 @@ namespace GondorsLegacy.Services.HotelInformation.Migraions.HotelDb
             migrationBuilder.InsertData(
                 table: "Hotels",
                 columns: new[] { "Id", "CreatedDateTime", "Description", "EmailAddress", "Name", "Phone", "UpdatedDateTime", "Website" },
-                values: new object[] { new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 878, DateTimeKind.Unspecified).AddTicks(8485), new TimeSpan(0, 3, 0, 0, 0)), "Açıklama", "info@salvatorresort.com", "SALVATOR RESORT HOTEL", "05303288200", new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 878, DateTimeKind.Unspecified).AddTicks(8502), new TimeSpan(0, 3, 0, 0, 0)), "https://www.salvatorresort.com" });
+                values: new object[] { new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(1703), new TimeSpan(0, 3, 0, 0, 0)), "Açıklama", "info@salvatorresort.com", "SALVATOR RESORT HOTEL", "05303288200", new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(1718), new TimeSpan(0, 3, 0, 0, 0)), "https://www.salvatorresort.com" });
 
             migrationBuilder.InsertData(
                 table: "Addresses",
                 columns: new[] { "Id", "AdditionalInfo", "ApartmentNumber", "BuildingNumber", "City", "Country", "CreatedDateTime", "District", "Floor", "HotelId", "IsSecure", "Labels", "Latitude", "Longitude", "Neighborhood", "POBox", "PostCode", "Province", "SecurityCode", "Street", "UpdatedDateTime" },
-                values: new object[] { new Guid("3e97bd4c-6762-41e7-8595-6c79a5d91a19"), "NULL", "5", "9", "İstanbul", "Türkiye", new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 878, DateTimeKind.Unspecified).AddTicks(2798), new TimeSpan(0, 3, 0, 0, 0)), "Gaziosmanpaşa", "1", new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), true, "Özel Mülk", 34.100000000000001, 41.5, "Yenidoğan", "34100", "34100", "İstanbul", "f4e465s1", "Kuyu", new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 878, DateTimeKind.Unspecified).AddTicks(2862), new TimeSpan(0, 3, 0, 0, 0)) });
+                values: new object[] { new Guid("ca937045-e20d-4651-89b1-3dbebd8b1156"), "NULL", "5", "9", "İstanbul", "Türkiye", new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 21, DateTimeKind.Unspecified).AddTicks(6217), new TimeSpan(0, 3, 0, 0, 0)), "Gaziosmanpaşa", "1", new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), true, "Özel Mülk", 34.100000000000001, 41.5, "Yenidoğan", "34100", "34100", "İstanbul", "f4e465s1", "Kuyu", new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 21, DateTimeKind.Unspecified).AddTicks(6291), new TimeSpan(0, 3, 0, 0, 0)) });
 
             migrationBuilder.InsertData(
                 table: "HotelCustomerReviews",
                 columns: new[] { "Id", "CreatedDateTime", "CustomerId", "Dislikes", "HotelId", "IsHelpful", "IsRecommended", "IsVerified", "Likes", "ReviewDate", "ReviewText", "ReviewTitle", "UpdatedDateTime" },
                 values: new object[,]
                 {
-                    { new Guid("0230c9ac-c9fa-4d09-bf58-03979355604e"), new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(823), new TimeSpan(0, 3, 0, 0, 0)), new Guid("e1e1af7b-01f0-4dc3-95a1-dd6873bf3dd7"), 12, new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), true, true, true, 17, new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Local).AddTicks(825), "Bu otele güzeldi", "Bu otel güzeldi!", new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(827), new TimeSpan(0, 3, 0, 0, 0)) },
-                    { new Guid("5aa381c7-7dab-4c81-a8d0-6c517ded8318"), new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(773), new TimeSpan(0, 3, 0, 0, 0)), new Guid("efb1421d-65e7-4eda-bc9d-b6080420ba17"), 10, new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), true, true, true, 10, new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Local).AddTicks(797), "Bu otele bayıldım", "Bu otele bayıldım!", new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(799), new TimeSpan(0, 3, 0, 0, 0)) }
+                    { new Guid("5ae56c1c-e4f8-4dce-a348-7e97e10e502d"), new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(3597), new TimeSpan(0, 3, 0, 0, 0)), new Guid("7f1831d1-4fc0-4899-afab-156ed1ab5c24"), 10, new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), true, true, true, 10, new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Local).AddTicks(3621), "Bu otele bayıldım", "Bu otele bayıldım!", new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(3623), new TimeSpan(0, 3, 0, 0, 0)) },
+                    { new Guid("e6c1fdf7-40b7-44a6-9d53-1bac83eea279"), new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(3628), new TimeSpan(0, 3, 0, 0, 0)), new Guid("93803ce2-71d1-4b23-88e6-13c3a5f63398"), 12, new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), true, true, true, 17, new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Local).AddTicks(3629), "Bu otele güzeldi", "Bu otel güzeldi!", new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(3630), new TimeSpan(0, 3, 0, 0, 0)) }
                 });
 
             migrationBuilder.InsertData(
@@ -219,25 +219,25 @@ namespace GondorsLegacy.Services.HotelInformation.Migraions.HotelDb
                 columns: new[] { "Id", "CreatedDateTime", "HotelId", "HotelPolicyType", "UpdatedDateTime" },
                 values: new object[,]
                 {
-                    { new Guid("1388b190-db9f-47ec-9ab4-8ff9438ca309"), new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(3047), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 13, new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(3060), new TimeSpan(0, 3, 0, 0, 0)) },
-                    { new Guid("41341e7b-c984-435b-b607-69877b6a7990"), new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(3078), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 22, new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(3079), new TimeSpan(0, 3, 0, 0, 0)) },
-                    { new Guid("49909ea1-1cb9-4535-893d-0f96d05dea03"), new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(3067), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 55, new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(3069), new TimeSpan(0, 3, 0, 0, 0)) },
-                    { new Guid("a04bcb45-5327-4533-b9c5-d035d1188608"), new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(3073), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 43, new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(3074), new TimeSpan(0, 3, 0, 0, 0)) }
+                    { new Guid("0d0d277b-4806-4e6b-a043-e5cde90def76"), new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(5072), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 56, new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(5073), new TimeSpan(0, 3, 0, 0, 0)) },
+                    { new Guid("3ab6b852-2c64-474f-9d2a-b5c7b027d186"), new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(5076), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 44, new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(5077), new TimeSpan(0, 3, 0, 0, 0)) },
+                    { new Guid("78850b86-a52b-45fa-b33f-f88f61d54273"), new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(5061), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 14, new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(5068), new TimeSpan(0, 3, 0, 0, 0)) },
+                    { new Guid("d7a90fc6-8073-4b0e-91dc-01f226bbac10"), new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(5080), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 23, new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(5081), new TimeSpan(0, 3, 0, 0, 0)) }
                 });
 
             migrationBuilder.InsertData(
                 table: "HotelRatings",
                 columns: new[] { "Id", "Amenities", "Cleanliness", "CreatedDateTime", "Description", "HotelId", "Location", "ServiceQuality", "Stars", "UpdatedDateTime", "ValueForMoney" },
-                values: new object[] { new Guid("91a7887a-4318-4a0a-be4c-55248609e4d6"), 10f, 10f, new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(4909), new TimeSpan(0, 3, 0, 0, 0)), "NULL", new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 10f, 10f, 5, new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(4921), new TimeSpan(0, 3, 0, 0, 0)), 10f });
+                values: new object[] { new Guid("d2e6cf3a-d001-4659-a10a-5d27272241b5"), 10f, 10f, new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(6309), new TimeSpan(0, 3, 0, 0, 0)), "NULL", new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 10f, 10f, 5, new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(6315), new TimeSpan(0, 3, 0, 0, 0)), 10f });
 
             migrationBuilder.InsertData(
                 table: "HotelRooms",
                 columns: new[] { "Id", "Capacity", "CreatedDateTime", "HotelId", "RoomType", "UpdatedDateTime" },
                 values: new object[,]
                 {
-                    { new Guid("260e469a-b87f-49e5-8ac8-c36716521552"), 50, new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(6411), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 0, new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(6428), new TimeSpan(0, 3, 0, 0, 0)) },
-                    { new Guid("69e60e50-08bf-4bdc-95fc-fce558a0ea60"), 80, new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(6445), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 5, new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(6447), new TimeSpan(0, 3, 0, 0, 0)) },
-                    { new Guid("88f4520b-9c57-4e55-9654-107b926b214b"), 75, new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(6431), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 3, new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(6434), new TimeSpan(0, 3, 0, 0, 0)) }
+                    { new Guid("93abd8c4-2460-4839-a801-301272d4123f"), 50, new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(7492), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 0, new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(7505), new TimeSpan(0, 3, 0, 0, 0)) },
+                    { new Guid("e3454d91-301a-4c13-bc43-d008c744be09"), 80, new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(7520), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 5, new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(7522), new TimeSpan(0, 3, 0, 0, 0)) },
+                    { new Guid("fe13f5b3-d735-473f-a510-307d9155deb0"), 75, new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(7515), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 3, new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(7518), new TimeSpan(0, 3, 0, 0, 0)) }
                 });
 
             migrationBuilder.InsertData(
@@ -245,11 +245,11 @@ namespace GondorsLegacy.Services.HotelInformation.Migraions.HotelDb
                 columns: new[] { "Id", "CreatedDateTime", "HotelId", "HotelServiceType", "UpdatedDateTime" },
                 values: new object[,]
                 {
-                    { new Guid("0097bc87-0623-461f-9479-7b96975fdbc9"), new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(8007), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 33, new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(8009), new TimeSpan(0, 3, 0, 0, 0)) },
-                    { new Guid("442d1a17-b52d-4226-8c95-5052ce4a51af"), new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(8018), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 72, new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(8019), new TimeSpan(0, 3, 0, 0, 0)) },
-                    { new Guid("58d6d610-424c-4df1-bda0-02848857920d"), new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(7999), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 51, new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(8001), new TimeSpan(0, 3, 0, 0, 0)) },
-                    { new Guid("5a7ec8e3-a70a-4058-861c-4457e3e54380"), new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(8013), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 8, new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(8014), new TimeSpan(0, 3, 0, 0, 0)) },
-                    { new Guid("86aa2b6a-329e-4ddf-a2db-21f8f6932fa6"), new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(7978), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 74, new DateTimeOffset(new DateTime(2024, 2, 11, 19, 49, 54, 879, DateTimeKind.Unspecified).AddTicks(7988), new TimeSpan(0, 3, 0, 0, 0)) }
+                    { new Guid("33d5cf9a-b162-4bd1-9ccd-84ce176a3f22"), new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(8978), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 52, new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(8979), new TimeSpan(0, 3, 0, 0, 0)) },
+                    { new Guid("53d2af56-fcdf-407f-9a17-5b05dd0fc336"), new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(8990), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 73, new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(8991), new TimeSpan(0, 3, 0, 0, 0)) },
+                    { new Guid("7e3f89e2-be99-48e1-a43f-6d9aebd5a92b"), new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(8982), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 34, new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(8983), new TimeSpan(0, 3, 0, 0, 0)) },
+                    { new Guid("8aaf0f3e-f150-4e9c-8da7-8f154e54a20e"), new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(8961), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 75, new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(8973), new TimeSpan(0, 3, 0, 0, 0)) },
+                    { new Guid("f5c22a88-3e86-405c-86de-1b75bca1e98e"), new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(8986), new TimeSpan(0, 3, 0, 0, 0)), new Guid("459f9270-9f33-488b-a6d6-0b441697c50c"), 9, new DateTimeOffset(new DateTime(2024, 4, 30, 16, 51, 35, 22, DateTimeKind.Unspecified).AddTicks(8987), new TimeSpan(0, 3, 0, 0, 0)) }
                 });
 
             migrationBuilder.CreateIndex(

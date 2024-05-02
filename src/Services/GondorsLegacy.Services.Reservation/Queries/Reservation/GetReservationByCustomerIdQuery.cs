@@ -4,7 +4,7 @@ using GondorsLegacy.Services.Reservation.Repositories;
 using MediatR;
 using Newtonsoft.Json;
 
-namespace GondorsLegacy.Services.Reservation.Queries;
+namespace GondorsLegacy.Services.Reservation.Queries.Reservation;
 
 public class GetReservationByCustomerIdQuery : IRequest<Entities.Reservation>
 {
@@ -72,7 +72,7 @@ public class GetReservationByCustomerIdQueryHandler : IRequestHandler<GetReserva
     {
         _logger.LogInformation($"Fetching reservation for CustomerId {request.CustomerId} from the database.");
 
-        var reservation = await _reservationRepository.FirstOrDefaultAsync(_reservationRepository.GetAll().Where(x=>x.CustomerId == request.CustomerId));
+        var reservation = await _reservationRepository.FirstOrDefaultAsync(_reservationRepository.GetAll().Where(x => x.CustomerId == request.CustomerId));
 
         return reservation;
     }

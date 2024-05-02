@@ -1,45 +1,18 @@
-﻿using Asp.Versioning.Builder;
-using Asp.Versioning;
+﻿using Asp.Versioning;
+using Asp.Versioning.Builder;
 using AutoMapper;
 using GondorsLegacy.Infrastructure.Web.MinimalApis;
-using GondorsLegacy.Services.Reservation.Commands;
+using GondorsLegacy.Services.Reservation.Commands.Reservation;
 using GondorsLegacy.Services.Reservation.Constants;
-using GondorsLegacy.Services.Reservation.Entities;
 using GondorsLegacy.Services.Reservation.Models;
+using GondorsLegacy.Services.Reservation.Models.Requests.Reservation;
+using GondorsLegacy.Services.Reservation.Models.Responses.Reservation;
 using GondorsLegacy.Services.Reservation.Validations;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 
-namespace GondorsLegacy.Services.Reservation.Endpoints;
-
-public class CreateReservationRequest
-{
-    public Guid CustomerId { get; set; } // Müşteri kimliği
-    public string CustomerFirstName { get; set; }  // Müşteri adı
-    public string CustomerLastName { get; set; }  // Müşteri adı
-    public Guid HotelId { get; set; } // Otel kimliği
-    public string HotelName { get; set; } // Otel adı
-    public DateTime CheckInDate { get; set; }  // Giriş tarihi
-    public DateTime CheckOutDate { get; set; }  // Çıkış tarihi
-    public RoomType RoomType { get; set; }  // Oda tipi
-    public string RoomNumber { get; set; } // Oda numarası
-    public decimal TotalPrice { get; set; }  // Toplam fiyat
-    public int NumberOfGuests { get; set; }  // Konuk sayısı
-    public string CustomerEmail { get; set; } // Müşteri e-posta adresi
-    public ReservationStatus ReservationStatus { get; set; } // Rezervasyon durumu
-    public string PaymentInformation { get; set; } // Ödeme bilgileri
-    public string SpecialRequests { get; set; } // Özel istekler
-    public int NumberOfAdults { get; set; } // Yetişkin kişi sayısı
-    public int NumberOfChildren { get; set; } // Çocuk kişi sayısı
-    public PaymentStatus PaymentStatus { get; set; } // Ödeme durumu
-
-}
-
-public class CreateReservationResponse
-{
-    public Guid ReservationId { get; set; }
-}
+namespace GondorsLegacy.Services.Reservation.Endpoints.Reservation;
 
 public class CreateReservationRequestHandler : IEndpointHandler
 {
@@ -55,7 +28,7 @@ public class CreateReservationRequestHandler : IEndpointHandler
             .WithName("CreateReservation")
             .Produces<CreateReservationResponse>(statusCode: StatusCodes.Status201Created, contentType: "application/json")
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .WithOpenApi(operation => new Microsoft.OpenApi.Models.OpenApiOperation
+            .WithOpenApi(operation => new OpenApiOperation
             {
                 Tags = new List<OpenApiTag> { new OpenApiTag { Name = "Reservations" } },
                 RequestBody = new OpenApiRequestBody
@@ -89,13 +62,18 @@ public class CreateReservationRequestHandler : IEndpointHandler
             {
                 await dispatcher.Send(new CreateReservationCommand { Reservation = reservation });
 
-                var response = new CreateReservationResponse
+                var reservationResponse = new CreateReservationResponse
                 {
                     ReservationId = reservation.Id
                 };
-
+                var response = new SuccessResponseModel
+                {
+                    StatusCode = StatusCodes.Status200OK,
+                    Message = Messages.RequestProcessedSuccessfully,
+                    Data = reservationResponse
+                };
                 // İşlem başarılı olduğunda 201 Created yanıtı dön
-                return Results.Created($"api/v{{version:apiVersion}}/reservations/{response.ReservationId}", response);
+                return Results.Created($"api/v{{version:apiVersion}}/reservations/{reservationResponse.ReservationId}", response);
             }
             else
             {
@@ -104,14 +82,14 @@ public class CreateReservationRequestHandler : IEndpointHandler
                 {
                     StatusCode = StatusCodes.Status400BadRequest,
                     Message = Messages.InvalidReservationRequestMessage,
-                    ErrorDetails  = result.Errors.Select(error => error.ErrorMessage).ToList()
+                    ErrorDetails = result.Errors.Select(error => error.ErrorMessage).ToList()
                 };
 
                 // 400 Bad Request yanıtı dön
-                return Results.BadRequest(error:errorDetails);
+                return Results.BadRequest(error: errorDetails);
             }
 
-          
+
         }
         catch (Exception ex)
         {
@@ -130,7 +108,3 @@ public class CreateReservationRequestHandler : IEndpointHandler
     }
 
 }
-
-
-
-

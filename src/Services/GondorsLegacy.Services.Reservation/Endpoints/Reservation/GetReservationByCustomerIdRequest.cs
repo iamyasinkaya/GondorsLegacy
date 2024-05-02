@@ -5,12 +5,14 @@ using GondorsLegacy.Services.Reservation.Models;
 using GondorsLegacy.Services.Reservation.Queries;
 using MediatR;
 using Microsoft.OpenApi.Models;
+using GondorsLegacy.Services.Reservation.Constants;
+using GondorsLegacy.Services.Reservation.Queries.Reservation;
 
-namespace GondorsLegacy.Services.Reservation.Endpoints;
+namespace GondorsLegacy.Services.Reservation.Endpoints.Reservation;
 
 public class GetReservationByCustomerIdRequest : IEndpointHandler
 {
- public static void MapEndpoint(IEndpointRouteBuilder builder)
+    public static void MapEndpoint(IEndpointRouteBuilder builder)
     {
         ApiVersionSet apiVersionSet = builder.NewApiVersionSet()
                                              .HasApiVersion(new ApiVersion(1))
@@ -61,7 +63,23 @@ public class GetReservationByCustomerIdRequest : IEndpointHandler
     private static async Task<IResult> HandleAsync(IMediator dispatcher, Guid customerId)
     {
         var reservation = await dispatcher.Send(new GetReservationByCustomerIdQuery { CustomerId = customerId, ThrowNotFoundIfNull = true });
+        if (reservation == null)
+        {
+            // Hotel not found, return 404 Not Found response with details
+
+            return Results.NotFound(new ErrorResponseModel
+            {
+                StatusCode = StatusCodes.Status404NotFound,
+                Message = Messages.ResourceNotFoundMessage,
+            });
+        }
         var model = reservation.ToModel();
-        return Results.Ok(model);
+        var response = new SuccessResponseModel
+        {
+            StatusCode = StatusCodes.Status200OK,
+            Message = Messages.RequestProcessedSuccessfully,
+            Data = model
+        };
+        return Results.Ok(response);
     }
 }

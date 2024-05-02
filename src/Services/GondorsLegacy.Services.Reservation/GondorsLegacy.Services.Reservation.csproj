@@ -46,16 +46,9 @@
     <None Remove="Mappers\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Entities\" />
-    <Folder Include="Constants\" />
     <Folder Include="DTOs\" />
-    <Folder Include="Repositories\" />
-    <Folder Include="Queries\" />
-    <Folder Include="Endpoints\" />
-    <Folder Include="Commands\" />
-    <Folder Include="Validations\" />
     <Folder Include="Mappers\" />
+    <Folder Include="Queries\Guest\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\GondorsLegacy.Domain\GondorsLegacy.Domain.csproj">

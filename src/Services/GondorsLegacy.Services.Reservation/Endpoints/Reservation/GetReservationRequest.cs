@@ -4,10 +4,11 @@ using GondorsLegacy.Infrastructure.Web.MinimalApis;
 using GondorsLegacy.Services.Reservation.Constants;
 using GondorsLegacy.Services.Reservation.Models;
 using GondorsLegacy.Services.Reservation.Queries;
+using GondorsLegacy.Services.Reservation.Queries.Reservation;
 using MediatR;
 using Microsoft.OpenApi.Models;
 
-namespace GondorsLegacy.Services.Reservation.Endpoints;
+namespace GondorsLegacy.Services.Reservation.Endpoints.Reservation;
 
 public class GetReservationRequest : IEndpointHandler
 {
@@ -73,8 +74,16 @@ public class GetReservationRequest : IEndpointHandler
                 Message = Messages.ResourceNotFoundMessage,
             });
         }
+
+
         var model = reservation.ToModel();
 
-        return Results.Ok(model);
+        var response = new SuccessResponseModel
+        {
+            StatusCode = StatusCodes.Status200OK,
+            Message = Messages.RequestProcessedSuccessfully,
+            Data = model
+        };
+        return Results.Ok(response);
     }
 }

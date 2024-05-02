@@ -11,7 +11,7 @@
   "profiles": {
     "reservation-webapi": {
       "commandName": "Project",
-      "launchBrowser": false,
+      "launchBrowser": true,
       "launchUrl": "swagger",
       "applicationUrl": "http://localhost:5001",
       "environmentVariables": {
