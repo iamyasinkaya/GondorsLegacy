@@ -29,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GondorsLegacy.ApiGateway", "src\ApiGateway\GondorsLegacy.ApiGateway\GondorsLegacy.ApiGateway.csproj", "{BF26FDF4-D88A-4ECA-B5ED-77F6E672CDAC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GondorsLegacy.Services.External", "src\Services\GondorsLegacy.Services.External\GondorsLegacy.Services.External.csproj", "{EC2020D6-E0D5-4495-9BA3-C179B690CD28}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{BF26FDF4-D88A-4ECA-B5ED-77F6E672CDAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF26FDF4-D88A-4ECA-B5ED-77F6E672CDAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF26FDF4-D88A-4ECA-B5ED-77F6E672CDAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC2020D6-E0D5-4495-9BA3-C179B690CD28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC2020D6-E0D5-4495-9BA3-C179B690CD28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC2020D6-E0D5-4495-9BA3-C179B690CD28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC2020D6-E0D5-4495-9BA3-C179B690CD28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,5 +94,6 @@ Global
 		{2D44DFEF-317D-4F0F-8DC0-741C5D27D8A4} = {56225A52-0CAF-4231-AD70-60896E9FC24D}
 		{17509B47-59CF-4759-A5D8-0FF579A2F6EA} = {4639E45C-F2D2-4D09-B22E-E780557B8407}
 		{BF26FDF4-D88A-4ECA-B5ED-77F6E672CDAC} = {17509B47-59CF-4759-A5D8-0FF579A2F6EA}
+		{EC2020D6-E0D5-4495-9BA3-C179B690CD28} = {4607D68C-F7E0-497C-A31B-4113FC8FCF3F}
 	EndGlobalSection
 EndGlobal
