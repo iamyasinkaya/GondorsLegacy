@@ -1,5 +1,5 @@
 using Refit;
-using System.Threading.Tasks;
+
 
 namespace GondorsLegacy.Services.External;
 
@@ -12,7 +12,7 @@ public interface ILodgifyApi<T>
         [Query] int page,
         [Query] int size
     );
-
+    [Get("/v2/properties/{id}")]
+    Task<ApiResponse<GetLodgifyPropertyResponse>> GetPropertyAsync([AliasAs("id")] string id);
     
-
 }
